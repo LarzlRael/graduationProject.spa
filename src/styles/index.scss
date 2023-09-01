@@ -1,0 +1,131 @@
+@import "variables";
+@import "mediaQuery";
+@import "shared";
+@import "loginAdmin";
+@import "landingPage";
+@import "ley1171";
+@import "header";
+body {
+  margin: 0;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  transition: 0.3s ease all;
+  &.blackTheme {
+    background: $primary-dark-color;
+    color: white;
+    .header {
+      @include media(sm) {
+        background: $back-ground-responsive;
+      }
+      .logo {
+        @include media(sm) {
+          background: $back-ground-responsive;
+        }
+      }
+      .enlaces {
+        .link {
+          color: white;
+
+          @include media(sm) {
+            background: $back-ground-responsive;
+          }
+
+          &:hover {
+            color: $back-ground-responsive;
+          }
+          &.active {
+            color: white;
+
+            border-bottom: 3px solid $back-ground-responsive;
+          }
+          &.active {
+            color: $back-ground-responsive;
+
+            @include media(sm) {
+              color: white;
+            }
+          }
+        }
+      }
+      .info .buttonMap {
+        background: $back-ground-responsive;
+      }
+    }
+
+    .info {
+      .info-container {
+        span {
+          color: white;
+        }
+      }
+      @include media(sm) {
+        .info-container {
+        }
+      }
+      .buttonMap {
+        &:hover {
+        }
+        @include media(sm) {
+          background: $back-ground-responsive;
+        }
+      }
+      .title {
+        h2 {
+          color: white;
+        }
+      }
+    }
+
+    /* .login-div .form .formLogin .button-login,
+    .login-div .info-login {
+      background: $back-ground-responsive;
+      &:hover {
+        // background: $dash-background;
+        background-color: darken($color: $back-ground-responsive, $amount: 15);
+      }
+    }
+    .login-div .form .formLogin .title {
+      color: white;
+    }
+
+    .dashboard {
+      .dash {
+        background: $back-ground-responsive;
+        transition: 0.4s ease all;
+        .dash-group {
+          .dash-item {
+            color: white;
+            background: $back-ground-responsive;
+
+            &:hover {
+              background: $dash-title-color;
+              border-left: 5px solid $primary-color;
+            }
+            &.active {
+              color: white;
+              background: $dash-title-color;
+              border-left: 5px solid white;
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+    // Toolbar 
+    .toolbar {
+      background-color: $back-ground-responsive;
+    }
+  } */
+    .login-div .form .formLogin .title {
+      color: white;
+    }
+  }
+}

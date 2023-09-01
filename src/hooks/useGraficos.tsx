@@ -1,0 +1,118 @@
+import { useEffect, useState, useContext } from 'react'
+import { getRandomColor } from '../utils/utils'
+import {
+  ChartData,
+  ChartOptions,
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  registerables,
+} from 'chart.js'
+import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2'
+import { GraphProps } from '../components/Graficos'
+import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
+import { graphTypeArray } from '../data/data'
+
+export const useGraficos = ({
+  info,
+  nombreDepartamento,
+  loading,
+}: GraphProps) => {
+  ChartJS.register(ArcElement, Tooltip, Legend, ...registerables)
+  const { changeTypeGraph, graphType } = useContext(HeatSourcesContext)
+
+  const [stringTitle, setStringTitle] = useState<string[]>([''])
+  const [tipoGrafico, setTipoGrafico] = useState<string>()
+
+  useEffect(() => {
+    const titlesArray: string[] = []
+    info?.resp.map((resp) => titlesArray.push(resp.nombre))
+    const arrayTitles: string[] = []
+    info?.resp.map((resp) => arrayTitles.push(resp.nombre))
+
+    setStringTitle(arrayTitles)
+  }, [info])
+
+  const data = {
+    labels: stringTitle,
+    datasets: [
+      {
+        label: `Departamento de ${nombreDepartamento}`,
+        data: info?.resp.map((ele) => parseInt(ele.focos_calor))
+          ? info?.resp.map((ele) => parseInt(ele.focos_calor))!
+          : [],
+        backgroundColor: stringTitle.map(() => getRandomColor()),
+        borderColor: stringTitle.map(() => getRandomColor()),
+        borderWidth: 1,
+      },
+    ],
+  }
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: `Consultas del departamento de ${nombreDepartamento}`,
+      },
+    },
+  }
+
+  const options2 = {
+    // Elements options apply to all of the options unless overridden in a dataset
+    // In this case, we are setting the border of each horizontal bar to be 2px wide
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'right' as const,
+      },
+      title: {
+        display: true,
+        text: nombreDepartamento,
+      },
+    },
+  }
+
+  const ShowGraphic = () => {
+    switch (graphType) {
+      case 'Pie':
+        setTipoGrafico('circular')
+        return <Pie data={data} />
+      case 'Lineas':
+        setTipoGrafico('cuadrado')
+        return <Line data={data} options={options} />
+      case 'Barras Horizontal':
+        setTipoGrafico('cuadrado')
+        return <Bar data={data} options={options} />
+      case 'Barras Vertical':
+        setTipoGrafico('cuadrado')
+        return <Bar data={data} options={options2} />
+      case 'Dona':
+        setTipoGrafico('circular')
+        return <Doughnut data={data} options={options} />
+      default:
+        setTipoGrafico('cuadrado')
+        return <Pie data={data} />
+    }
+  }
+
+  return {
+    changeTypeGraph,
+    ShowGraphic,
+    loading,
+    graphType,
+    info,
+    graphTypeArray,
+    tipoGrafico,
+  }
+}

@@ -1,0 +1,150 @@
+.ReactModal__Body--open {
+    overflow: a;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.pointer {
+    cursor: pointer;
+}
+.dashContentContainer {
+    margin: 2rem;
+}
+
+.align-calendar {
+    display: flex;
+    align-items: flex-end;
+}
+
+.table-download {
+    width: 500px;
+}
+
+.calendar-buttons {
+    display: flex;
+}
+.css-quj9j6-MuiTable-root {
+    width: 25%;
+}
+
+.layout_page {
+    width: 1200px;
+    margin: 1rem auto;
+
+    @include media(sm) {
+        width: 100%;
+        margin: 0;
+        position: relative;
+    }
+}
+
+.buttons-groups {
+    display: flex;
+    flex-direction: column;
+    button {
+        margin: 0.5rem 1rem;
+    }
+}
+
+.app-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.map {
+    margin: 0 auto;
+    max-width: 800px;
+    height: 600px;
+}
+
+.grafic-square {
+    margin: auto;
+    width: 800px;
+    @include media(sm) {
+        width: 100%;
+    }
+}
+.grafic-circle {
+    margin: auto;
+    width: 550px;
+    @include media(sm) {
+        width: 100%;
+    }
+}
+.css-heg063-MuiTabs-flexContainer {
+    @include media(sm) {
+        margin-top: 4rem;
+    }
+}
+.title_close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .close-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        background: rgb(207, 6, 6);
+        border: none;
+        padding: 5px 1rem;
+        border-radius: 8px;
+    }
+}
+.modal-wrapper {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    overflow: scroll;
+}
+.modal-content {
+    display: grid;
+
+    z-index: 100;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 1.5rem;
+    /* flex-direction: row;
+
+    @include media(sm) {
+        flex-direction: column;
+        .modal-info {
+            margin-bottom: 1.5rem;
+        }
+    } */
+    &.blackTheme {
+        background: $primary-dark-color;
+    }
+}
+.ReactModalPortal {
+    background: $primary-dark-color;
+}
+
+.switchContainer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.graphDepartaments {
+    display: flex;
+    flex-direction: column;
+    .combo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom:2rem;
+        @include media(sm) {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+}
+
+
+.datePicker{
+    width: 100%;
+    
+}
