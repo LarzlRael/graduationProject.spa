@@ -57,15 +57,9 @@ export const UpdateInformation = () => {
         onChange={changeHandler}
       />
       <label htmlFor="raised-button-file">
-        <ToolTip
-          content="Seleccionar archivo"
-          interactive={true}
-          placement="right"
-        >
-          <Button variant="outlined" component="span">
-            Seleccionar archivo CVS
-          </Button>
-        </ToolTip>
+        <Button variant="outlined" component="span">
+          Seleccionar archivo CVS
+        </Button>
       </label>
       {/*  {
                 selectedFiles!.map(file => (

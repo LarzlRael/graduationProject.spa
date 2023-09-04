@@ -10,8 +10,9 @@ import {
   getNombresProvincias,
   getNombresMunicipios,
 } from '../provider/analysisServices'
-import { Resp as ResProv } from '../interfaces/provinciasResponse.interface'
-import { Resp as ResMun } from '../interfaces/municipiosResponse.interface'
+import { RespProvincia } from '../interfaces/provinciasResponse.interface'
+import { MunResp } from '../interfaces/municipiosResponse.interface'
+
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 
 /* import { FlyToInterpolator } from 'react-map-gl' */
@@ -87,8 +88,8 @@ export const useFocosCalor = () => {
   })
 
   const [stateArrMunProv, setArrMunProv] = useState<{
-    sArrayPro: ResProv[]
-    sArrayMu: ResMun[]
+    sArrayPro: RespProvincia[]
+    sArrayMu: MunResp[]
   }>({
     sArrayPro: [],
     sArrayMu: [],
@@ -225,8 +226,8 @@ export const useFocosCalor = () => {
       )
       setArrMunProv({
         ...stateArrMunProv,
-        sArrayMu: arrayMunicipiosList.resp,
-        sArrayPro: arrayProvinciasList.resp,
+        sArrayMu: arrayMunicipiosList,
+        sArrayPro: arrayProvinciasList,
       })
     }
     getArray()
@@ -237,12 +238,14 @@ export const useFocosCalor = () => {
   useEffect(() => {
     const getMiddlePoint = async () => {
       let getMidPointService
-      if (showOptions === false) {
+      if (!showOptions) {
         getMidPointService = await getMidPoint(
           'departamentos',
           queryToFind.departamentSelected,
         )
-      } else if (showProvMun) {
+        return
+      }
+      if (showProvMun) {
         getMidPointService = await getMidPoint(
           'provincias',
           queryToFind.provincia,
@@ -253,7 +256,7 @@ export const useFocosCalor = () => {
           queryToFind.municipio,
         )
       }
-      if (loading === false && currentGeoJson.features.length > 0) {
+      if (!loading && currentGeoJson.features.length > 0) {
         changeCurrentLatLng({
           latitude: getMidPointService.longitude,
           longitude: getMidPointService.latitude,

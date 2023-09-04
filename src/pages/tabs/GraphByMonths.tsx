@@ -22,10 +22,18 @@ import {
 import { LoadingElipsis } from '../../components/widgets/LoadingElipsis'
 import useAxiosAuth from '../../hooks/useAxios'
 import { convertMonths } from '../../utils/utils'
-
+import {
+  Chart as ChartJS,
+  ArcElement,
+  registerables,
+  Tooltip,
+  Legend,
+} from 'chart.js'
 moment.locale('es')
 
 export const GraphByMonths = () => {
+  ChartJS.register(ArcElement, Tooltip, Legend, ...registerables)
+
   const {
     setMounthSelected,
     getHeatSourcesInfoToGragh,
@@ -50,8 +58,8 @@ export const GraphByMonths = () => {
     datasets: [
       {
         label: `Focos de calor`,
-        data: countByDates?.resp.map((ele) => parseInt(ele.focos_calor))
-          ? countByDates?.resp.map((ele) => parseInt(ele.focos_calor))
+        data: countByDates?.map((ele) => parseInt(ele.focos_calor))
+          ? countByDates?.map((ele) => parseInt(ele.focos_calor))
           : [],
         backgroundColor: titleArray.map(() => getRandomColor()),
         borderColor: titleArray.map(() => getRandomColor()),
@@ -143,7 +151,7 @@ export const GraphByMonths = () => {
     "month": 10,
     "year": 2020
 } */}
-            {response?.years?.map(
+            {response?.map(
               (mes: { month: number; year: number }, i: number) => (
                 <MenuItem
                   key={mes.month}

@@ -1,4 +1,4 @@
-import { CountDepProMun } from '../interfaces/countProvinceDepartamento.interface'
+import { CountDepProMun, RespFoco } from '../interfaces/countProvinceDepartamento.interface'
 import { CircularProgress } from '@material-ui/core'
 import { useGraficos } from '../hooks/useGraficos'
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
@@ -6,7 +6,7 @@ import { useRef, useEffect } from 'react'
 import { LoadingElipsis } from './widgets/LoadingElipsis';
 
 export interface GraphProps {
-  info?: CountDepProMun
+  info?: RespFoco[]
   nombreDepartamento: string
   loading: boolean
   ref: any
@@ -52,7 +52,7 @@ export const Graficos = (graphProps: GraphProps) => {
 
       {loading ? (
         <LoadingElipsis />
-      ) : info?.resp.length === 0 ? (
+      ) : info?.length === 0 ? (
         <div>No se encontraron datos</div>
       ) : (
         <div

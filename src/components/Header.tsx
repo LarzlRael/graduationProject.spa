@@ -68,7 +68,7 @@ export const Header = () => {
           className="link"
           to="/departamentos"
         >
-          Mapa por departamentos
+          Departamentos
         </NavLink>
         <NavLink
           /* activeClassName="active" */

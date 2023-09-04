@@ -1,9 +1,8 @@
-export interface    ProvinciasResponse {
-    ok:   boolean;
-    resp: Resp[];
+export interface ProvinciasResponse {
+  resp: RespProvincia[]
 }
 
-export interface Resp {
-    nombre_provincia: string;
-    departamento:     string;
+export interface RespProvincia {
+  nombre_provincia: string
+  departamento: string
 }

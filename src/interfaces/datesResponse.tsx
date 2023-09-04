@@ -1,10 +1,9 @@
 export interface DatesResponse {
-    ok: boolean;
-    dates: Date[];
+  dates: Date[]
 }
 
 export interface ConsulHeatSources {
-    dateStart: string;
-    dateEnd: string;
-    departament: string
+  dateStart: string
+  dateEnd: string
+  departament: string
 }

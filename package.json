@@ -13,6 +13,7 @@
     "@mui/material": "^5.14.7",
     "@mui/styled-engine-sc": "^5.14.7",
     "@mui/x-data-grid": "^6.12.1",
+    "@mui/x-date-pickers": "^6.12.1",
     "@react-pdf/renderer": "^3.1.12",
     "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^14.0.0",
@@ -33,6 +34,7 @@
     "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^4.16.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-map-gl": "^7.1.5",
@@ -71,6 +73,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "@types/mapbox-gl": "^2.7.13",
+    "@types/react-datepicker": "^4.15.0",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.3"

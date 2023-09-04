@@ -26,10 +26,9 @@ export const useGraficos = ({
   const [tipoGrafico, setTipoGrafico] = useState<string>()
 
   useEffect(() => {
-    const titlesArray: string[] = []
-    info?.resp.map((resp) => titlesArray.push(resp.nombre))
     const arrayTitles: string[] = []
-    info?.resp.map((resp) => arrayTitles.push(resp.nombre))
+
+    info?.map((resp) => arrayTitles.push(resp.nombre))
 
     setStringTitle(arrayTitles)
   }, [info])
@@ -39,8 +38,8 @@ export const useGraficos = ({
     datasets: [
       {
         label: `Departamento de ${nombreDepartamento}`,
-        data: info?.resp.map((ele) => parseInt(ele.focos_calor))
-          ? info?.resp.map((ele) => parseInt(ele.focos_calor))!
+        data: info?.map((ele) => parseInt(ele.focos_calor))
+          ? info?.map((ele) => parseInt(ele.focos_calor))!
           : [],
         backgroundColor: stringTitle.map(() => getRandomColor()),
         borderColor: stringTitle.map(() => getRandomColor()),

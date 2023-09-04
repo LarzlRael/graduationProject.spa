@@ -21,6 +21,7 @@ import {
 import moment from 'moment'
 import {
   CountByDates,
+  DatesHeatSources,
   LatLngInt,
 } from '../../interfaces/countProvinceDepartamento.interface'
 import { GeoJsonFeature } from '../../interfaces/geoJsonResponse'
@@ -37,7 +38,7 @@ type HeatSourcesStateProps = {
   graphType: string
   mounthAndYearSelected: SelectOptionDateInterface
   titleArray: string[]
-  countByDates: CountByDates
+  countByDates: DatesHeatSources[]
   currentLatLongMidLocation: LatLngInt
   currentGeoJson: GeoJsonFeature
   modalIsOpen: boolean
@@ -77,10 +78,7 @@ const HeatSourcesInitialState: HeatSourcestState = {
     year: new Date().getFullYear(),
     onlyYear: true,
   },
-  countByDates: {
-    ok: false,
-    resp: [],
-  },
+  countByDates: [],
   titleArray: [],
   currentLatLongMidLocation: {
     longitude: -66.2137434,
@@ -120,14 +118,11 @@ export const HeatProvider = ({ children }: any) => {
       year: new Date().getFullYear(),
       onlyYear: true,
     })
-    console.log('useEffect de fechas disponibles')
-    console.log(state.datesAvailable)
     changeDateSelectedAndRanked({
       ...state.dateSelectedAndRange,
       dateStart: new Date(),
       dateEnd: new Date(),
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const addHours = (h: number, date: Date) => {
@@ -144,8 +139,8 @@ export const HeatProvider = ({ children }: any) => {
         type: 'dates',
         payload: {
           dates: [
-            addHours(8, new Date(dates.dates[0])),
-            addHours(8, new Date(dates.dates[1])),
+            addHours(8, new Date(dates[0])),
+            addHours(8, new Date(dates[1])),
           ],
         },
       })
@@ -197,7 +192,7 @@ export const HeatProvider = ({ children }: any) => {
     })
   }
   const getHeatSourcesInfoToGragh = async (month: number, year: number) => {
-    let getInformation: CountByDates
+    let getInformation: DatesHeatSources[]
     const arrayTitles: string[] = []
     dispatch({
       type: 'loading',
@@ -207,16 +202,16 @@ export const HeatProvider = ({ children }: any) => {
       getInformation = await getCountHeatSourcesByMonths({
         year: year,
       })
-      getInformation?.resp.map((_, i) => arrayTitles.push(meses[i + 1]))
-    } else {
-      getInformation = await getCountHeatSourcesByMonth({
-        month: month,
-        year: year,
-      })
-      getInformation?.resp.map((resp) =>
-        arrayTitles.push(moment(resp.acq_date).add(8, 'hours').format('L')),
-      )
+      getInformation?.map((_, i) => arrayTitles.push(meses[i + 1]))
+      return
     }
+    getInformation = await getCountHeatSourcesByMonth({
+      month: month,
+      year: year,
+    })
+    getInformation?.map((resp) =>
+      arrayTitles.push(moment(resp.acq_date).add(8, 'hours').format('L')),
+    )
 
     dispatch({
       type: 'loading',

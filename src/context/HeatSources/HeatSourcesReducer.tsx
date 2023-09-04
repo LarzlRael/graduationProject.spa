@@ -1,5 +1,6 @@
 import {
   CountByDates,
+  DatesHeatSources,
   LatLngInt,
 } from '../../interfaces/countProvinceDepartamento.interface'
 import { MapStyleInt } from '../../data/data'
@@ -31,7 +32,7 @@ export interface HeatSourcestState {
   tab: number
   graphType: string
   mounthAndYearSelected: SelectOptionDateInterface
-  countByDates: CountByDates
+  countByDates: DatesHeatSources[]
   titleArray: string[]
   currentLatLongMidLocation: LatLngInt
   currentGeoJson: GeoJsonFeature
@@ -49,7 +50,7 @@ type HeatSourceAction =
   | { type: 'changeTab'; payload: number }
   | { type: 'changeGraphType'; payload: string }
   | { type: 'changeMounthOrYear'; payload: SelectOptionDateInterface }
-  | { type: 'changeCountByDates'; payload: CountByDates }
+  | { type: 'changeCountByDates'; payload: DatesHeatSources[] }
   | { type: 'setTitlesArray'; payload: string[] }
   | { type: 'setLatLong'; payload: LatLngInt }
   | { type: 'setCurrentGeoJson'; payload: GeoJsonFeature }

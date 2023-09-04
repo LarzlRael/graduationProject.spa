@@ -14,7 +14,7 @@ export const ModalComponent = ({ children }: ModalProps) => {
       <Button variant="contained" onClick={() => openModal()}>
         Consultar
       </Button>
-      <Modal titulo={'Consultar Focos de calor'}>{children}</Modal>
+      <Modal titulo="Consultar Focos de calor">{children}</Modal>
     </div>
   )
 }

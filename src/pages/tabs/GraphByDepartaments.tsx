@@ -7,7 +7,7 @@ import {
   getCountByDeMun,
 } from '../../provider/analysisServices'
 import { Graficos } from '../../components/Graficos'
-import { CountDepProMun } from '../../interfaces/countProvinceDepartamento.interface'
+import { CountDepProMun, RespFoco } from '../../interfaces/countProvinceDepartamento.interface'
 import { ComboBoxDepartamentos } from '../../components/widgets/ComboBoxDepartamentos'
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
 import { SwitchWidget } from '../../components/widgets/SwitchWidget'
@@ -27,10 +27,7 @@ export const GraphByDepartaments = () => {
 
   const myRef = useRef(null)
 
-  const [countDepProvState, setCountDepProvState] = useState<CountDepProMun>({
-    ok: false,
-    resp: [],
-  })
+  const [countDepProvState, setCountDepProvState] = useState<RespFoco[]>([])
   const [loading, setLoading] = useState(false)
 
   const getProvinciasNamesService = async () => {
@@ -87,7 +84,8 @@ export const GraphByDepartaments = () => {
         getDepartamentosNamesService()
         setShowSwitch(false)
         return
-      }  if (showProvMun) {
+      }
+      if (showProvMun) {
         getProvinciasNamesService()
         setShowSwitch(true)
       } else {

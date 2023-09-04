@@ -1,8 +1,10 @@
 import { useEffect, useContext } from 'react'
 import { FormControlLabel } from '@material-ui/core'
-import { Switch, TextField, FormControl } from '@mui/material'
-import { DatePicker, LocalizationProvider } from '@mui/lab'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import { Switch } from '@mui/material'
+import DatePicker from 'react-datepicker'
+
+import 'react-datepicker/dist/react-datepicker.css'
+
 import moment from 'moment'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import { DateSelectedRangeInterface } from '../context/HeatSources/HeatSourcesReducer'
@@ -33,20 +35,17 @@ export const DatePickerRange = () => {
   }, [dateStart])
 
   useEffect(() => {
-    console.log(dateStart, 'dateStart')
-    console.log(dateEnd, 'dateEnd')
     if (!isShowSwith) {
       changeDateSelectedAndRanked({
         ...dateSelectedAndRange,
         dateEnd: dateStart,
-        
       })
-    } else {
-      changeDateSelectedAndRanked({
-        ...dateSelectedAndRange,
-        dateEnd: moment(dateStart).add(6, 'days').toDate(),
-      })
+      return
     }
+    changeDateSelectedAndRanked({
+      ...dateSelectedAndRange,
+      dateEnd: moment(dateStart).add(6, 'days').toDate(),
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShowSwith])
 
@@ -61,36 +60,23 @@ export const DatePickerRange = () => {
   }
   return !loadingState ? (
     <>
-      <FormControl fullWidth>
+      <>
         <br />
 
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            /* cultureInfo={cultureInfo} */
-            label={!isShowSwith ? 'Buscar por fecha' : 'Fecha inicio'}
-            value={dateStart}
-            inputFormat="dd/MM/yyyy"
-            maxDate={datesAvailable[1]}
-            onChange={(e:any) => onChange(e!, 'dateStart')}
-            renderInput={(params:any) => <TextField />}
-          />
-          <br />
-        </LocalizationProvider>
+        <DatePicker
+          selected={dateStart}
+          maxDate={datesAvailable[1]}
+          onChange={(e: any) => onChange(e!, 'dateStart')}
+        />
         {isShowSwith && (
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DatePicker
-              /* cultureInfo={cultureInfo} */
-              label="Selecciona Fecha fin"
-              value={dateEnd}
-              minDate={dateStart ? dateStart : null}
-              inputFormat="dd/MM/yyyy"
-              maxDate={dateEnd ? dateEnd : datesAvailable[1]}
-              onChange={(e:any) => onChange(e!, 'dateEnd')}
-              renderInput={(params:any) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
+          <DatePicker
+            selected={dateEnd}
+            minDate={dateStart ? dateStart : null}
+            maxDate={dateEnd ? dateEnd : datesAvailable[1]}
+            onChange={(e: any) => onChange(e!, 'dateEnd')}
+          />
         )}
-      </FormControl>
+      </>
 
       <FormControlLabel
         control={

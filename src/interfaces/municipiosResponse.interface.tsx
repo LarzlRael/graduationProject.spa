@@ -1,9 +1,8 @@
 export interface MunicipiosResponse {
-    ok:   boolean;
-    resp: Resp[];
+    resp: MunResp[];
 }
 
-export interface Resp {
+export interface MunResp {
     nombre_municipio: string;
     departamento:     string;
     provincia:        string;

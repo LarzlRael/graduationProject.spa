@@ -1,23 +1,20 @@
 export interface CountDepProMun {
-    ok: boolean;
-    resp: Resp[];
+  resp: RespFoco[]
 }
-export interface Resp {
-    nombre: string;
-    focos_calor: string;
+export interface RespFoco {
+  nombre: string
+  focos_calor: string
 }
 
 export interface CountByDates {
-    ok: boolean;
-    resp: DatesHeatSources[];
+  resp: DatesHeatSources[]
 }
 export interface DatesHeatSources {
-    acq_date:    Date;
-    focos_calor: string;
+  acq_date: Date
+  focos_calor: string
 }
 
-
 export interface LatLngInt {
-    longitude: number;
-    latitude: number;
+  longitude: number
+  latitude: number
 }
