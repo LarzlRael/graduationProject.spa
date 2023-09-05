@@ -5,7 +5,11 @@ interface Props {
   icon?: string
   style: React.CSSProperties
 }
-export const ButtonIcon = ({ to = '/', icon = 'chevron-left',style }: Props) => {
+export const ButtonIcon = ({
+  to = '/',
+  icon = 'chevron-left',
+  style,
+}: Props) => {
   return (
     <div style={style}>
       <Link to={to} className="ButtonIcon">

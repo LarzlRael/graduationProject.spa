@@ -1,10 +1,8 @@
-import { CountDepProMun, RespFoco } from '../interfaces/countProvinceDepartamento.interface'
-import { CircularProgress } from '@material-ui/core'
-import { useGraficos } from '../hooks/useGraficos'
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { useRef, useEffect } from 'react'
-import { LoadingElipsis } from './widgets/LoadingElipsis';
-
+import { RespFoco } from '../interfaces/countProvinceDepartamento.interface'
+import { useGraficos } from '../hooks/useGraficos'
+import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
+import Select from 'react-select'
 export interface GraphProps {
   info?: RespFoco[]
   nombreDepartamento: string
@@ -28,27 +26,25 @@ export const Graficos = (graphProps: GraphProps) => {
   useEffect(() => {
     window.scrollTo(0, myRef.current?.offsetTop ? myRef.current?.offsetTop : 0)
   }, [loading])
-
+  const graphTypeArrayGenerated = graphTypeArray.map((graph) => ({
+    value: graph,
+    label: graph,
+  }))
   return (
     <>
-      <FormControl>
-        <InputLabel id="demo-simple-select-label">Tipo de grafico</InputLabel>
-        <Select
-          autoWidth
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Age"
-          renderValue={(value) => `${graphType}`}
-          value={graphType}
-          onChange={({ target }) => changeTypeGraph(target.value)}
-        >
-          {graphTypeArray.map((graph) => (
-            <MenuItem key={graph} value={graph}>
-              {graph}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <label>Tipo de grafico</label>
+      <Select
+        /* renderValue={(value) => `${graphType}`} */
+        options={graphTypeArrayGenerated}
+        value={
+          graphTypeArrayGenerated.filter(
+            (option) => option.value === graphType,
+          )[0]
+        }
+        onChange={(e) => {
+          changeTypeGraph(e!.value)
+        }}
+      />
 
       {loading ? (
         <LoadingElipsis />

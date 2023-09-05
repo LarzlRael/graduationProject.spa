@@ -35,28 +35,7 @@
             width: 100%;
         }
     }
-    .buttonMap {
-        display: block;
-        border-radius: 40px;
-        border: none;
-        padding: 1rem 1.5rem;
-        width: 100%;
-        margin: 3rem 0;
-        background: $primaryLanding;
-        color: white;
-        cursor: pointer;
-        font-size: 1.1rem;
-        text-decoration: none;
-        text-align: center;
-        transition: 0.3s ease all;
-        &:hover {
-            background: darken($color: $primaryLanding, $amount: 25);
-        }
-        @include media(sm) {
-            width: 85%;
-            margin: 3rem auto;
-        }
-    }
+
     .title {
         h2 {
             font-size: 3rem;

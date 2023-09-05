@@ -1,5 +1,6 @@
 import { Header } from '../components/Header'
 import { SwitchTheme } from '../components/public/SwitchTheme'
+import { FilledButton } from '../components/widgets/buttons/FilledButton'
 
 export const LandingPage = () => {
   return (
@@ -15,15 +16,27 @@ export const LandingPage = () => {
             Voluptatibus illum labore vitae cumque. Ab ullam officia molestias
             blanditiis, ex aut quisquam.
           </span>
-          <a
+          {/* <a
             className="buttonMap"
             href={`${process.env.REACT_APP_SERVER_URL}/maps`}
             target="_blank"
             rel="noreferrer"
           >
             Ir a mapa interactivo
-            
-          </a>
+          </a> */}
+          <FilledButton
+            margin="20px 0 0 0"
+            backGroundColor="var(--primary-color)"
+            padding="1rem 2rem"
+            borderRadius="40px"
+            fontSize="1.2rem"
+            /* width="100%" */
+            onClick={() => {
+              window.open(`${process.env.REACT_APP_SERVER_URL}/maps`, '_blank')
+            }}
+          >
+            Ir a mapa interactivo
+          </FilledButton>
         </div>
 
         <SwitchTheme />

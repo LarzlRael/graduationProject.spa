@@ -1,6 +1,5 @@
 import { useEffect, useContext } from 'react'
-import { FormControlLabel } from '@material-ui/core'
-import { Switch } from '@mui/material'
+
 import DatePicker from 'react-datepicker'
 
 import 'react-datepicker/dist/react-datepicker.css'
@@ -8,7 +7,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import { DateSelectedRangeInterface } from '../context/HeatSources/HeatSourcesReducer'
-import { LoadingElipsis } from './widgets/LoadingElipsis'
+import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
+import { Switch } from '../form/Switch'
 
 export const DatePickerRange = () => {
   const {
@@ -78,13 +78,9 @@ export const DatePickerRange = () => {
         )}
       </>
 
-      <FormControlLabel
-        control={
-          <Switch
-            checked={dateSelectedAndRange.findbyOneDate}
-            onChange={(e) => onChange(e.target.checked, 'findbyOneDate')}
-          />
-        }
+      <Switch
+        checked={dateSelectedAndRange.findbyOneDate}
+        onChange={(e) => onChange(e.target.checked, 'findbyOneDate')}
         label={`Buscando por ${isShowSwith ? 'Rango' : 'Un solo dia'}`}
       />
     </>

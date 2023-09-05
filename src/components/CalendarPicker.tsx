@@ -1,22 +1,16 @@
 import { useState, Fragment, useContext } from 'react'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
+
 import Stack from '@mui/material/Stack'
-import {
-  Box,
-  InputLabel,
-  FormControl,
-  MenuItem,
-  Button,
-  TextField,
-} from '@mui/material'
+import { Box, InputLabel, FormControl, MenuItem } from '@mui/material'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { Grid } from '@material-ui/core'
 import { useReport } from '../hooks/useReport'
 
-import { LocalizationProvider, DesktopDatePicker } from '@mui/lab'
 import 'moment/locale/es' // without this line it didn't work
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import moment from 'moment'
+import DatePicker from 'react-datepicker'
+import { FilledButton } from './widgets/buttons/FilledButton'
 moment.locale('es')
 
 export const ResponsiveDatePickers = () => {
@@ -48,8 +42,8 @@ export const ResponsiveDatePickers = () => {
         return generateShapeFile(startDate!, endDate!)
 
       case 'GeoJson':
-        generateGeoJsonReport(startDate!, endDate!)
-        break
+        return generateGeoJsonReport(startDate!, endDate!)
+
       default:
         break
     }
@@ -58,33 +52,27 @@ export const ResponsiveDatePickers = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <Stack spacing={3}>
-            <DesktopDatePicker
-              inputFormat="dd/MM/yyyy"
-              label="Desde"
-              value={startDate}
-              maxDate={datesAvailable[1]}
-              minDate={datesAvailable[0]}
-              onChange={(newValue: any) => {
-                setStartDate(newValue)
-              }}
-              renderInput={(params: any) => <TextField {...params} />}
-            />
+        <Stack spacing={3}>
+          <DatePicker
+            /* label="Desde" */
+            selected={startDate}
+            maxDate={datesAvailable[1]}
+            minDate={datesAvailable[0]}
+            onChange={(newValue: any) => {
+              setStartDate(newValue)
+            }}
+          />
 
-            <DesktopDatePicker
-              inputFormat="dd/MM/yyyy"
-              label="Hasta"
-              value={endDate}
-              minDate={datesAvailable[0]}
-              maxDate={datesAvailable[1]}
-              onChange={(newValue: any) => {
-                setEndDate(newValue)
-              }}
-              renderInput={(newValue: any) => <TextField />}
-            />
-          </Stack>
-        </LocalizationProvider>
+          <DatePicker
+            /* label="Hasta" */
+            selected={endDate}
+            minDate={datesAvailable[0]}
+            maxDate={datesAvailable[1]}
+            onChange={(newValue: any) => {
+              setEndDate(newValue)
+            }}
+          />
+        </Stack>
       </Grid>
       <Grid item xs={6}>
         <Box sx={{ minWidth: 120 }}>
@@ -106,17 +94,17 @@ export const ResponsiveDatePickers = () => {
             </Select>
           </FormControl>
           {typeFile !== '' && (
-            <Fragment>
+            <>
               Descargar Archivo {typeFile} <br />
               Desde: <b>{moment(startDate).format('LL')}</b>
               <br />
               hasta:
               <b> {moment(endDate).format('LL')}</b>
               <br />
-              <Button onClick={dowloadFileSelected} variant="contained">
+              <FilledButton onClick={dowloadFileSelected}>
                 Descargar archivo {typeFile}
-              </Button>
-            </Fragment>
+              </FilledButton>
+            </>
           )}
         </Box>
       </Grid>

@@ -1,16 +1,10 @@
 import { useState, useRef } from 'react'
 import { useEffect, useContext } from 'react'
-import { ChartData, ChartOptions } from 'chart.js'
+
 import { Line, Bar } from 'react-chartjs-2'
 import moment from 'moment'
-import {
-  Switch,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@mui/material'
-import { FormControlLabel } from '@material-ui/core'
+import Select from 'react-select'
+
 import { meses, monthName } from '../../data/data'
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
 import {
@@ -19,7 +13,7 @@ import {
   getOnlyMonth,
   isYear,
 } from '../../utils/utils'
-import { LoadingElipsis } from '../../components/widgets/LoadingElipsis'
+
 import useAxiosAuth from '../../hooks/useAxios'
 import { convertMonths } from '../../utils/utils'
 import {
@@ -29,6 +23,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
+import { LoadingElipsis } from '../../components/widgets/loadings/LoadingElipsis'
+import { Switch } from '../../form/Switch'
 moment.locale('es')
 
 export const GraphByMonths = () => {
@@ -116,53 +112,34 @@ export const GraphByMonths = () => {
     }
   }
   // list of mouths with year field
-
+  function generateOption() {
+    let options: { value: string; label: string }[] = []
+    response?.map(({ month, year }: any) =>
+      options.push({
+        value: month ? month + '-' + year : year,
+        label: month ? monthName[month] + '-' + year : year,
+      }),
+    )
+    console.log(options)
+    return options
+  }
   return (
     <>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={lineGraph}
-            onChange={(e) => setLineGraph(e.target.checked)}
-          />
-        }
+      <Switch
+        checked={lineGraph}
+        onChange={(e) => setLineGraph(e.target.checked)}
         label={`Grafico de ${!lineGraph ? 'Lineas' : 'Puntos'}`}
       />
-
       {loading ? (
         <LoadingElipsis />
       ) : (
-        <FormControl>
-          <InputLabel id="demo-simple-select-label">
-            Seleccionar Fecha
-          </InputLabel>
+        <>
+          <label>Seleccionar Fecha</label>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Age"
-            value={
-              mounthAndYearSelected.month
-                ? mounthAndYearSelected.month + '-' + mounthAndYearSelected.year
-                : mounthAndYearSelected.year
-            }
-            onChange={(e) => handleChange(e.target.value.toString())}
-          >
-            {/*            {
-    "month": 10,
-    "year": 2020
-} */}
-            {response?.map(
-              (mes: { month: number; year: number }, i: number) => (
-                <MenuItem
-                  key={mes.month}
-                  value={mes.month ? mes.month + '-' + mes.year : mes.year}
-                >
-                  {mes.month ? monthName[mes.month] + '-' + mes.year : mes.year}
-                </MenuItem>
-              ),
-            )}
-          </Select>
-        </FormControl>
+            options={generateOption()}
+            onChange={(e) => handleChange(e!.value)}
+          />
+        </>
       )}
       {loadingState ? (
         <LoadingElipsis />

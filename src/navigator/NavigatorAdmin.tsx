@@ -12,14 +12,14 @@ import { ReportsLists } from '../pages/ReportsLists'
 import { Ley1171 } from '../pages/Ley1171'
 import { Departaments } from '../pages/Departaments'
 import { PrivateRoute } from './AdminRoutes'
-import { CircularProgress } from '@material-ui/core'
 
 import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 import { CommonContext } from '../context/commonContext/CommonContext_'
 import { AuthAdminContext } from '../context/LoginContext/AuthAdminContext'
+import { LoadingSpin } from '../components/widgets/loadings/Loading'
 
 export const LoadingScreen = () => {
-  return <CircularProgress />
+  return <div>cargando</div>
 }
 
 export const Navigator = () => {

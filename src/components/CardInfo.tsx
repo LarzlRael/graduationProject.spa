@@ -29,13 +29,13 @@ export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
   const renderPlaceName = (): string => {
     if (!showOptions) {
       return ''
-    } else if (showOptions && showProvMun) {
-      return queryToFind.provincia
-    } else {
-      return queryToFind.municipio
     }
+    if (showOptions && showProvMun) {
+      return queryToFind.provincia
+    }
+    return queryToFind.municipio
   }
-  
+
   return (
     <Card>
       <CardMedia
@@ -53,7 +53,7 @@ export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
           {!dateSelectedAndRange.findbyOneDate ? (
             <>
               <b>{moment(dateSelectedAndRange.dateStart).format('LL')}</b>
-              <b>es de{' '}{currentGeoJson.features.length}</b>
+              <b>es de {currentGeoJson.features.length}</b>
             </>
           ) : (
             <>

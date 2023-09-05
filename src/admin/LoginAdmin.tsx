@@ -8,11 +8,11 @@ import { DatesResponse } from '../interfaces/datesResponse';
 import { v4 as uuidv4 } from 'uuid'; */
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
-import { LoadingElipsis } from '../components/widgets/LoadingElipsis'
+import { LoadingElipsis } from '../components/widgets/loadings/LoadingElipsis'
 import { AuthAdminContext } from '../context/LoginContext/AuthAdminContext'
 import { CommonContext } from '../context/commonContext/CommonContext_'
 import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
-
+import { FilledButton } from '../components/widgets/buttons/FilledButton'
 
 export const AdminLogin = () => {
   const { singIn, logged, loading } = useContext(AuthAdminContext)
@@ -86,9 +86,13 @@ export const AdminLogin = () => {
             />
 
             {!loading ? (
-              <button type="submit" className="button-login pointer">
+              <FilledButton
+                type="submit"
+                className="button-login pointer"
+                fontSize="1rem"
+              >
                 Iniciar Sesion
-              </button>
+              </FilledButton>
             ) : (
               <LoadingElipsis />
             )}

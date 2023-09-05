@@ -1,11 +1,11 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { departametsArray } from '../../data/data'
+
+import Select from 'react-select'
 
 interface ComboProps {
   setState: React.Dispatch<
     React.SetStateAction<{
       departamentSelected: string
-      provinciaSelected: string
       todosDepartamentos: boolean
     }>
   >
@@ -15,33 +15,25 @@ export const ComboBoxDepartamentos = ({
   nameDepartament,
   setState,
 }: ComboProps) => {
+  const optionsGenerated = departametsArray.map((departament) => ({
+    value: departament.name,
+    label: departament.name,
+  }))
+
   return (
-    <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">
-        Seleccionar Departamento
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        label="Age"
-        value={nameDepartament}
-        onChange={(e) =>
-          setState((previosState) => ({
-            ...previosState,
-            departamentSelected: e.target.value,
-            todosDepartamentos: e.target.value === 'Bolivia' ? true : false,
-          }))
-        }
-      >
-        <MenuItem key="Bolivia" value="Bolivia">
-          Bolivia
-        </MenuItem>
-        {departametsArray.map((departament) => (
-          <MenuItem key={departament.name} value={departament.name}>
-            {departament.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Select
+      options={optionsGenerated}
+      /* value={nameDepartament} */
+      value={
+        optionsGenerated.filter((option) => option.value === nameDepartament)[0]
+      }
+      onChange={(e) =>
+        setState((previosState) => ({
+          ...previosState,
+          departamentSelected: e!.value,
+          todosDepartamentos: e!.value === 'Bolivia',
+        }))
+      }
+    />
   )
 }

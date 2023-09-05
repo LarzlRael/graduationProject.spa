@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef } from 'react'
-import { Grid } from '@material-ui/core'
+
 import { departametsArray } from '../../data/data'
 import {
   getCountByDepPro,
@@ -7,12 +7,12 @@ import {
   getCountByDeMun,
 } from '../../provider/analysisServices'
 import { Graficos } from '../../components/Graficos'
-import { CountDepProMun, RespFoco } from '../../interfaces/countProvinceDepartamento.interface'
+import { RespFoco } from '../../interfaces/countProvinceDepartamento.interface'
 import { ComboBoxDepartamentos } from '../../components/widgets/ComboBoxDepartamentos'
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
 import { SwitchWidget } from '../../components/widgets/SwitchWidget'
 import { DatePickerRange } from '../../components/DatePickerRange'
-import { Button } from '@mui/material'
+import { FilledButton } from '../../components/widgets/buttons/FilledButton'
 
 export const GraphByDepartaments = () => {
   const { dateSelectedAndRange, showProvMun } = useContext(HeatSourcesContext)
@@ -21,7 +21,6 @@ export const GraphByDepartaments = () => {
 
   const [departamentoProvincia, setDepartamentoProvincia] = useState({
     departamentSelected: departametsArray[0].name,
-    provinciaSelected: '',
     todosDepartamentos: false,
   })
 
@@ -103,10 +102,9 @@ export const GraphByDepartaments = () => {
   useEffect(() => {
     if (departamentoProvincia.todosDepartamentos) {
       setShowSwitch(false)
-    } else {
-      setShowSwitch(true)
+      return
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setShowSwitch(true)
   }, [departamentoProvincia.departamentSelected])
 
   return (
@@ -123,9 +121,7 @@ export const GraphByDepartaments = () => {
         <div>
           <DatePickerRange />
 
-          <Button onClick={consultar} variant="outlined">
-            Consultar
-          </Button>
+          <FilledButton onClick={consultar}>Consultar</FilledButton>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useContext } from 'react'
-import { AuthAdminContext } from '../../context/LoginContext/AuthAdminContext'
-import { CommonContext } from '../../context/commonContext/CommonContext_'
+import { AuthAdminContext } from '../../../context/LoginContext/AuthAdminContext'
+import { CommonContext } from '../../../context/commonContext/CommonContext_'
 
 const LoadingElipsisStyles = styled.div<{
   darkTheme: boolean
