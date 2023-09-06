@@ -16,8 +16,8 @@ export const ComboBoxDepartamentos = ({
   setState,
 }: ComboProps) => {
   const optionsGenerated = departametsArray.map((departament) => ({
-    value: departament.name,
-    label: departament.name,
+    value: departament.label,
+    label: departament.label,
   }))
 
   return (

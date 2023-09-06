@@ -41,7 +41,7 @@ export const FilledButton = ({
   children,
   onClick,
   icon,
-  backGroundColor: background,
+  backGroundColor,
   textColor,
   type = 'button',
   margin = '0',
@@ -55,7 +55,7 @@ export const FilledButton = ({
     <ButtonStyle
       disabled={disabled}
       type={type}
-      backGroundColor={background}
+      backGroundColor={backGroundColor}
       onClick={onClick}
       textColor={textColor}
       margin={margin}

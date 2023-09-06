@@ -103,13 +103,13 @@ export const GraphByMonths = () => {
         year: parseInt(value),
         onlyYear: true,
       })
-    } else {
-      setMounthSelected({
-        month: getOnlyMonth(value),
-        year: getOnlyYear(value),
-        onlyYear: false,
-      })
+      return
     }
+    setMounthSelected({
+      month: getOnlyMonth(value),
+      year: getOnlyYear(value),
+      onlyYear: false,
+    })
   }
   // list of mouths with year field
   function generateOption() {
@@ -120,7 +120,7 @@ export const GraphByMonths = () => {
         label: month ? monthName[month] + '-' + year : year,
       }),
     )
-    console.log(options)
+
     return options
   }
   return (
@@ -144,7 +144,10 @@ export const GraphByMonths = () => {
       {loadingState ? (
         <LoadingElipsis />
       ) : (
-        <div ref={myRef}>
+        <div
+          style={{ height: '400px', width: '80%', margin: 'auto' }}
+          ref={myRef}
+        >
           {lineGraph ? (
             <Line data={data} options={options} />
           ) : (

@@ -3,7 +3,7 @@ import {
   DatesHeatSources,
   LatLngInt,
 } from '../../interfaces/countProvinceDepartamento.interface'
-import { MapStyleInt } from '../../data/data'
+import { MapStyleIntOption } from '../../data/data'
 import { GeoJsonFeature } from '../../interfaces/geoJsonResponse'
 
 export interface DateSelectedRangeInterface {
@@ -28,7 +28,7 @@ export interface HeatSourcestState {
   loadingState: boolean
   showProvMun: boolean
   showOptions: boolean
-  mapStyle: MapStyleInt
+  mapStyle: MapStyleIntOption
   tab: number
   graphType: string
   mounthAndYearSelected: SelectOptionDateInterface
@@ -46,7 +46,7 @@ type HeatSourceAction =
   | { type: 'loading'; payload: boolean }
   | { type: 'showProvMun'; payload: boolean }
   | { type: 'showOptions'; payload: boolean }
-  | { type: 'changeMapType'; payload: MapStyleInt }
+  | { type: 'changeMapType'; payload: MapStyleIntOption }
   | { type: 'changeTab'; payload: number }
   | { type: 'changeGraphType'; payload: string }
   | { type: 'changeMounthOrYear'; payload: SelectOptionDateInterface }

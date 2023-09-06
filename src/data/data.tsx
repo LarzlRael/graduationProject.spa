@@ -20,50 +20,53 @@ export const namesDepartamentos = [
   'Pando',
   'Santa Cruz',
 ]
-
-export const departametsArray = [
+export interface OptionAndValueInterface {
+  label: string
+  value: string
+}
+export const departametsArray: OptionAndValueInterface[] = [
   {
-    name: 'La Paz',
-    imageUrl:
+    label: 'La Paz',
+    value:
       'https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/06/6f/46/31.jpg',
   },
   {
-    name: 'Oruro',
-    imageUrl:
+    label: 'Oruro',
+    value:
       'http://www.chamlaty.com/wp-content/uploads/2019/03/Captura-de-pantalla-2019-03-15-a-las-10.30.43.png',
   },
   {
-    name: 'Potosi',
-    imageUrl:
+    label: 'Potosi',
+    value:
       'https://www.elcolombiano.com/binrepository/733x562/0c0/0d0/none/11101/WVSQ/potosiimagen_37443608_20210329100749.jpg',
   },
   {
-    name: 'Tarija',
-    imageUrl: 'https://i.ytimg.com/vi/b2_SfdyiKKM/maxresdefault.jpg',
+    label: 'Tarija',
+    value: 'https://i.ytimg.com/vi/b2_SfdyiKKM/maxresdefault.jpg',
   },
   {
-    name: 'Chuquisaca',
-    imageUrl:
+    label: 'Chuquisaca',
+    value:
       'https://mediaim.expedia.com/destination/1/170eb17de2d7bbf1ed92aed5e6b7ffca.jpg?impolicy=fcrop&w=360&h=224&q=mediumLow',
   },
   {
-    name: 'Cochabamba',
-    imageUrl:
+    label: 'Cochabamba',
+    value:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Cristo_de_La_Concordia.jpg/295px-Cristo_de_La_Concordia.jpg',
   },
   {
-    name: 'Beni',
-    imageUrl:
+    label: 'Beni',
+    value:
       'https://web.senado.gob.bo/sites/default/files/styles/img-standard__800x600_/public/26.11%20beni.jpg?itok=u3eluHWH',
   },
   {
-    name: 'Pando',
-    imageUrl:
+    label: 'Pando',
+    value:
       'https://web.senado.gob.bo/sites/default/files/styles/img-standard__800x600_/public/cobija2.jpg?itok=k2R_1uLY',
   },
   {
-    name: 'Santa Cruz',
-    imageUrl: 'https://i.ytimg.com/vi/QTDLMVXDvzs/maxresdefault.jpg',
+    label: 'Santa Cruz',
+    value: 'https://i.ytimg.com/vi/QTDLMVXDvzs/maxresdefault.jpg',
   },
 ]
 
@@ -138,43 +141,43 @@ export const mapType = [
   'navigation-day-v1',
   'navigation-night-v1',
 ]
-export interface MapStyleInt {
-  mapStyle: string
-  mapName: string
+export interface MapStyleIntOption {
+  value: string
+  label: string
 }
 
-export const mapTypeStyle: MapStyleInt[] = [
+export const mapsTypeStyle: MapStyleIntOption[] = [
   {
-    mapName: 'Mapa de Calles',
-    mapStyle: 'streets-v11',
+    label: 'Mapa de Calles',
+    value: 'streets-v11',
   },
   {
-    mapStyle: 'outdoors-v11',
-    mapName: 'Mapa al aire libre',
+    value: 'outdoors-v11',
+    label: 'Mapa al aire libre',
   },
   {
-    mapStyle: 'light-v10',
-    mapName: 'Mapa Claro',
+    value: 'light-v10',
+    label: 'Mapa Claro',
   },
   {
-    mapStyle: 'dark-v10',
-    mapName: 'Mapa Oscuro',
+    value: 'dark-v10',
+    label: 'Mapa Oscuro',
   },
   {
-    mapStyle: 'satellite-v9',
-    mapName: 'Mapa de satélite',
+    value: 'satellite-v9',
+    label: 'Mapa de satélite',
   },
   {
-    mapStyle: 'satellite-streets-v11',
-    mapName: 'Mapa de satélites y calles',
+    value: 'satellite-streets-v11',
+    label: 'Mapa de satélites y calles',
   },
   {
-    mapStyle: 'navigation-day-v1',
-    mapName: 'Mapa de navegación',
+    value: 'navigation-day-v1',
+    label: 'Mapa de navegación',
   },
   {
-    mapStyle: 'navigation-night-v1',
-    mapName: 'Mapa de noche',
+    value: 'navigation-night-v1',
+    label: 'Mapa de noche',
   },
 ]
 

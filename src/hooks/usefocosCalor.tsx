@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef } from 'react'
-import { departametsArray, mapTypeStyle } from '../data/data'
+import { OptionAndValueInterface, departametsArray, mapsTypeStyle } from '../data/data'
 import {
   getHeatSourcesByDepartament,
   getHotSourcesByDepMun,
@@ -52,9 +52,9 @@ export const useFocosCalor = () => {
     const previusQueryToFind = usePrevious(queryToFind); */
   useEffect(() => {
     if (darkTheme) {
-      setChangeMapType(mapTypeStyle[3])
+      setChangeMapType(mapsTypeStyle[3])
     } else {
-      setChangeMapType(mapTypeStyle[2])
+      setChangeMapType(mapsTypeStyle[2])
     }
   }, [darkTheme])
 
@@ -83,8 +83,8 @@ export const useFocosCalor = () => {
   const [loading, setLoading] = useState(false)
 
   const [selecteDepartamentCopy, setSelecteDepartamentCopy] = useState({
-    departamentSelected: departametsArray[0].name,
-    image: departametsArray[0].imageUrl,
+    departamentSelected: departametsArray[0].label,
+    image: departametsArray[0].value,
   })
 
   const [stateArrMunProv, setArrMunProv] = useState<{
@@ -95,11 +95,12 @@ export const useFocosCalor = () => {
     sArrayMu: [],
   })
 
-  const onChange = (e: any) => {
+  const onChange = (e: OptionAndValueInterface) => {
+    console.log(e)
     changeQueryToFind({
       ...queryToFind,
-      departamentSelected: e.target.value.name,
-      image: e.target.value.imageUrl,
+      departamentSelected: e.label,
+      image: e.value,
     })
   }
 
@@ -148,9 +149,6 @@ export const useFocosCalor = () => {
     }
   }
   useEffect(() => {
-    console.log(dateStart)
-    console.log(dateEnd)
-
     const consultarPorDepartamentos = async () => {
       const queryResult = await getHeatSourcesByDepartament({
         dateStart: dateStart!.toISOString().slice(0, 10),

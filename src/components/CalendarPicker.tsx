@@ -1,9 +1,4 @@
-import { useState, Fragment, useContext } from 'react'
-
-import Stack from '@mui/material/Stack'
-import { Box, InputLabel, FormControl, MenuItem } from '@mui/material'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { Grid } from '@material-ui/core'
+import { useState, useContext } from 'react'
 import { useReport } from '../hooks/useReport'
 
 import 'moment/locale/es' // without this line it didn't work
@@ -11,6 +6,7 @@ import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import { FilledButton } from './widgets/buttons/FilledButton'
+import Select from 'react-select'
 moment.locale('es')
 
 export const ResponsiveDatePickers = () => {
@@ -27,9 +23,9 @@ export const ResponsiveDatePickers = () => {
 
   const [typeFile, setTypeFile] = useState('')
 
-  const handleChange = (event: SelectChangeEvent) => {
+  /*  const handleChange = (event: SelectChangeEvent) => {
     setTypeFile(event.target.value as string)
-  }
+  } */
 
   const dowloadFileSelected = () => {
     switch (typeFile) {
@@ -48,11 +44,17 @@ export const ResponsiveDatePickers = () => {
         break
     }
   }
+  const options = [
+    { value: 'PDF', label: 'PDF' },
+    { value: 'GeoJson', label: 'GeoJson File' },
+    { value: 'ShapeFile', label: 'ShapeFile' },
+    { value: 'CSV', label: 'CSV' },
+  ]
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={6}>
-        <Stack spacing={3}>
+    <>
+      <>
+        <>
           <DatePicker
             /* label="Desde" */
             selected={startDate}
@@ -72,27 +74,19 @@ export const ResponsiveDatePickers = () => {
               setEndDate(newValue)
             }}
           />
-        </Stack>
-      </Grid>
-      <Grid item xs={6}>
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">
-              Seleccionar descarga
-            </InputLabel>
+        </>
+      </>
+      <>
+        <>
+          <>
+            <label>Seleccionar descarga</label>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={typeFile}
-              label="Age"
-              onChange={handleChange}
-            >
-              <MenuItem value="PDF">Reporte PDF</MenuItem>
-              <MenuItem value="GeoJson">GeoJson File</MenuItem>
-              <MenuItem value="ShapeFile">ShapeFile</MenuItem>
-              <MenuItem value="CSV">CSV</MenuItem>
-            </Select>
-          </FormControl>
+              options={options}
+              onChange={(e) => {
+                setTypeFile(e!.value)
+              }}
+            />
+          </>
           {typeFile !== '' && (
             <>
               Descargar Archivo {typeFile} <br />
@@ -106,8 +100,8 @@ export const ResponsiveDatePickers = () => {
               </FilledButton>
             </>
           )}
-        </Box>
-      </Grid>
-    </Grid>
+        </>
+      </>
+    </>
   )
 }

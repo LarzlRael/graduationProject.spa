@@ -1,7 +1,7 @@
 import { createContext, useReducer, useContext } from 'react'
 import { commonReducer, CommonState, ISnackbar } from './CommonReducer'
 import { HeatSourcesContext } from '../HeatSources/HeatSourceContext'
-import { mapTypeStyle } from '../../data/data'
+import { mapsTypeStyle } from '../../data/data'
 
 type CommonContextProps = {
   snackBar: ISnackbar

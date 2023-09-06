@@ -1,4 +1,3 @@
-import { FormControlLabel } from '@material-ui/core'
 import { useTheme } from '../../hooks/useTheme'
 import { Switch } from '../../form/Switch'
 export const SwitchTheme = () => {

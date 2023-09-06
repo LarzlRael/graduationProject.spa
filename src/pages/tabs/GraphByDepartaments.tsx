@@ -20,7 +20,7 @@ export const GraphByDepartaments = () => {
   const [showSwitch, setShowSwitch] = useState<boolean>(true)
 
   const [departamentoProvincia, setDepartamentoProvincia] = useState({
-    departamentSelected: departametsArray[0].name,
+    departamentSelected: departametsArray[0].label,
     todosDepartamentos: false,
   })
 

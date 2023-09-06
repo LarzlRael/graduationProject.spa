@@ -12,9 +12,9 @@ import {
 } from '../../provider/analysisServices'
 import {
   graphTypeArray,
-  mapTypeStyle,
+  mapsTypeStyle,
   meses,
-  MapStyleInt,
+  MapStyleIntOption,
   departametsArray,
 } from '../../data/data'
 
@@ -33,7 +33,7 @@ type HeatSourcesStateProps = {
   loadingState: boolean
   showProvMun: boolean
   showOptions: boolean
-  mapStyle: MapStyleInt
+  mapStyle: MapStyleIntOption
   tab: number
   graphType: string
   mounthAndYearSelected: SelectOptionDateInterface
@@ -46,7 +46,7 @@ type HeatSourcesStateProps = {
   queryToFind: QueryToFindInterface
   showProvinvicaMun: (newState: boolean) => void
   setShowOptions: (newState: boolean) => void
-  setChangeMapType: (mapStyle: MapStyleInt) => void
+  setChangeMapType: (mapStyle: MapStyleIntOption) => void
   setChangeTab: (value: number) => void
   changeTypeGraph: (value: string) => void
   setMounthSelected: (value: SelectOptionDateInterface) => void
@@ -70,7 +70,7 @@ const HeatSourcesInitialState: HeatSourcestState = {
   loadingState: false,
   showProvMun: false,
   showOptions: false,
-  mapStyle: mapTypeStyle[2],
+  mapStyle: mapsTypeStyle[2],
   tab: 1,
   graphType: graphTypeArray[0],
   mounthAndYearSelected: {
@@ -96,8 +96,8 @@ const HeatSourcesInitialState: HeatSourcestState = {
     findbyOneDate: false,
   },
   queryToFind: {
-    departamentSelected: departametsArray[0].name,
-    image: departametsArray[0].imageUrl,
+    departamentSelected: departametsArray[0].label,
+    image: departametsArray[0].value,
     municipio: '',
     provincia: '',
   },
@@ -163,7 +163,7 @@ export const HeatProvider = ({ children }: any) => {
     })
   }
 
-  const setChangeMapType = (mapStyle: MapStyleInt) => {
+  const setChangeMapType = (mapStyle: MapStyleIntOption) => {
     dispatch({
       type: 'changeMapType',
       payload: mapStyle,

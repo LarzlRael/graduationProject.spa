@@ -1,13 +1,5 @@
 import { useState, useContext } from 'react'
 
-import { Box, TextField } from '@mui/material'
-
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import { DateRange } from '@mui/lab/DateRangePicker'
-import StaticDateRangePicker from '@mui/lab/StaticDateRangePicker'
-
-import { es } from 'date-fns/locale'
 import { useReport } from '../../hooks/useReport'
 import { FaFileCsv, FaFilePdf } from 'react-icons/fa'
 import { VscJson } from 'react-icons/vsc'
@@ -19,31 +11,10 @@ import { GhostButton } from '../widgets/buttons/GhostButton'
 import { LoadingSpin } from '../widgets/loadings/Loading'
 moment.locale('es')
 
-/* const DateRangePickerDay = styled(MuiDateRangePickerDay)(
-    ({ theme, isHighlighting, isStartOfHighlighting, isEndOfHighlighting }) => ({
-        ...(isHighlighting && {
-            borderRadius: 0,
-            backgroundColor: theme.palette.primary.main,
-            color: theme.palette.common.white,
-            '&:hover, &:focus': {
-                backgroundColor: theme.palette.primary.dark,
-            },
-        }),
-        ...(isStartOfHighlighting && {
-            borderTopLeftRadius: '50%',
-            borderBottomLeftRadius: '50%',
-        }),
-        ...(isEndOfHighlighting && {
-            borderTopRightRadius: '50%',
-            borderBottomRightRadius: '50%',
-        }),
-    }),
-) as React.ComponentType<DateRangePickerDayProps<Date>>; */
-
 export const CustomDateRangePickerDay = () => {
   const { datesAvailable } = useContext(HeatSourcesContext)
 
-  const [dates, setValue] = useState<DateRange<Date>>([
+  const [dates, setValue] = useState<Date[]>([
     datesAvailable[1],
     datesAvailable[1],
   ])
@@ -55,13 +26,6 @@ export const CustomDateRangePickerDay = () => {
     loading,
   } = useReport()
 
-  /* const renderWeekPickerDay = (
-        date: Date,
-        dateRangePickerDayProps: DateRangePickerDayProps<Date>,
-    ) => {
-        return <DateRangePickerDay {...dateRangePickerDayProps} />;
-    };
- */
   const onChange = (value: any) => {
     console.log(value[0].toISOString().slice(0, 10))
     setValue(value)
@@ -70,25 +34,7 @@ export const CustomDateRangePickerDay = () => {
   const size = '1.2rem'
   return (
     <div className="calendar-buttons">
-      <LocalizationProvider dateAdapter={AdapterDateFns} locale={es}>
-        <StaticDateRangePicker
-          displayStaticWrapperAs="desktop"
-          label="date range"
-          value={dates}
-          minDate={datesAvailable[0]}
-          maxDate={datesAvailable[1]}
-          onChange={(newValue: any) => onChange(newValue)}
-          /* renderDay={renderWeekPickerDay} */
-          renderInput={(startProps: any, endProps: any) => (
-            <>
-              <TextField {...startProps} />
-              <Box sx={{ mx: 2 }}> to </Box>
-              <TextField {...endProps} />
-            </>
-          )}
-        />
-      </LocalizationProvider>
-
+      que fue
       <div className="buttons-groups">
         <GhostButton
           disabled={loading}
