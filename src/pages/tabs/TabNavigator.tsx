@@ -1,9 +1,6 @@
 import { useContext } from 'react'
-import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import 'react-tabs/style/react-tabs.css'
 
 import { MapBoxLayer } from '../../components/mapbox/MapBoxLayer'
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
@@ -19,7 +16,7 @@ export const TabNavigator = () => {
 
   return (
     <div className="tabContext">
-      <TabContext value={tab.toString()}>
+      {/* <TabContext value={tab.toString()}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} variant="scrollable">
             <Tab color="white" label="Departamentos" value="1" />
@@ -36,7 +33,24 @@ export const TabNavigator = () => {
         <TabPanel value="3">
           <GraphByDepartaments />
         </TabPanel>
-      </TabContext>
+      </TabContext> */}
+      <Tabs>
+        <TabList>
+          <Tab>Departamentos</Tab>
+          <Tab>Gráficos por periodo de tiempo</Tab>
+          <Tab>Gráficos por departamentos</Tab>
+        </TabList>
+
+        <TabPanel>
+          <MapBoxLayer />
+        </TabPanel>
+        <TabPanel>
+          <GraphByMonths />
+        </TabPanel>
+        <TabPanel>
+          <GraphByDepartaments />
+        </TabPanel>
+      </Tabs>
     </div>
   )
 }

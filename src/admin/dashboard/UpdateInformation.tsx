@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button } from '@material-ui/core'
+
 import { ChangeEvent } from 'react'
 import { IoCloseCircleSharp } from 'react-icons/io5'
 import { MdFileUpload } from 'react-icons/md'
@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import ToolTip from '../../components/ToolTip'
+import { FilledButton } from '../../components/widgets/buttons/FilledButton'
 
 export const UpdateInformation = () => {
   const [selectedFile, setSelectedFile] = useState<File>()
@@ -57,9 +58,9 @@ export const UpdateInformation = () => {
         onChange={changeHandler}
       />
       <label htmlFor="raised-button-file">
-        <Button variant="outlined" component="span">
+        <FilledButton>
           Seleccionar archivo CVS
-        </Button>
+        </FilledButton>
       </label>
       {/*  {
                 selectedFiles!.map(file => (
@@ -70,14 +71,12 @@ export const UpdateInformation = () => {
       <br />
       {isSelected && (
         <>
-          <Button
+          <FilledButton
             onClick={uploadFile}
-            variant="outlined"
-            component="span"
-            startIcon={<MdFileUpload size="1.5rem" onClick={clearFile} />}
+            icon={<MdFileUpload size="1.5rem" onClick={clearFile} />}
           >
             Actualizar Base de datos
-          </Button>
+          </FilledButton>
           <IoCloseCircleSharp size="1.5rem" onClick={clearFile} />
         </>
       )}
