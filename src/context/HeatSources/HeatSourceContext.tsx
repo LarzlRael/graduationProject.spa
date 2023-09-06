@@ -134,7 +134,7 @@ export const HeatProvider = ({ children }: any) => {
     try {
       dispatch({ type: 'loading', payload: true })
       const dates = await getAvailableDatesServer()
-      console.log(dates)
+
       dispatch({
         type: 'dates',
         payload: {

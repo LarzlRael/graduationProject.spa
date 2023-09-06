@@ -72,7 +72,6 @@ export const heatSourcesReducer = (
 ): HeatSourcestState => {
   switch (action.type) {
     case 'dates':
-      console.log(action.payload)
       return {
         ...state,
         datesAvailable: action.payload.dates,
@@ -143,7 +142,6 @@ export const heatSourcesReducer = (
         modalIsOpen: action.payload,
       }
     case 'dateSelectedAndRange':
-      console.log(action.payload)
       return {
         ...state,
         dateSelectedAndRange: action.payload,

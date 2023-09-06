@@ -8,7 +8,7 @@ export const ButtonStyle = styled.button<ButtonProps>`
     backGroundColor ? backGroundColor : '#444752'};
   color: ${({ textColor }) => (textColor ? textColor : 'white')};
 font-size: ${({ fontSize }) => fontSize};
-  border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '5px')};
+  border-radius: ${({ borderRadius }) => (borderRadius ?? '5px')};
   border: none;
   padding: ${({ padding }) => padding ?? '0.7rem'};
   display: flex;

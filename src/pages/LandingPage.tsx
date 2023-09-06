@@ -26,9 +26,9 @@ export const LandingPage = () => {
           </a> */}
           <FilledButton
             margin="20px 0 0 0"
-            backGroundColor="var(--primary-color)"
+            /* backGroundColor="var(--primary-color)"
+            borderRadius="40px" */
             padding="1rem 2rem"
-            borderRadius="40px"
             fontSize="1.2rem"
             /* width="100%" */
             onClick={() => {

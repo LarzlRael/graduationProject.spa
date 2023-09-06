@@ -72,7 +72,7 @@ export const CustomDateRangePickerDay = () => {
         {loading && <LoadingSpin />}
         <h2>Consultas entre fechas</h2>
         {dates.map((home, i) => (
-          <p>{moment(home).format('LL')}</p>
+          <p key={i}>{moment(home).format('LL')}</p>
         ))}
       </div>
     </div>

@@ -20,11 +20,6 @@ export const Navigator = () => {
   const { darkTheme } = useContext(CommonContext)
   const { status } = useContext(AuthAdminContext)
 
-  if (status === 'checking') {
-    return <LoadingScreen />
-  }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (darkTheme) {
       document.body.className = 'blackTheme'
@@ -32,6 +27,12 @@ export const Navigator = () => {
     }
     document.body.className = ''
   }, [darkTheme])
+  
+  if (status === 'checking') {
+    return <LoadingScreen />
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
 
   return (
     <div className="theme">
