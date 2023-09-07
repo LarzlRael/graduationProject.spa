@@ -38,7 +38,7 @@ export const CustomDateRangePickerDay = () => {
       <div className="buttons-groups">
         <GhostButton
           disabled={loading}
-          backGroundColor="var(--primary-color)"
+          backgroundcolor="var(--primary-color)"
           onClick={() => generatePdfReport(dates[0]!)}
           icon={<FaFilePdf color="#f40f02" size={size} />}
         >
@@ -46,7 +46,7 @@ export const CustomDateRangePickerDay = () => {
         </GhostButton>
         <GhostButton
           disabled={loading}
-          backGroundColor="var(--primary-color)"
+          backgroundcolor="var(--primary-color)"
           onClick={() => generateCVSreport(dates[0]!, dates[1]!)}
           icon={<FaFileCsv size={size} />}
         >
@@ -54,7 +54,7 @@ export const CustomDateRangePickerDay = () => {
         </GhostButton>
         <GhostButton
           disabled={loading}
-          backGroundColor="var(--primary-color)"
+          backgroundcolor="var(--primary-color)"
           onClick={() => generateGeoJsonReport(dates[0]!, dates[1]!)}
           icon={<VscJson color="#201b1b" size={size} />}
         >
@@ -62,7 +62,7 @@ export const CustomDateRangePickerDay = () => {
         </GhostButton>
         <GhostButton
           disabled={loading}
-          backGroundColor="var(--primary-color)"
+          backgroundcolor="var(--primary-color)"
           onClick={() => generateShapeFile(dates[0]!, dates[1]!)}
           icon={<VscJson color="#201b1b" size={size} />}
         >

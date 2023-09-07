@@ -97,19 +97,19 @@ export const GraphByMonths = () => {
   }, [mounthAndYearSelected])
 
   const handleChange = (value: string) => {
-    if (isYear(value)) {
+    if (isYear(value.toString())) {
       setMounthSelected({
         month: 0,
         year: parseInt(value),
         onlyYear: true,
       })
-      return
+    } else {
+      setMounthSelected({
+        month: getOnlyMonth(value),
+        year: getOnlyYear(value),
+        onlyYear: false,
+      })
     }
-    setMounthSelected({
-      month: getOnlyMonth(value),
-      year: getOnlyYear(value),
-      onlyYear: false,
-    })
   }
   // list of mouths with year field
   function generateOption() {

@@ -131,6 +131,7 @@ export const HeatProvider = ({ children }: any) => {
   }
 
   const getDatesAvailable = async () => {
+    if (state.datesAvailable.length > 0) return
     try {
       dispatch({ type: 'loading', payload: true })
       const dates = await getAvailableDatesServer()
@@ -203,12 +204,12 @@ export const HeatProvider = ({ children }: any) => {
         year: year,
       })
       getInformation?.map((_, i) => arrayTitles.push(meses[i + 1]))
-      return
+    } else {
+      getInformation = await getCountHeatSourcesByMonth({
+        month: month,
+        year: year,
+      })
     }
-    getInformation = await getCountHeatSourcesByMonth({
-      month: month,
-      year: year,
-    })
     getInformation?.map((resp) =>
       arrayTitles.push(moment(resp.acq_date).add(8, 'hours').format('L')),
     )

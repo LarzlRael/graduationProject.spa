@@ -1,8 +1,10 @@
 import { Header } from '../components/Header'
 import { SwitchTheme } from '../components/public/SwitchTheme'
 import { FilledButton } from '../components/widgets/buttons/FilledButton'
+import { useNavigate } from 'react-router';
 
 export const LandingPage = () => {
+  const navigate = useNavigate()
   return (
     <div className="landingContainer">
       <Header />
@@ -32,7 +34,7 @@ export const LandingPage = () => {
             fontSize="1.2rem"
             /* width="100%" */
             onClick={() => {
-              window.open(`${process.env.REACT_APP_SERVER_URL}/maps`, '_blank')
+              navigate('/mapa');
             }}
           >
             Ir a mapa interactivo

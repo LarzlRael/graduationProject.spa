@@ -66,12 +66,14 @@ export const DatePickerRange = () => {
         <DatePicker
           selected={dateStart}
           maxDate={datesAvailable[1]}
+          dateFormat="dd/MM/yyyy"
           onChange={(e: any) => onChange(e!, 'dateStart')}
         />
         {isShowSwith && (
           <DatePicker
             selected={dateEnd}
             minDate={dateStart ? dateStart : null}
+            dateFormat="dd/MM/yyyy"
             maxDate={dateEnd ? dateEnd : datesAvailable[1]}
             onChange={(e: any) => onChange(e!, 'dateEnd')}
           />

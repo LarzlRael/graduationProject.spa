@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef } from 'react'
 
-import { departametsArray } from '../../data/data'
+import { departametsArray, namesDepartamentos } from '../../data/data'
 import {
   getCountByDepPro,
   getCountByDepartamaments,
@@ -8,12 +8,12 @@ import {
 } from '../../provider/analysisServices'
 import { Graficos } from '../../components/Graficos'
 import { RespFoco } from '../../interfaces/countProvinceDepartamento.interface'
-import { ComboBoxDepartamentos } from '../../components/widgets/ComboBoxDepartamentos'
+
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
 import { SwitchWidget } from '../../components/widgets/SwitchWidget'
 import { DatePickerRange } from '../../components/DatePickerRange'
 import { FilledButton } from '../../components/widgets/buttons/FilledButton'
-
+import Select from 'react-select'
 export const GraphByDepartaments = () => {
   const { dateSelectedAndRange, showProvMun } = useContext(HeatSourcesContext)
   const { dateStart, dateEnd, findbyOneDate } = dateSelectedAndRange
@@ -43,7 +43,6 @@ export const GraphByDepartaments = () => {
       }),
     )
     setLoading(false)
-    console.log(countDepProvState)
   }
 
   const getDepartamentosNamesService = async () => {
@@ -92,8 +91,14 @@ export const GraphByDepartaments = () => {
         setShowSwitch(true)
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading])
+  }, [
+    departamentoProvincia.todosDepartamentos,
+    getDepartamentosNamesService,
+    getMunicipiosServices,
+    getProvinciasNamesService,
+    loading,
+    showProvMun,
+  ])
 
   const consultar = () => {
     setLoading(true)
@@ -106,14 +111,29 @@ export const GraphByDepartaments = () => {
     }
     setShowSwitch(true)
   }, [departamentoProvincia.departamentSelected])
-
+  const optionsGenerated = namesDepartamentos.map((departament) => ({
+    value: departament,
+    label: departament,
+  }))
   return (
     <div className="graphDepartaments">
       <div className="combo">
         <div>
-          <ComboBoxDepartamentos
-            nameDepartament={departamentoProvincia.departamentSelected}
-            setState={setDepartamentoProvincia}
+          <Select
+            options={optionsGenerated}
+            /* value={nameDepartament} */
+            value={
+              optionsGenerated.filter(
+                (option) => option.value === namesDepartamentos[0],
+              )[0]
+            }
+            onChange={(e) =>
+              setDepartamentoProvincia((previosState) => ({
+                ...previosState,
+                departamentSelected: e!.value,
+                todosDepartamentos: e!.value === 'Bolivia',
+              }))
+            }
           />
 
           {showSwitch && <SwitchWidget />}

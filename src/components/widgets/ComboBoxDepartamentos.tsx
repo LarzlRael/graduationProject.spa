@@ -1,23 +1,18 @@
-import { departametsArray } from '../../data/data'
+import { departametsArray, namesDepartamentos } from '../../data/data'
 
 import Select from 'react-select'
 
 interface ComboProps {
-  setState: React.Dispatch<
-    React.SetStateAction<{
-      departamentSelected: string
-      todosDepartamentos: boolean
-    }>
-  >
+  onChange: (e: any) => void
   nameDepartament: string
 }
 export const ComboBoxDepartamentos = ({
   nameDepartament,
-  setState,
+  onChange,
 }: ComboProps) => {
-  const optionsGenerated = departametsArray.map((departament) => ({
-    value: departament.label,
-    label: departament.label,
+  const optionsGenerated = namesDepartamentos.map((departament) => ({
+    value: departament,
+    label: departament,
   }))
 
   return (
@@ -27,13 +22,7 @@ export const ComboBoxDepartamentos = ({
       value={
         optionsGenerated.filter((option) => option.value === nameDepartament)[0]
       }
-      onChange={(e) =>
-        setState((previosState) => ({
-          ...previosState,
-          departamentSelected: e!.value,
-          todosDepartamentos: e!.value === 'Bolivia',
-        }))
-      }
+      onChange={onChange}
     />
   )
 }

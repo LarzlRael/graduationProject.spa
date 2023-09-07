@@ -1,6 +1,11 @@
 import { useState, useEffect, useContext, useRef } from 'react'
-import { OptionAndValueInterface, departametsArray, mapsTypeStyle } from '../data/data'
 import {
+  OptionAndValueInterface,
+  departametsArray,
+  mapsTypeStyle,
+} from '../data/data'
+import {
+  getHeatAllSources,
   getHeatSourcesByDepartament,
   getHotSourcesByDepMun,
   getHotSourcesByDepProv,
@@ -96,7 +101,6 @@ export const useFocosCalor = () => {
   })
 
   const onChange = (e: OptionAndValueInterface) => {
-    console.log(e)
     changeQueryToFind({
       ...queryToFind,
       departamentSelected: e.label,
@@ -149,6 +153,24 @@ export const useFocosCalor = () => {
     }
   }
   useEffect(() => {
+    const getAllContry = async () => {
+      const queryResult = await getHeatAllSources({
+        dateStart: dateStart!.toISOString().slice(0, 10),
+        dateEnd: dateEnd!.toISOString().slice(0, 10),
+        departamento: queryToFind.departamentSelected,
+      })
+
+      changeCurrentGeoJson(queryResult)
+      ShowSnakBarError(queryResult.features.length)
+
+      setLoading(false)
+      setSelecteDepartamentCopy({
+        ...selecteDepartamentCopy,
+        departamentSelected: queryToFind.departamentSelected,
+        image: queryToFind.image,
+      })
+    }
+
     const consultarPorDepartamentos = async () => {
       const queryResult = await getHeatSourcesByDepartament({
         dateStart: dateStart!.toISOString().slice(0, 10),
@@ -194,8 +216,14 @@ export const useFocosCalor = () => {
       setLoading(false)
       return
     }
+    if (queryToFind.departamentSelected === 'Bolivia') {
+      getAllContry()
+      closeModal()
+      return
+    }
     if (!showOptions) {
       consultarPorDepartamentos()
+      closeModal()
       return
     }
     if (showProvMun) {
@@ -211,6 +239,7 @@ export const useFocosCalor = () => {
       departamentSelected: queryToFind.departamentSelected,
       image: queryToFind.image,
     })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])
 

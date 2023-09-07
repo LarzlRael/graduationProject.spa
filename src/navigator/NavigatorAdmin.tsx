@@ -11,6 +11,7 @@ import { PrivateRoute } from './AdminRoutes'
 import { CommonContext } from '../context/commonContext/CommonContext_'
 import { AuthAdminContext } from '../context/LoginContext/AuthAdminContext'
 import { LoadingSpin } from '../components/widgets/loadings/Loading'
+import { InteractiveMap } from '../pages/InteractiveMap'
 
 export const LoadingScreen = () => {
   return <div>cargando</div>
@@ -27,7 +28,6 @@ export const Navigator = () => {
     }
     document.body.className = ''
   }, [darkTheme])
-  
   if (status === 'checking') {
     return <LoadingScreen />
   }
@@ -41,6 +41,7 @@ export const Navigator = () => {
           <Route path="/" element={<LandingPage />} />
 
           <Route path="/inicio" element={<LandingPage />} />
+          <Route path="/mapa" element={<InteractiveMap />} />
           <Route path="/login" element={<AdminLogin />} />
           <Route path="/reportes" element={<ReportsLists />} />
           <Route path="/ley1171" element={<Ley1171 />} />

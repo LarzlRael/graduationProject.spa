@@ -26,6 +26,11 @@ export interface OptionAndValueInterface {
 }
 export const departametsArray: OptionAndValueInterface[] = [
   {
+    label: 'Bolivia',
+    value:
+      'https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/06/6f/46/31.jpg',
+  },
+  {
     label: 'La Paz',
     value:
       'https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/06/6f/46/31.jpg',

@@ -7,9 +7,7 @@ export const Ley1171 = () => {
     <Layout>
       <div className="ley1171">
         <h1 className="center title">
-          <h1>
-            Bolivia: Ley de uso y manejo racional de quemas, 2 de mayo de 2019
-          </h1>
+          Bolivia: Ley de uso y manejo racional de quemas, 2 de mayo de 2019
         </h1>
 
         <div className="center subtitle">

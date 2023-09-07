@@ -5,11 +5,11 @@ import { ReactElement } from 'react'
 /* import { sizeMedia } from '../../styles/mediaQuerys' */
 export const ButtonStyle = styled.button<ButtonProps>`
   background: 'transparent';
-  color: ${({ textColor, backGroundColor }) =>
-    textColor ? textColor : backGroundColor};
+  color: ${({ textColor, backgroundcolor }) =>
+    textColor ? textColor : backgroundcolor};
 font-size: ${({ fontSize }) => fontSize};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '5px')};
-  border: 1px solid ${({ backGroundColor }) => backGroundColor};
+  border: 1px solid ${({ backgroundcolor }) => backgroundcolor};
   padding: ${({ padding }) => padding ?? '0.7rem'};
   display: flex;
   align-content: center;
@@ -19,7 +19,7 @@ font-size: ${({ fontSize }) => fontSize};
 
   cursor: pointer;
   /* &:hover {
-    background: darken(0.9, ${({ backGroundColor }) => backGroundColor});
+    background: darken(0.9, ${({ backgroundcolor }) => backgroundcolor});
   } */
   
 `
@@ -27,7 +27,7 @@ interface ButtonProps {
   children: React.ReactNode
   icon?: ReactElement<any, any>
   onClick?: () => void
-  backGroundColor?: string
+  backgroundcolor?: string
   textColor?: string
   type?: 'button' | 'submit'
   margin?: string
@@ -41,7 +41,7 @@ export const GhostButton = ({
   children,
   onClick,
   icon,
-  backGroundColor,
+  backgroundcolor,
   textColor,
   type = 'button',
   margin = '0',
@@ -55,7 +55,7 @@ export const GhostButton = ({
     <ButtonStyle
       disabled={disabled}
       type={type}
-      backGroundColor={backGroundColor}
+      backgroundcolor={backgroundcolor}
       onClick={onClick}
       textColor={textColor}
       margin={margin}
