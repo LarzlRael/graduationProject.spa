@@ -1,4 +1,5 @@
 import {
+  CoordLatLngInt,
   CountByDates,
   DatesHeatSources,
   LatLngInt,
@@ -34,7 +35,7 @@ export interface HeatSourcestState {
   mounthAndYearSelected: SelectOptionDateInterface
   countByDates: DatesHeatSources[]
   titleArray: string[]
-  currentLatLongMidLocation: LatLngInt
+  currentLatLongMidLocation: CoordLatLngInt
   currentGeoJson: GeoJsonFeature
   modalIsOpen: boolean
   dateSelectedAndRange: DateSelectedRangeInterface
@@ -52,7 +53,7 @@ type HeatSourceAction =
   | { type: 'changeMounthOrYear'; payload: SelectOptionDateInterface }
   | { type: 'changeCountByDates'; payload: DatesHeatSources[] }
   | { type: 'setTitlesArray'; payload: string[] }
-  | { type: 'setLatLong'; payload: LatLngInt }
+  | { type: 'setLatLong'; payload: CoordLatLngInt }
   | { type: 'setCurrentGeoJson'; payload: GeoJsonFeature }
   | { type: 'setModalIsOpen'; payload: boolean }
   | { type: 'dateSelectedAndRange'; payload: DateSelectedRangeInterface }

@@ -5,6 +5,7 @@ import {
   mapsTypeStyle,
 } from '../data/data'
 import {
+  getDepartamentPoligone,
   getHeatAllSources,
   getHeatSourcesByDepartament,
   getHotSourcesByDepMun,
@@ -68,9 +69,10 @@ export const useFocosCalor = () => {
   const [viewport, setViewport] = useState({
     /* width: 'fit',
     height: '100vh', */
-    longitude: currentLatLongMidLocation.longitude,
-    latitude: currentLatLongMidLocation.latitude,
+    longitude: currentLatLongMidLocation.coordinates.longitude,
+    latitude: currentLatLongMidLocation.coordinates.latitude,
     zoom: 5.2,
+    poligone: currentLatLongMidLocation.poligono,
     transitionDuration: 5000,
     /* transitionInterpolator: new FlyToInterpolator(), */
   })
@@ -78,8 +80,9 @@ export const useFocosCalor = () => {
   const goTo = () => {
     setViewport({
       ...viewport,
-      longitude: currentLatLongMidLocation.longitude,
-      latitude: currentLatLongMidLocation.latitude,
+      longitude: currentLatLongMidLocation.coordinates.longitude,
+      latitude: currentLatLongMidLocation.coordinates.latitude,
+      poligone: currentLatLongMidLocation.poligono,
       zoom: 6,
       transitionDuration: 1000,
       /* transitionInterpolator: new FlyToInterpolator(), */
@@ -177,6 +180,9 @@ export const useFocosCalor = () => {
         dateEnd: dateEnd!.toISOString().slice(0, 10),
         departamento: queryToFind.departamentSelected,
       })
+      const poligonesDepartament = await getDepartamentPoligone(
+        queryToFind.departamentSelected,
+      )
 
       changeCurrentGeoJson(queryResult)
       ShowSnakBarError(queryResult.features.length)
@@ -186,6 +192,10 @@ export const useFocosCalor = () => {
         ...selecteDepartamentCopy,
         departamentSelected: queryToFind.departamentSelected,
         image: queryToFind.image,
+      })
+      changeCurrentLatLng({
+        ...currentLatLongMidLocation,
+        poligono: poligonesDepartament,
       })
     }
 
@@ -223,7 +233,7 @@ export const useFocosCalor = () => {
     }
     if (!showOptions) {
       consultarPorDepartamentos()
-      closeModal()
+
       return
     }
     if (showProvMun) {
@@ -285,19 +295,20 @@ export const useFocosCalor = () => {
       }
       if (!loading && currentGeoJson.features.length > 0) {
         changeCurrentLatLng({
-          latitude: getMidPointService.longitude,
-          longitude: getMidPointService.latitude,
+          coordinates: {
+            latitude: getMidPointService.coordinates.latitude,
+            longitude: getMidPointService.coordinates.longitude,
+          },
+          poligono: getMidPointService.poligono,
         })
         closeModal()
       }
     }
     getMiddlePoint()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])
 
   useEffect(() => {
     goTo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLatLongMidLocation])
 
   useEffect(() => {

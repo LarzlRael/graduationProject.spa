@@ -5,6 +5,9 @@
   background: #5b555e88;
   margin-left: 20px;
   color: var(--primaryLanding);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 .ButtonIcon:hover {
   opacity: 0.8;

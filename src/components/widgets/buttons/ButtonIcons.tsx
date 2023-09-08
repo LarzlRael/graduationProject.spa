@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../styles/ButtonIcons.css'
 interface Props {
   to?: string
@@ -10,11 +10,15 @@ export const ButtonIcon = ({
   icon = 'chevron-left',
   style,
 }: Props) => {
+  const navigator = useNavigate()
   return (
     <div style={style}>
-      <Link to={to} className="ButtonIcon">
+      <button
+        onClick={() => (to === '/' ? navigator('/') : navigator(-1))}
+        className="ButtonIcon"
+      >
         <i className={`fas fa-${icon}`}></i>
-      </Link>
+      </button>
     </div>
   )
 }

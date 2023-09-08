@@ -122,11 +122,7 @@ export const GraphByDepartaments = () => {
           <Select
             options={optionsGenerated}
             /* value={nameDepartament} */
-            value={
-              optionsGenerated.filter(
-                (option) => option.value === namesDepartamentos[0],
-              )[0]
-            }
+
             onChange={(e) =>
               setDepartamentoProvincia((previosState) => ({
                 ...previosState,

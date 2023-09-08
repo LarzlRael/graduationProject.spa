@@ -15,6 +15,7 @@ import { GeoJsonObject } from 'geojson'
 import { MapBoxModal } from '../components/mapbox/MapBoxModal'
 import { mapsTypeStyle } from '../data/data'
 import { generateUniqueKey } from '../utils/key_utils'
+import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
 /* import './react-leaflet.css'; */
 
 export const InteractiveMap = () => {
@@ -50,12 +51,24 @@ export const InteractiveMap = () => {
       ...rest,
     }
   }
+  function polyToGeoJson(): GeoJsonObject {
+    const { type, ...rest } = viewport.poligone
+    return {
+      type: 'MultiPolygon',
+      ...rest,
+    }
+  }
   const [key, setKey] = useState(generateUniqueKey())
   useEffect(() => {
     setKey(generateUniqueKey())
-  }, [currentGeoJson])
+  }, [currentGeoJson, viewport])
   return (
     <div>
+      <ButtonIcon
+        style={{
+          marginTop: '1rem',
+        }}
+      />
       <MapBoxModal
         imageUrl={selecteDepartamentCopy.image}
         isDarkTheme={darkTheme}
@@ -83,6 +96,7 @@ export const InteractiveMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <GeoJSON data={convertToGeoJson()} />
+        <GeoJSON data={polyToGeoJson()} />
       </MapContainer>
     </div>
   )

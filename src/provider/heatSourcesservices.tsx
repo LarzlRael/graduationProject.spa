@@ -3,7 +3,10 @@ import { DatesResponse } from '../interfaces/datesResponse'
 import { HeatSourcesByDeparament } from '../interfaces/hottestByDepartament'
 import { HeatSourcesByPlace } from '../interfaces/provMun.interface'
 import { GeoJSONResponse } from '../interfaces/HottestSourceResponse'
-import { LatLngInt } from '../interfaces/countProvinceDepartamento.interface'
+import {
+  CoordLatLngInt,
+  LatLngInt,
+} from '../interfaces/countProvinceDepartamento.interface'
 
 export const getHigherOrLowerByDate = async (): Promise<DatesResponse> => {
   const { data } = await serverAPI.get<DatesResponse>('/analysis/dates')
@@ -21,6 +24,7 @@ export const getHeatSourcesByDepartament = async (
 
   return resp.data
 }
+
 export const getHeatAllSources = async (
   consulHeatSources: HeatSourcesByPlace,
 ): Promise<GeoJSONResponse> => {
@@ -73,9 +77,18 @@ export const getHotSourcesByDepProv = async (
 export const getMidPoint = async (
   location: string,
   name: string,
-): Promise<LatLngInt> => {
-  const resp = await serverAPI.get<LatLngInt>(
+): Promise<CoordLatLngInt> => {
+  const resp = await serverAPI.get<CoordLatLngInt>(
     `/maps/getMidPoint/${location}/${name}`,
+  )
+  return resp.data
+}
+
+export const getDepartamentPoligone = async (
+  departament: string,
+): Promise<CoordLatLngInt> => {
+  const resp = await serverAPI.get<any>(
+    `/maps/getDepartmentPoligonoes/${departament}`,
   )
   return resp.data
 }

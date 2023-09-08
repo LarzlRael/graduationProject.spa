@@ -26,6 +26,7 @@ import {
 } from '../../interfaces/countProvinceDepartamento.interface'
 import { GeoJsonFeature } from '../../interfaces/geoJsonResponse'
 import { SelectOptionDateInterface } from './HeatSourcesReducer'
+import { CoordLatLngInt } from '../../interfaces/countProvinceDepartamento.interface'
 moment.locale('es')
 
 type HeatSourcesStateProps = {
@@ -39,7 +40,7 @@ type HeatSourcesStateProps = {
   mounthAndYearSelected: SelectOptionDateInterface
   titleArray: string[]
   countByDates: DatesHeatSources[]
-  currentLatLongMidLocation: LatLngInt
+  currentLatLongMidLocation: CoordLatLngInt
   currentGeoJson: GeoJsonFeature
   modalIsOpen: boolean
   dateSelectedAndRange: DateSelectedRangeInterface
@@ -51,7 +52,7 @@ type HeatSourcesStateProps = {
   changeTypeGraph: (value: string) => void
   setMounthSelected: (value: SelectOptionDateInterface) => void
   getHeatSourcesInfoToGragh: (monthNumber: number, year: number) => void
-  changeCurrentLatLng: (currentLatLong: LatLngInt) => void
+  changeCurrentLatLng: (currentLatLong: CoordLatLngInt) => void
   changeCurrentGeoJson: (geoJsonCurrent: GeoJsonFeature) => void
   changeDateSelectedAndRanked: (
     dateSelectedAndRange: DateSelectedRangeInterface,
@@ -81,8 +82,14 @@ const HeatSourcesInitialState: HeatSourcestState = {
   countByDates: [],
   titleArray: [],
   currentLatLongMidLocation: {
-    longitude: -66.2137434,
-    latitude: -17.390915,
+    coordinates: {
+      longitude: -66.2137434,
+      latitude: -17.390915,
+    },
+    poligono: {
+      type: 'MultiPolygon',
+      coordinates: [],
+    },
   },
   currentGeoJson: {
     type: 'FeatureCollection',
@@ -209,10 +216,10 @@ export const HeatProvider = ({ children }: any) => {
         month: month,
         year: year,
       })
+      getInformation?.map((resp) =>
+        arrayTitles.push(moment(resp.acq_date).add(8, 'hours').format('L')),
+      )
     }
-    getInformation?.map((resp) =>
-      arrayTitles.push(moment(resp.acq_date).add(8, 'hours').format('L')),
-    )
 
     dispatch({
       type: 'loading',
@@ -229,10 +236,10 @@ export const HeatProvider = ({ children }: any) => {
       payload: arrayTitles,
     })
   }
-  const changeCurrentLatLng = (latLng: LatLngInt) => {
+  const changeCurrentLatLng = (coordLatLog: CoordLatLngInt) => {
     dispatch({
       type: 'setLatLong',
-      payload: latLng,
+      payload: coordLatLog,
     })
   }
 
