@@ -19,11 +19,7 @@ import {
 } from '../../data/data'
 
 import moment from 'moment'
-import {
-  CountByDates,
-  DatesHeatSources,
-  LatLngInt,
-} from '../../interfaces/countProvinceDepartamento.interface'
+import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.interface'
 import { GeoJsonFeature } from '../../interfaces/geoJsonResponse'
 import { SelectOptionDateInterface } from './HeatSourcesReducer'
 import { CoordLatLngInt } from '../../interfaces/countProvinceDepartamento.interface'
@@ -35,20 +31,17 @@ type HeatSourcesStateProps = {
   showProvMun: boolean
   showOptions: boolean
   mapStyle: MapStyleIntOption
-  tab: number
   graphType: string
   mounthAndYearSelected: SelectOptionDateInterface
   titleArray: string[]
   countByDates: DatesHeatSources[]
   currentLatLongMidLocation: CoordLatLngInt
   currentGeoJson: GeoJsonFeature
-  modalIsOpen: boolean
   dateSelectedAndRange: DateSelectedRangeInterface
   queryToFind: QueryToFindInterface
-  showProvinvicaMun: (newState: boolean) => void
+  setShowProvinvicaMun: (newState: boolean) => void
   setShowOptions: (newState: boolean) => void
   setChangeMapType: (mapStyle: MapStyleIntOption) => void
-  setChangeTab: (value: number) => void
   changeTypeGraph: (value: string) => void
   setMounthSelected: (value: SelectOptionDateInterface) => void
   getHeatSourcesInfoToGragh: (monthNumber: number, year: number) => void
@@ -62,8 +55,6 @@ type HeatSourcesStateProps = {
     value: string,
   ) => void
   changeQueryToFind: (queryToFindInterface: QueryToFindInterface) => void
-  closeModal: () => void
-  openModal: () => void
 }
 
 const HeatSourcesInitialState: HeatSourcestState = {
@@ -72,7 +63,6 @@ const HeatSourcesInitialState: HeatSourcestState = {
   showProvMun: false,
   showOptions: false,
   mapStyle: mapsTypeStyle[2],
-  tab: 1,
   graphType: graphTypeArray[0],
   mounthAndYearSelected: {
     month: 1,
@@ -95,7 +85,7 @@ const HeatSourcesInitialState: HeatSourcestState = {
     type: 'FeatureCollection',
     features: [],
   },
-  modalIsOpen: false,
+
   dateSelectedAndRange: {
     dateStart: null,
     dateEnd: null,
@@ -158,7 +148,7 @@ export const HeatProvider = ({ children }: any) => {
     }
   }
 
-  const showProvinvicaMun = (state: boolean) => {
+  const setShowProvinvicaMun = (state: boolean) => {
     dispatch({
       type: 'showProvMun',
       payload: state,
@@ -178,12 +168,6 @@ export const HeatProvider = ({ children }: any) => {
     })
   }
 
-  const setChangeTab = (value: number) => {
-    dispatch({
-      type: 'changeTab',
-      payload: value,
-    })
-  }
   const changeTypeGraph = (value: string) => {
     dispatch({
       type: 'changeGraphType',
@@ -249,18 +233,7 @@ export const HeatProvider = ({ children }: any) => {
       payload: currentGeoJson,
     })
   }
-  const closeModal = () => {
-    dispatch({
-      type: 'setModalIsOpen',
-      payload: false,
-    })
-  }
-  const openModal = () => {
-    dispatch({
-      type: 'setModalIsOpen',
-      payload: true,
-    })
-  }
+
   const changeDateSelectedAndRanked = (
     dateSelectedAndRange: DateSelectedRangeInterface,
   ) => {
@@ -292,17 +265,15 @@ export const HeatProvider = ({ children }: any) => {
     <HeatSourcesContext.Provider
       value={{
         ...state,
-        showProvinvicaMun,
+        setShowProvinvicaMun,
         setShowOptions,
         setChangeMapType,
-        setChangeTab,
+
         changeTypeGraph,
         setMounthSelected,
         getHeatSourcesInfoToGragh,
         changeCurrentLatLng,
         changeCurrentGeoJson,
-        closeModal,
-        openModal,
         changeDateSelectedAndRanked,
         changeQueryOneFieldToFind,
         changeQueryToFind,

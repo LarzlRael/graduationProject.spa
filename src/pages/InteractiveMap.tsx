@@ -42,7 +42,7 @@ export const InteractiveMap = () => {
     //query to find
     queryToFind,
     changeQueryOneFieldToFind,
-    darkTheme,
+    showProvinvicaMun,
   } = useFocosCalor()
   function convertToGeoJson(): GeoJsonObject {
     const { type, ...rest } = currentGeoJson
@@ -62,6 +62,7 @@ export const InteractiveMap = () => {
   useEffect(() => {
     setKey(generateUniqueKey())
   }, [currentGeoJson, viewport])
+  console.log(viewport)
   return (
     <div>
       <ButtonIcon
@@ -70,8 +71,8 @@ export const InteractiveMap = () => {
         }}
       />
       <MapBoxModal
+        showProvinvicaMun={showProvinvicaMun}
         imageUrl={selecteDepartamentCopy.image}
-        isDarkTheme={darkTheme}
         mapTypeStyle={mapsTypeStyle}
         mapStyle={mapStyle}
         setChangeMapType={setChangeMapType}
@@ -97,7 +98,19 @@ export const InteractiveMap = () => {
         />
         <GeoJSON data={convertToGeoJson()} />
         <GeoJSON data={polyToGeoJson()} />
+        {/*  <RecenterAutomatically
+          lat={viewport.latitude}
+          lng={viewport.longitude}
+        /> */}
       </MapContainer>
     </div>
   )
+}
+const RecenterAutomatically = ({ lat, lng }: any) => {
+  const map = useMap()
+  useEffect(() => {
+    map.setView([lat, lng])
+    map.setZoom(10)
+  }, [lat, lng])
+  return null
 }

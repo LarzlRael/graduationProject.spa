@@ -10,12 +10,15 @@ import { Graficos } from '../../components/Graficos'
 import { RespFoco } from '../../interfaces/countProvinceDepartamento.interface'
 
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
-import { SwitchWidget } from '../../components/widgets/SwitchWidget'
 import { DatePickerRange } from '../../components/DatePickerRange'
 import { FilledButton } from '../../components/widgets/buttons/FilledButton'
 import Select from 'react-select'
+import { Switch } from '../../form/Switch'
+
 export const GraphByDepartaments = () => {
-  const { dateSelectedAndRange, showProvMun } = useContext(HeatSourcesContext)
+  const { dateSelectedAndRange, showProvMun, setShowProvinvicaMun: showProvinvicaMun } = useContext(
+    HeatSourcesContext,
+  )
   const { dateStart, dateEnd, findbyOneDate } = dateSelectedAndRange
   const [showSwitch, setShowSwitch] = useState<boolean>(true)
 
@@ -132,7 +135,13 @@ export const GraphByDepartaments = () => {
             }
           />
 
-          {showSwitch && <SwitchWidget />}
+          {showSwitch && (
+            <Switch
+              checked={showProvMun}
+              onChange={(e) => showProvinvicaMun(e.target.checked)}
+              label={`Buscando por ${showProvMun ? 'Provincia' : 'Municipio'}`}
+            />
+          )}
         </div>
         <div>
           <DatePickerRange />

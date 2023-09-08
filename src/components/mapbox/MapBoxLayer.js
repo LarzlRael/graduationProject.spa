@@ -57,6 +57,7 @@ export const MapBoxLayer = () => {
         <NavigationControl style={navControlStyle} />
 
         <MapBoxModal
+        showProvinvicaMunicipio={showProvMun}
           imageUrl={selecteDepartamentCopy.image}
           isDarkTheme={darkTheme}
           mapTypeStyle={mapsTypeStyle}

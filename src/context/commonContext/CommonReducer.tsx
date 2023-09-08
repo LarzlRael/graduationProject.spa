@@ -6,11 +6,15 @@ export interface ISnackbar {
 export interface CommonState {
   snackBar: ISnackbar
   darkTheme: boolean
+  tab: number
+  modalIsOpen: boolean
 }
 
 type CommonAction =
   | { type: 'changeTheme'; payload: boolean }
   | { type: 'openSnackBar'; payload: ISnackbar }
+  | { type: 'changeTab'; payload: number }
+  | { type: 'setModalIsOpen'; payload: boolean }
 /* | { type: 'removeError' }
   | { type: 'noAuthenticated' } 
   | { type: 'logout' }
@@ -36,7 +40,17 @@ export const commonReducer = (
         ...state,
         darkTheme: action.payload,
       }
+    case 'changeTab':
+      return {
+        ...state,
+        tab: action.payload,
+      }
 
+    case 'setModalIsOpen':
+      return {
+        ...state,
+        modalIsOpen: action.payload,
+      }
     default:
       return state
   }

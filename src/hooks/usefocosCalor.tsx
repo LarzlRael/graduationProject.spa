@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import {
   OptionAndValueInterface,
   departametsArray,
@@ -12,18 +12,13 @@ import {
   getHotSourcesByDepProv,
   getMidPoint,
 } from '../provider/heatSourcesservices'
-import {
-  getNombresProvincias,
-  getNombresMunicipios,
-} from '../provider/analysisServices'
-import { RespProvincia } from '../interfaces/provinciasResponse.interface'
-import { MunResp } from '../interfaces/municipiosResponse.interface'
+import { getNombresProvinciasAndMun } from '../provider/analysisServices'
 
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 
 /* import { FlyToInterpolator } from 'react-map-gl' */
 import { CommonContext } from '../context/commonContext/CommonContext_'
-import { openSnackbar } from '../context/commonContext/actions'
+import { IProvinciasAndMunicipios } from '../interfaces/provMun.interface'
 
 export const useFocosCalor = () => {
   const {
@@ -40,12 +35,13 @@ export const useFocosCalor = () => {
     changeCurrentGeoJson,
     changeQueryOneFieldToFind,
     changeQueryToFind,
-    closeModal,
+
     dateSelectedAndRange,
     queryToFind,
+    setShowProvinvicaMun: showProvinvicaMun,
   } = useContext(HeatSourcesContext)
 
-  const { darkTheme, showSnackBar } = useContext(CommonContext)
+  const { darkTheme, showSnackBar, closeModal } = useContext(CommonContext)
 
   /* function usePrevious(value: QueryToFindInterface) {
         const ref = useRef<QueryToFindInterface>();
@@ -95,12 +91,9 @@ export const useFocosCalor = () => {
     image: departametsArray[0].value,
   })
 
-  const [stateArrMunProv, setArrMunProv] = useState<{
-    sArrayPro: RespProvincia[]
-    sArrayMu: MunResp[]
-  }>({
-    sArrayPro: [],
-    sArrayMu: [],
+  const [stateArrMunProv, setArrMunProv] = useState<IProvinciasAndMunicipios>({
+    municipios: [],
+    provincias: [],
   })
 
   const onChange = (e: OptionAndValueInterface) => {
@@ -146,7 +139,7 @@ export const useFocosCalor = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const ShowSnakBarError = (isThere: number) => {
+  const showSnakBarError = (isThere: number) => {
     if (isThere === 0) {
       showSnackBar({
         message: 'No se encontraron resultados',
@@ -164,14 +157,7 @@ export const useFocosCalor = () => {
       })
 
       changeCurrentGeoJson(queryResult)
-      ShowSnakBarError(queryResult.features.length)
-
-      setLoading(false)
-      setSelecteDepartamentCopy({
-        ...selecteDepartamentCopy,
-        departamentSelected: queryToFind.departamentSelected,
-        image: queryToFind.image,
-      })
+      showSnakBarError(queryResult.features.length)
     }
 
     const consultarPorDepartamentos = async () => {
@@ -185,7 +171,7 @@ export const useFocosCalor = () => {
       )
 
       changeCurrentGeoJson(queryResult)
-      ShowSnakBarError(queryResult.features.length)
+      showSnakBarError(queryResult.features.length)
 
       setLoading(false)
       setSelecteDepartamentCopy({
@@ -200,15 +186,13 @@ export const useFocosCalor = () => {
     }
 
     const consultarProvincias = async () => {
-      changeCurrentGeoJson(
-        await getHotSourcesByDepProv({
-          dateEnd: dateEnd!.toISOString().slice(0, 10),
-          dateStart: dateStart!.toISOString().slice(0, 10),
-          provincia: queryToFind.provincia,
-        }),
-      )
-
-      setLoading(false)
+      const queryResult = await getHotSourcesByDepProv({
+        dateEnd: dateEnd!.toISOString().slice(0, 10),
+        dateStart: dateStart!.toISOString().slice(0, 10),
+        provincia: queryToFind.provincia,
+      })
+      changeCurrentGeoJson(queryResult)
+      showSnakBarError(queryResult.features.length)
     }
 
     const consultarMunicipio = async () => {
@@ -217,23 +201,23 @@ export const useFocosCalor = () => {
         dateStart: dateStart!.toISOString().slice(0, 10),
         municipio: queryToFind.municipio,
       })
-      ShowSnakBarError(queryResult.features.length)
       changeCurrentGeoJson(queryResult)
-      setLoading(false)
+      showSnakBarError(queryResult.features.length)
     }
 
     if (!loading) {
       setLoading(false)
       return
     }
+
+    setLoading(false)
+
     if (queryToFind.departamentSelected === 'Bolivia') {
       getAllContry()
-      closeModal()
       return
     }
     if (!showOptions) {
       consultarPorDepartamentos()
-
       return
     }
     if (showProvMun) {
@@ -255,21 +239,16 @@ export const useFocosCalor = () => {
 
   useEffect(() => {
     const getArray = async () => {
-      const arrayProvinciasList = await getNombresProvincias(
+      const arrayProvinciasList = await getNombresProvinciasAndMun(
         queryToFind.departamentSelected,
       )
-      const arrayMunicipiosList = await getNombresMunicipios(
-        queryToFind.departamentSelected,
-      )
+
       setArrMunProv({
         ...stateArrMunProv,
-        sArrayMu: arrayMunicipiosList,
-        sArrayPro: arrayProvinciasList,
+        ...arrayProvinciasList,
       })
     }
     getArray()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryToFind.departamentSelected])
 
   useEffect(() => {
@@ -280,7 +259,6 @@ export const useFocosCalor = () => {
           'departamentos',
           queryToFind.departamentSelected,
         )
-        return
       }
       if (showProvMun) {
         getMidPointService = await getMidPoint(
@@ -314,12 +292,8 @@ export const useFocosCalor = () => {
   useEffect(() => {
     changeQueryToFind({
       ...queryToFind,
-      municipio: stateArrMunProv.sArrayMu[0]
-        ? stateArrMunProv.sArrayMu[0].nombre_municipio
-        : '',
-      provincia: stateArrMunProv.sArrayPro[0]
-        ? stateArrMunProv.sArrayPro[0].nombre_provincia
-        : '',
+      municipio: stateArrMunProv.municipios[0] ?? '',
+      provincia: stateArrMunProv.provincias[0] ?? '',
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryToFind.departamentSelected])
@@ -346,6 +320,6 @@ export const useFocosCalor = () => {
     queryToFind,
     changeQueryToFind,
     changeQueryOneFieldToFind,
-    darkTheme,
+    showProvinvicaMun,  
   }
 }

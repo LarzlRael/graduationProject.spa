@@ -6,17 +6,19 @@ import {
 import { CardInfo } from '../CardInfo'
 import { DatePickerRange } from '../DatePickerRange'
 import { ModalComponent } from '../ModalComponent'
-import { SwitchWidget } from '../widgets/SwitchWidget'
+
 import { LoadingElipsis } from '../widgets/loadings/LoadingElipsis'
 import { QueryToFindInterface } from '../../context/HeatSources/HeatSourcesReducer'
-import { RespProvincia } from '../../interfaces/provinciasResponse.interface'
-import { MunResp } from '../../interfaces/municipiosResponse.interface'
+
 import Select2 from 'react-select'
 import { FilledButton } from '../widgets/buttons/FilledButton'
 import Checkbox from '../../form/Checkbox'
+import { IProvinciasAndMunicipios } from '../../interfaces/provMun.interface'
+import { CommonContext } from '../../context/commonContext/CommonContext_'
+import { useContext } from 'react'
+import { Switch } from '../../form/Switch'
 interface Props {
   imageUrl: string
-  isDarkTheme: boolean
   mapTypeStyle: MapStyleIntOption[]
   mapStyle: MapStyleIntOption
   setChangeMapType: (mapStyle: MapStyleIntOption) => void
@@ -29,16 +31,13 @@ interface Props {
   showProvMun: boolean
   setShowOptions: (newState: boolean) => void
   onChange: (e: any) => void
-  stateArrMunProv: {
-    sArrayPro: RespProvincia[]
-    sArrayMu: MunResp[]
-  }
+  stateArrMunProv: IProvinciasAndMunicipios
   loading: boolean
   getHeatSources: () => Promise<void>
+  showProvinvicaMun: (newState: boolean) => void
 }
 export const MapBoxModal = ({
   imageUrl,
-  isDarkTheme,
   mapTypeStyle,
   mapStyle,
   setChangeMapType,
@@ -51,10 +50,12 @@ export const MapBoxModal = ({
   stateArrMunProv,
   loading,
   getHeatSources,
+  showProvinvicaMun,
 }: Props) => {
+  const { darkTheme } = useContext(CommonContext)
   return (
     <ModalComponent>
-      <div className={`modal-content ${isDarkTheme && 'blackTheme'}`}>
+      <div className={`modal-content ${darkTheme && 'blackTheme'}`}>
         <div className="modal-info">
           <CardInfo imageUrl={imageUrl} />
           <br />
@@ -88,7 +89,13 @@ export const MapBoxModal = ({
 
           {showOptions && (
             <>
-              <SwitchWidget />
+              <Switch
+                checked={showProvMun}
+                onChange={(e) => showProvinvicaMun(e.target.checked)}
+                label={`Buscando por ${
+                  showProvMun ? 'Provincia' : 'Municipio'
+                }`}
+              />
               {showProvMun ? (
                 <>
                   <label>Seleccionar Provincia</label>
@@ -97,9 +104,9 @@ export const MapBoxModal = ({
                       changeQueryOneFieldToFind('provincia', e!.value)
                     }}
                     /* options={stateArrMunProv.sArrayPro} */
-                    options={stateArrMunProv.sArrayPro.map((provincia) => ({
-                      value: provincia.nombre_provincia,
-                      label: provincia.nombre_provincia,
+                    options={stateArrMunProv.provincias.map((provincia) => ({
+                      value: provincia,
+                      label: provincia,
                     }))}
                   />
                 </>
@@ -110,9 +117,9 @@ export const MapBoxModal = ({
                     onChange={(e) =>
                       changeQueryOneFieldToFind('municipio', e!.value)
                     }
-                    options={stateArrMunProv.sArrayMu.map((municipio) => ({
-                      value: municipio.nombre_municipio,
-                      label: municipio.nombre_municipio,
+                    options={stateArrMunProv.municipios.map((municipio) => ({
+                      value: municipio,
+                      label: municipio,
                     }))}
                   />
                 </>

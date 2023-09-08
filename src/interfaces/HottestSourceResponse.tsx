@@ -4,6 +4,10 @@ export interface GeoJSONResponse {
     crs: CRS;
     features: any[];
 }
+export interface GeoJsonResponseCount{
+    geojson: GeoJSONResponse;
+    count: number;
+}
 
 export interface CRS {
     type: string;

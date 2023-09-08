@@ -1,10 +1,13 @@
 import { Header } from '../components/Header'
-import { SwitchTheme } from '../components/public/SwitchTheme'
 import { FilledButton } from '../components/widgets/buttons/FilledButton'
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router'
+import { Switch } from '../form/Switch'
+import { CommonContext } from '../context/commonContext/CommonContext_'
+import { useContext } from 'react'
 
 export const LandingPage = () => {
   const navigate = useNavigate()
+  const { setTheme, darkTheme } = useContext(CommonContext)
   return (
     <div className="landingContainer">
       <Header />
@@ -34,14 +37,18 @@ export const LandingPage = () => {
             fontSize="1.2rem"
             /* width="100%" */
             onClick={() => {
-              navigate('/mapa');
+              navigate('/mapa')
             }}
           >
             Ir a mapa interactivo
           </FilledButton>
         </div>
 
-        <SwitchTheme />
+        <Switch
+          checked={darkTheme}
+          onChange={setTheme}
+          label={`${darkTheme ? 'Tema oscuro' : 'Tema Claro'}`}
+        />
       </div>
     </div>
   )

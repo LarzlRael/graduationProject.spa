@@ -30,14 +30,13 @@ export interface HeatSourcestState {
   showProvMun: boolean
   showOptions: boolean
   mapStyle: MapStyleIntOption
-  tab: number
   graphType: string
   mounthAndYearSelected: SelectOptionDateInterface
   countByDates: DatesHeatSources[]
   titleArray: string[]
   currentLatLongMidLocation: CoordLatLngInt
   currentGeoJson: GeoJsonFeature
-  modalIsOpen: boolean
+
   dateSelectedAndRange: DateSelectedRangeInterface
   queryToFind: QueryToFindInterface
 }
@@ -48,14 +47,12 @@ type HeatSourceAction =
   | { type: 'showProvMun'; payload: boolean }
   | { type: 'showOptions'; payload: boolean }
   | { type: 'changeMapType'; payload: MapStyleIntOption }
-  | { type: 'changeTab'; payload: number }
   | { type: 'changeGraphType'; payload: string }
   | { type: 'changeMounthOrYear'; payload: SelectOptionDateInterface }
   | { type: 'changeCountByDates'; payload: DatesHeatSources[] }
   | { type: 'setTitlesArray'; payload: string[] }
   | { type: 'setLatLong'; payload: CoordLatLngInt }
   | { type: 'setCurrentGeoJson'; payload: GeoJsonFeature }
-  | { type: 'setModalIsOpen'; payload: boolean }
   | { type: 'dateSelectedAndRange'; payload: DateSelectedRangeInterface }
   | { type: 'setQueryToFind'; payload: QueryToFindInterface }
   | {
@@ -97,11 +94,6 @@ export const heatSourcesReducer = (
         ...state,
         mapStyle: action.payload,
       }
-    case 'changeTab':
-      return {
-        ...state,
-        tab: action.payload,
-      }
     case 'changeGraphType':
       return {
         ...state,
@@ -137,11 +129,7 @@ export const heatSourcesReducer = (
         ...state,
         currentGeoJson: action.payload,
       }
-    case 'setModalIsOpen':
-      return {
-        ...state,
-        modalIsOpen: action.payload,
-      }
+
     case 'dateSelectedAndRange':
       return {
         ...state,

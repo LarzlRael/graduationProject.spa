@@ -3,15 +3,15 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 
 import { MapBoxLayer } from '../../components/mapbox/MapBoxLayer'
-import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
 import { GraphByDepartaments } from './GraphByDepartaments'
 import { GraphByMonths } from './GraphByMonths'
+import { CommonContext } from '../../context/commonContext/CommonContext_'
 
 export const TabNavigator = () => {
-  const { tab, setChangeTab } = useContext(HeatSourcesContext)
+  const { tab, setTabPosition } = useContext(CommonContext)
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setChangeTab(parseInt(newValue))
+    setTabPosition(parseInt(newValue))
   }
 
   return (

@@ -22,7 +22,7 @@ export const Modal = ({
   padding = '20px',
   positionModal = 'center',
 }: LayoutProps) => {
-  const { modalIsOpen, closeModal } = useContext(HeatSourcesContext)
+  const { modalIsOpen, closeModal } = useContext(CommonContext)
   const { darkTheme } = useContext(CommonContext)
 
   return (
