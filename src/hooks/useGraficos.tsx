@@ -13,18 +13,22 @@ import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2'
 import { GraphProps } from '../components/Graficos'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import { graphTypeArray } from '../data/data'
+import { useNavigate } from 'react-router-dom'
+import { useFocosCalor } from './usefocosCalor'
 
 export const useGraficos = ({
   info,
   nombreDepartamento,
   loading,
+  selected,
 }: GraphProps) => {
   ChartJS.register(ArcElement, Tooltip, Legend, ...registerables)
   const { changeTypeGraph, graphType } = useContext(HeatSourcesContext)
 
   const [stringTitle, setStringTitle] = useState<string[]>([''])
   const [tipoGrafico, setTipoGrafico] = useState<string>()
-
+  const navigate = useNavigate()
+  const { changeQueryToFind } = useFocosCalor()
   useEffect(() => {
     const arrayTitles: string[] = []
 
@@ -32,6 +36,10 @@ export const useGraficos = ({
 
     setStringTitle(arrayTitles)
   }, [info])
+
+  const handleNav = () => {
+    navigate('/mapa')
+  }
 
   const data = {
     labels: stringTitle,
@@ -60,6 +68,12 @@ export const useGraficos = ({
         text: `Consultas del departamento de ${nombreDepartamento}`,
       },
     },
+    onClick: function (evt: any, elements: any) {
+      if (elements.length === 0) {
+        return
+      }
+      selected(stringTitle[elements[0].index])
+    },
   }
 
   const options2 = {
@@ -79,6 +93,12 @@ export const useGraficos = ({
         display: true,
         text: nombreDepartamento,
       },
+    },
+    onClick: function (evt: any, elements: any) {
+      if (elements.length === 0) {
+        return
+      }
+      selected(stringTitle[elements[0].index])
     },
   }
 

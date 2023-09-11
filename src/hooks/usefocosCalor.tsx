@@ -38,7 +38,7 @@ export const useFocosCalor = () => {
 
     dateSelectedAndRange,
     queryToFind,
-    setShowProvinvicaMun: showProvinvicaMun,
+    setShowProvinvicaMun,
   } = useContext(HeatSourcesContext)
 
   const { darkTheme, showSnackBar, closeModal } = useContext(CommonContext)
@@ -148,63 +148,65 @@ export const useFocosCalor = () => {
       })
     }
   }
+
+  const getAllContry = async () => {
+    const queryResult = await getHeatAllSources({
+      dateStart: dateStart!.toISOString().slice(0, 10),
+      dateEnd: dateEnd!.toISOString().slice(0, 10),
+      departamento: queryToFind.departamentSelected,
+    })
+
+    changeCurrentGeoJson(queryResult)
+    showSnakBarError(queryResult.features.length)
+  }
+
+  const consultarPorDepartamentos = async () => {
+    const queryResult = await getHeatSourcesByDepartament({
+      dateStart: dateStart!.toISOString().slice(0, 10),
+      dateEnd: dateEnd!.toISOString().slice(0, 10),
+      departamento: queryToFind.departamentSelected,
+    })
+    const poligonesDepartament = await getDepartamentPoligone(
+      queryToFind.departamentSelected,
+    )
+
+    changeCurrentGeoJson(queryResult)
+    showSnakBarError(queryResult.features.length)
+
+    setSelecteDepartamentCopy({
+      ...selecteDepartamentCopy,
+      departamentSelected: queryToFind.departamentSelected,
+      image: queryToFind.image,
+    })
+    changeCurrentLatLng({
+      ...currentLatLongMidLocation,
+      poligono: poligonesDepartament,
+    })
+  }
+
+  const consultarProvincias = async () => {
+    console.log(queryToFind)
+    const queryResult = await getHotSourcesByDepProv({
+      dateEnd: dateEnd!.toISOString().slice(0, 10),
+      dateStart: dateStart!.toISOString().slice(0, 10),
+      provincia: queryToFind.provincia,
+    })
+    changeCurrentGeoJson(queryResult)
+    showSnakBarError(queryResult.features.length)
+  }
+
+  const consultarMunicipio = async () => {
+    console.log(queryToFind)
+    const queryResult = await getHotSourcesByDepMun({
+      dateEnd: dateEnd!.toISOString().slice(0, 10),
+      dateStart: dateStart!.toISOString().slice(0, 10),
+      municipio: queryToFind.municipio,
+    })
+    changeCurrentGeoJson(queryResult)
+    showSnakBarError(queryResult.features.length)
+  }
+
   useEffect(() => {
-    const getAllContry = async () => {
-      const queryResult = await getHeatAllSources({
-        dateStart: dateStart!.toISOString().slice(0, 10),
-        dateEnd: dateEnd!.toISOString().slice(0, 10),
-        departamento: queryToFind.departamentSelected,
-      })
-
-      changeCurrentGeoJson(queryResult)
-      showSnakBarError(queryResult.features.length)
-    }
-
-    const consultarPorDepartamentos = async () => {
-      const queryResult = await getHeatSourcesByDepartament({
-        dateStart: dateStart!.toISOString().slice(0, 10),
-        dateEnd: dateEnd!.toISOString().slice(0, 10),
-        departamento: queryToFind.departamentSelected,
-      })
-      const poligonesDepartament = await getDepartamentPoligone(
-        queryToFind.departamentSelected,
-      )
-
-      changeCurrentGeoJson(queryResult)
-      showSnakBarError(queryResult.features.length)
-
-      setLoading(false)
-      setSelecteDepartamentCopy({
-        ...selecteDepartamentCopy,
-        departamentSelected: queryToFind.departamentSelected,
-        image: queryToFind.image,
-      })
-      changeCurrentLatLng({
-        ...currentLatLongMidLocation,
-        poligono: poligonesDepartament,
-      })
-    }
-
-    const consultarProvincias = async () => {
-      const queryResult = await getHotSourcesByDepProv({
-        dateEnd: dateEnd!.toISOString().slice(0, 10),
-        dateStart: dateStart!.toISOString().slice(0, 10),
-        provincia: queryToFind.provincia,
-      })
-      changeCurrentGeoJson(queryResult)
-      showSnakBarError(queryResult.features.length)
-    }
-
-    const consultarMunicipio = async () => {
-      const queryResult = await getHotSourcesByDepMun({
-        dateEnd: dateEnd!.toISOString().slice(0, 10),
-        dateStart: dateStart!.toISOString().slice(0, 10),
-        municipio: queryToFind.municipio,
-      })
-      changeCurrentGeoJson(queryResult)
-      showSnakBarError(queryResult.features.length)
-    }
-
     if (!loading) {
       setLoading(false)
       return
@@ -320,6 +322,8 @@ export const useFocosCalor = () => {
     queryToFind,
     changeQueryToFind,
     changeQueryOneFieldToFind,
-    showProvinvicaMun,  
+    setShowProvinvicaMun,
+    consultarProvincias,
+    consultarMunicipio,
   }
 }

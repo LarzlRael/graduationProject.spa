@@ -41,7 +41,7 @@ export const TabNavigator = () => {
           <Tab>Gráficos por departamentos</Tab>
         </TabList>
 
-        <TabPanel>
+        <TabPanel >
           <MapBoxLayer />
         </TabPanel>
         <TabPanel>

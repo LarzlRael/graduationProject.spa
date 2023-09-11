@@ -33,7 +33,7 @@ interface Props {
   onChange: (e: any) => void
   stateArrMunProv: IProvinciasAndMunicipios
   loading: boolean
-  getHeatSources: () => Promise<void>
+  getHeatSources: () => void
   showProvinvicaMun: (newState: boolean) => void
 }
 export const MapBoxModal = ({
@@ -70,9 +70,8 @@ export const MapBoxModal = ({
         </div>
 
         <div>
-          <label>Seleccionar Departamento</label>
+          <label>Seleccionar departamento</label>
           <Select2
-            /* value={queryToFind.departamentSelected} */
             onChange={(e) => {
               onChange(e)
             }}

@@ -42,7 +42,7 @@ export const InteractiveMap = () => {
     //query to find
     queryToFind,
     changeQueryOneFieldToFind,
-    showProvinvicaMun,
+    setShowProvinvicaMun,
   } = useFocosCalor()
   function convertToGeoJson(): GeoJsonObject {
     const { type, ...rest } = currentGeoJson
@@ -62,7 +62,7 @@ export const InteractiveMap = () => {
   useEffect(() => {
     setKey(generateUniqueKey())
   }, [currentGeoJson, viewport])
-  console.log(viewport)
+
   return (
     <div>
       <ButtonIcon
@@ -71,7 +71,7 @@ export const InteractiveMap = () => {
         }}
       />
       <MapBoxModal
-        showProvinvicaMun={showProvinvicaMun}
+        showProvinvicaMun={setShowProvinvicaMun}
         imageUrl={selecteDepartamentCopy.image}
         mapTypeStyle={mapsTypeStyle}
         mapStyle={mapStyle}

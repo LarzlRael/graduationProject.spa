@@ -8,6 +8,7 @@ export interface GraphProps {
   nombreDepartamento: string
   loading: boolean
   ref: any
+  selected: (value: string) => void
 }
 
 export const Graficos = (graphProps: GraphProps) => {
@@ -39,7 +40,7 @@ export const Graficos = (graphProps: GraphProps) => {
         value={
           graphTypeArrayGenerated.filter(
             (option) => option.value === graphType,
-          )[0]
+          )
         }
         onChange={(e) => {
           changeTypeGraph(e!.value)
