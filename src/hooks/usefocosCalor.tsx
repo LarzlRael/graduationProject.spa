@@ -10,6 +10,7 @@ import {
   getHeatSourcesByDepartament,
   getHotSourcesByDepMun,
   getHotSourcesByDepProv,
+  getHotSourcesByDepType,
   getMidPoint,
 } from '../provider/heatSourcesservices'
 import { getNombresProvinciasAndMun } from '../provider/analysisServices'
@@ -185,7 +186,6 @@ export const useFocosCalor = () => {
   }
 
   const consultarProvincias = async () => {
-    console.log(queryToFind)
     const queryResult = await getHotSourcesByDepProv({
       dateEnd: dateEnd!.toISOString().slice(0, 10),
       dateStart: dateStart!.toISOString().slice(0, 10),
@@ -195,8 +195,18 @@ export const useFocosCalor = () => {
     showSnakBarError(queryResult.features.length)
   }
 
+  const consultarByType = async () => {
+    const queryResult = await getHotSourcesByDepType({
+      dateEnd: dateEnd!.toISOString().slice(0, 10),
+      dateStart: dateStart!.toISOString().slice(0, 10),
+      departamento: queryToFind.departamentSelected,
+      
+    })
+    changeCurrentGeoJson(queryResult)
+    showSnakBarError(queryResult.features.length)
+  }
+
   const consultarMunicipio = async () => {
-    console.log(queryToFind)
     const queryResult = await getHotSourcesByDepMun({
       dateEnd: dateEnd!.toISOString().slice(0, 10),
       dateStart: dateStart!.toISOString().slice(0, 10),
@@ -256,6 +266,11 @@ export const useFocosCalor = () => {
   useEffect(() => {
     const getMiddlePoint = async () => {
       let getMidPointService
+
+      if (!queryToFind.municipio) {
+        return
+      }
+
       if (!showOptions) {
         getMidPointService = await getMidPoint(
           'departamentos',

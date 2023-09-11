@@ -10,12 +10,14 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 import { LoadingElipsis } from '../components/widgets/loadings/LoadingElipsis'
 import { AuthAdminContext } from '../context/LoginContext/AuthAdminContext'
-import { CommonContext } from '../context/commonContext/CommonContext_'
 import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
 import { FilledButton } from '../components/widgets/buttons/FilledButton'
-
+import { postAction } from '../provider/services/action/action'
+import { validateStatus } from '../utils/validation'
+import { CommonContext } from '../context/commonContext/CommonContext_'
 export const AdminLogin = () => {
-  const { singIn, logged, loading } = useContext(AuthAdminContext)
+  const { showSnackBar } = useContext(CommonContext)
+  const { startSession, logged, loading } = useContext(AuthAdminContext)
 
   const navigate = useNavigate()
 
@@ -38,7 +40,27 @@ export const AdminLogin = () => {
 
   const handleSumbit = (e: any) => {
     e.preventDefault()
-    singIn({ username: userAdmin.email, password: userAdmin.password })
+    /* singIn({ username: userAdmin.email, password: userAdmin.password }) */
+    postAction('auth/signin', {
+      username: userAdmin.email,
+      password: userAdmin.password,
+    }).then((res: any) => {
+      if (validateStatus(res.status)) {
+        window.localStorage.setItem('token', res.data.accessToken)
+        startSession(res.data.accessToken)
+        showSnackBar({
+          message: 'Inicio de sesión exitoso',
+          isOpen: true,
+          kind: true,
+        })
+      } else {
+        showSnackBar({
+          message: 'Usuario o contraseña incorrectos',
+          isOpen: true,
+          kind: false,
+        })
+      }
+    })
   }
 
   const { email, password } = userAdmin

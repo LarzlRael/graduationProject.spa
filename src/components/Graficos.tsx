@@ -8,7 +8,7 @@ export interface GraphProps {
   nombreDepartamento: string
   loading: boolean
   ref: any
-  selected: (value: string) => void
+  selected: (value: any) => void
 }
 
 export const Graficos = (graphProps: GraphProps) => {

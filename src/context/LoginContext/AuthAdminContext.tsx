@@ -13,7 +13,6 @@ import tokenAuth from '../../utils/token_auth'
 import { authReducer, AuthState } from './AuthAdminReducer'
 import { CommonContext } from '../commonContext/CommonContext_'
 
-
 type AuthContextProps = {
   errorMessage: string
   token: string | null
@@ -22,7 +21,7 @@ type AuthContextProps = {
   logged: boolean
   loading: boolean
   singUp: (obj: any) => void
-  singIn: (loginData: LoginData) => void
+  startSession: (token: string) => void
   logOut: () => void
   removeError: () => void
   checkToken: () => void
@@ -41,7 +40,7 @@ export const AuthAdminContext = createContext({} as AuthContextProps)
 
 export const AuthProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(authReducer, AuthInitialState)
-  const { showSnackBar } = useContext(CommonContext)
+
   useEffect(() => {
     checkToken()
   }, [])
@@ -61,7 +60,7 @@ export const AuthProvider = ({ children }: any) => {
                 return dispatch({ type: 'noAuthenticated' });
             } */
       dispatch({
-        type: 'signUp',
+        type: 'startSession',
         payload: {
           token: resp.data.accessToken,
           usuario: resp.data.usuario,
@@ -73,50 +72,14 @@ export const AuthProvider = ({ children }: any) => {
     }
   }
 
-  const singIn = async ({ username, password }: LoginData) => {
-    try {
-      dispatch({
-        type: 'loading',
-        payload: true,
-      })
-
-      const data = await singInAdmin(username, password)
-
-      dispatch({
-        type: 'signUp',
-        payload: {
-          token: data.accessToken,
-          usuario: data.usuario,
-        },
-      })
-      showSnackBar({
-        message: 'Inicio de sesión exitoso',
-        isOpen: true,
-        kind: true,
-      })
-      localStorage.setItem('token', data.accessToken)
-      dispatch({
-        type: 'loading',
-        payload: false,
-      })
-    } catch (error) {
-      /* console.log(error.response.data);
-            console.log(error.response.data.error); */
-
-      dispatch({
-        type: 'addError',
-        payload: 'Credenciales incorrectas',
-      })
-      showSnackBar({
-        message: 'Hubo un error al iniciar sesión',
-        isOpen: true,
-        kind: false,
-      })
-      dispatch({
-        type: 'loading',
-        payload: false,
-      })
-    }
+  const startSession = async (token: string) => {
+    dispatch({
+      type: 'startSession',
+      payload: {
+        token: token,
+        usuario: null,
+      },
+    })
   }
 
   const singUp = async ({ nombre, correo, password }: RegisterData) => {
@@ -128,7 +91,7 @@ export const AuthProvider = ({ children }: any) => {
       })
 
       dispatch({
-        type: 'signUp',
+        type: 'startSession',
         payload: {
           token: data.accessToken,
           usuario: data.usuario,
@@ -158,7 +121,7 @@ export const AuthProvider = ({ children }: any) => {
     <AuthAdminContext.Provider
       value={{
         singUp,
-        singIn,
+        startSession,
         logOut,
         removeError,
         checkToken,

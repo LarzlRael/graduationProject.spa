@@ -63,6 +63,18 @@ export const getHotSourcesByDepMun = async (
   return resp.data
 }
 
+export const getHotSourcesByDepType = async (
+  provincia: HeatSourcesByPlace,
+): Promise<GeoJSONResponse> => {
+  const resp = await serverAPI.post<GeoJSONResponse>(
+    `/maps/get_heat_sources_by_type`,
+    {
+      ...provincia,
+    },
+  )
+  return resp.data
+}
+
 export const getHotSourcesByDepProv = async (
   provincia: HeatSourcesByPlace,
 ): Promise<GeoJSONResponse> => {

@@ -8,7 +8,7 @@ export interface AuthState {
 }
 
 type AuthAction =
-  | { type: 'signUp'; payload: { token: string; usuario: any } }
+  | { type: 'startSession'; payload: { token: string; usuario: any } }
   | { type: 'addError'; payload: string }
   | { type: 'removeError' }
   | { type: 'noAuthenticated' }
@@ -32,10 +32,9 @@ export const authReducer = (
         ...state,
         errorMessage: '',
       }
-    case 'signUp':
+    case 'startSession':
       return {
         ...state,
-        errorMessage: '',
         status: 'authenticated',
         token: action.payload.token,
         user: action.payload.usuario,

@@ -164,7 +164,9 @@ export const GraphByDepartaments = () => {
         info={countDepProvState}
         loading={loading}
         nombreDepartamento={departamentoProvincia.departamentSelected}
-        selected={(value) => {}}
+        selected={(value) => {
+          console.log(value);
+        }}
         /*  selected={(value) => {
           console.log(value)
           changeQueryToFind({

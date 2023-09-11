@@ -72,7 +72,10 @@ export const useGraficos = ({
       if (elements.length === 0) {
         return
       }
-      selected(stringTitle[elements[0].index])
+      selected({
+        value: stringTitle[elements[0].index],
+        departamentSelected: nombreDepartamento,
+      })
     },
   }
 
@@ -98,7 +101,10 @@ export const useGraficos = ({
       if (elements.length === 0) {
         return
       }
-      selected(stringTitle[elements[0].index])
+      selected({
+        value: stringTitle[elements[0].index],
+        departamentSelected: nombreDepartamento,
+      })
     },
   }
 
