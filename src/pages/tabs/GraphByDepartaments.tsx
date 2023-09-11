@@ -25,7 +25,7 @@ export const GraphByDepartaments = () => {
     changeQueryToFind,
     queryToFind,
   } = useContext(HeatSourcesContext)
-  const { consultarProvincias, consultarMunicipio } = useFocosCalor()
+
   const { dateStart, dateEnd, findbyOneDate } = dateSelectedAndRange
   const [showSwitch, setShowSwitch] = useState<boolean>(true)
   const navigate = useNavigate()
@@ -67,6 +67,7 @@ export const GraphByDepartaments = () => {
       await getCountByDepartamaments({
         dateStart: dateStartToQuery!,
         dateEnd: dateEndToQuery!,
+        departamento: departamentoProvincia.departamentSelected,
       }),
     )
     setLoading(false)
@@ -165,7 +166,7 @@ export const GraphByDepartaments = () => {
         loading={loading}
         nombreDepartamento={departamentoProvincia.departamentSelected}
         selected={(value) => {
-          console.log(value);
+          console.log(value)
         }}
         /*  selected={(value) => {
           console.log(value)

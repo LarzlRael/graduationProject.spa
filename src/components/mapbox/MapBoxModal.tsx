@@ -53,6 +53,15 @@ export const MapBoxModal = ({
   showProvinvicaMun,
 }: Props) => {
   const { darkTheme } = useContext(CommonContext)
+
+  const handleChange = (e: any) => {
+    showProvinvicaMun(e.target.checked)
+
+    changeQueryOneFieldToFind(
+      'typeLocation',
+      e.target.checked ? 'provincia' : 'municipio',
+    )
+  }
   return (
     <ModalComponent>
       <div className={`modal-content ${darkTheme && 'blackTheme'}`}>
@@ -83,14 +92,17 @@ export const MapBoxModal = ({
           <Checkbox
             label="Provincias/municipios"
             isChecked={showOptions}
+            /* onChange={handleChange} */
             onChange={({ target }) => setShowOptions(target.checked)}
+
+
           />
 
           {showOptions && (
             <>
               <Switch
                 checked={showProvMun}
-                onChange={(e) => showProvinvicaMun(e.target.checked)}
+                onChange={handleChange}
                 label={`Buscando por ${
                   showProvMun ? 'Provincia' : 'Municipio'
                 }`}
@@ -100,7 +112,7 @@ export const MapBoxModal = ({
                   <label>Seleccionar Provincia</label>
                   <Select2
                     onChange={(e) => {
-                      changeQueryOneFieldToFind('provincia', e!.value)
+                      changeQueryOneFieldToFind('nameLocation', e!.value)
                     }}
                     /* options={stateArrMunProv.sArrayPro} */
                     options={stateArrMunProv.provincias.map((provincia) => ({
@@ -114,7 +126,7 @@ export const MapBoxModal = ({
                   <label>Seleccionar Municipio</label>
                   <Select2
                     onChange={(e) =>
-                      changeQueryOneFieldToFind('municipio', e!.value)
+                      changeQueryOneFieldToFind('nameLocation', e!.value)
                     }
                     options={stateArrMunProv.municipios.map((municipio) => ({
                       value: municipio,

@@ -8,8 +8,6 @@ import {
   getDepartamentPoligone,
   getHeatAllSources,
   getHeatSourcesByDepartament,
-  getHotSourcesByDepMun,
-  getHotSourcesByDepProv,
   getHotSourcesByDepType,
   getMidPoint,
 } from '../provider/heatSourcesservices'
@@ -20,6 +18,7 @@ import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 /* import { FlyToInterpolator } from 'react-map-gl' */
 import { CommonContext } from '../context/commonContext/CommonContext_'
 import { IProvinciasAndMunicipios } from '../interfaces/provMun.interface'
+import { CoordLatLngInt } from '../interfaces/countProvinceDepartamento.interface'
 
 export const useFocosCalor = () => {
   const {
@@ -185,32 +184,13 @@ export const useFocosCalor = () => {
     })
   }
 
-  const consultarProvincias = async () => {
-    const queryResult = await getHotSourcesByDepProv({
-      dateEnd: dateEnd!.toISOString().slice(0, 10),
-      dateStart: dateStart!.toISOString().slice(0, 10),
-      provincia: queryToFind.provincia,
-    })
-    changeCurrentGeoJson(queryResult)
-    showSnakBarError(queryResult.features.length)
-  }
-
   const consultarByType = async () => {
     const queryResult = await getHotSourcesByDepType({
       dateEnd: dateEnd!.toISOString().slice(0, 10),
       dateStart: dateStart!.toISOString().slice(0, 10),
       departamento: queryToFind.departamentSelected,
-      
-    })
-    changeCurrentGeoJson(queryResult)
-    showSnakBarError(queryResult.features.length)
-  }
-
-  const consultarMunicipio = async () => {
-    const queryResult = await getHotSourcesByDepMun({
-      dateEnd: dateEnd!.toISOString().slice(0, 10),
-      dateStart: dateStart!.toISOString().slice(0, 10),
-      municipio: queryToFind.municipio,
+      typeLocation: queryToFind.typeLocation,
+      nameLocation: queryToFind.nameLocation,
     })
     changeCurrentGeoJson(queryResult)
     showSnakBarError(queryResult.features.length)
@@ -233,11 +213,7 @@ export const useFocosCalor = () => {
       return
     }
     if (showProvMun) {
-      /* /? consultar por provincia */
-      consultarProvincias()
-    } else {
-      /* //? consultar por municipio */
-      consultarMunicipio()
+      consultarByType()
     }
 
     setSelecteDepartamentCopy({
@@ -265,36 +241,33 @@ export const useFocosCalor = () => {
 
   useEffect(() => {
     const getMiddlePoint = async () => {
-      let getMidPointService
-
-      if (!queryToFind.municipio) {
+      let getMidPointService: CoordLatLngInt
+      /*   if (!queryToFind.municipio) {
         return
-      }
+      }*/
 
       if (!showOptions) {
         getMidPointService = await getMidPoint(
           'departamentos',
           queryToFind.departamentSelected,
         )
+        return
       }
+
       if (showProvMun) {
         getMidPointService = await getMidPoint(
-          'provincias',
-          queryToFind.provincia,
-        )
-      } else {
-        getMidPointService = await getMidPoint(
-          'municipios',
-          queryToFind.municipio,
+          queryToFind.typeLocation + 's',
+          queryToFind.nameLocation,
         )
       }
-      if (!loading && currentGeoJson.features.length > 0) {
+
+      if (currentGeoJson.features.length > 0) {
         changeCurrentLatLng({
           coordinates: {
-            latitude: getMidPointService.coordinates.latitude,
-            longitude: getMidPointService.coordinates.longitude,
+            latitude: getMidPointService!.coordinates.latitude,
+            longitude: getMidPointService!.coordinates.longitude,
           },
-          poligono: getMidPointService.poligono,
+          poligono: getMidPointService!.poligono,
         })
         closeModal()
       }
@@ -309,8 +282,8 @@ export const useFocosCalor = () => {
   useEffect(() => {
     changeQueryToFind({
       ...queryToFind,
-      municipio: stateArrMunProv.municipios[0] ?? '',
-      provincia: stateArrMunProv.provincias[0] ?? '',
+      /* municipio: stateArrMunProv.municipios[0] ?? '',
+      provincia: stateArrMunProv.provincias[0] ?? '', */
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryToFind.departamentSelected])
@@ -338,7 +311,5 @@ export const useFocosCalor = () => {
     changeQueryToFind,
     changeQueryOneFieldToFind,
     setShowProvinvicaMun,
-    consultarProvincias,
-    consultarMunicipio,
   }
 }

@@ -18,25 +18,25 @@ export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
     showProvMun,
   } = useContext(HeatSourcesContext)
 
-  const renderPlaceName = (): string => {
+ /*  const renderPlaceName = (): string => {
     if (!showOptions) {
       return ''
     }
-    if (showOptions && showProvMun) {
-      return queryToFind.provincia
-    }
-    return queryToFind.municipio
-  }
+    return showOptions && showProvMun
+      ? queryToFind.typeLocation
+      : queryToFind.nameLocation
+  } */
 
   return (
     <div>
       <img height="160" src={imageUrl} alt="Contemplative Reptile" />
       <div>
         <h2>
-          {queryToFind.departamentSelected} {renderPlaceName()}
+          //TODO fix this
+          {/* {queryToFind.departamentSelected} {renderPlaceName()} */}
         </h2>
         <span>
-          Focos de calor detectados en {renderPlaceName()}{' '}
+          {/* Focos de calor detectados en {renderPlaceName()}{' '} */}
           {!dateSelectedAndRange.findbyOneDate ? (
             <>
               <b>{moment(dateSelectedAndRange.dateStart).format('LL')}</b>

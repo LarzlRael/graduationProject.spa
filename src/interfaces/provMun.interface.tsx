@@ -1,9 +1,9 @@
 export interface HeatSourcesByPlace {
   dateStart: string
   dateEnd: string
-  provincia?: string
-  municipio?: string
-  departamento?: string
+  nameLocation?: string
+  typeLocation?: 'provincia' | 'municipio' | null
+  departamento: string
 }
 
 export interface CountInterface {
