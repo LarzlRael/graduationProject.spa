@@ -14,7 +14,6 @@ import { DatePickerRange } from '../../components/DatePickerRange'
 import { FilledButton } from '../../components/widgets/buttons/FilledButton'
 import Select from 'react-select'
 import { Switch } from '../../form/Switch'
-import { useFocosCalor } from '../../hooks/usefocosCalor'
 import { useNavigate } from 'react-router-dom'
 
 export const GraphByDepartaments = () => {
@@ -22,8 +21,9 @@ export const GraphByDepartaments = () => {
     dateSelectedAndRange,
     showProvMun,
     setShowProvinvicaMun,
-    changeQueryToFind,
     queryToFind,
+    changeQueryOneFieldToFind,
+    changeQueryToFind,
   } = useContext(HeatSourcesContext)
 
   const { dateStart, dateEnd, findbyOneDate } = dateSelectedAndRange
@@ -34,7 +34,13 @@ export const GraphByDepartaments = () => {
     departamentSelected: departametsArray[0].label,
     todosDepartamentos: false,
   })
-
+  const onchangeAndSetType = (e: any) => {
+    changeQueryOneFieldToFind(
+      'typeLocation',
+      e.target.checked ? 'provincia' : 'municipio',
+    )
+    setShowProvinvicaMun(e.target.checked)
+  }
   const myRef = useRef(null)
 
   const [countDepProvState, setCountDepProvState] = useState<RespFoco[]>([])
@@ -148,7 +154,7 @@ export const GraphByDepartaments = () => {
           {showSwitch && (
             <Switch
               checked={showProvMun}
-              onChange={(e) => setShowProvinvicaMun(e.target.checked)}
+              onChange={onchangeAndSetType}
               label={`Buscando por ${showProvMun ? 'Provincia' : 'Municipio'}`}
             />
           )}
@@ -167,6 +173,12 @@ export const GraphByDepartaments = () => {
         nombreDepartamento={departamentoProvincia.departamentSelected}
         selected={(value) => {
           console.log(value)
+          console.log(queryToFind)
+          changeQueryToFind({
+            ...queryToFind,
+            departamentSelected: value.departamentSelected,
+            nameLocation: value.value,
+          })
         }}
         /*  selected={(value) => {
           console.log(value)

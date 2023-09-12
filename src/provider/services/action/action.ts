@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
-const instancia = axios.create()
+const instancia = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_URL,
+})
 
 /* instancia.CancelToken = axios.CancelToken
 instancia.isCancel = axios.isCancel */
