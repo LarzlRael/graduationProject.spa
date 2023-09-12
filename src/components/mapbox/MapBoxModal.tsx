@@ -10,7 +10,7 @@ import { ModalComponent } from '../ModalComponent'
 import { LoadingElipsis } from '../widgets/loadings/LoadingElipsis'
 import { QueryToFindInterface } from '../../context/HeatSources/HeatSourcesReducer'
 
-import Select2 from 'react-select'
+import Select from 'react-select'
 import { FilledButton } from '../widgets/buttons/FilledButton'
 import Checkbox from '../../form/Checkbox'
 import { IProvinciasAndMunicipios } from '../../interfaces/provMun.interface'
@@ -62,6 +62,13 @@ export const MapBoxModal = ({
       e.target.checked ? 'provincia' : 'municipio',
     )
   }
+  const handleChangeFindByProvincia = (e: any) => {
+    setShowOptions(e.target.checked)
+    changeQueryOneFieldToFind(
+      'typeLocation',
+      e.target.checked ? 'municipio' : 'departamento',
+    )
+  }
   return (
     <ModalComponent>
       <div className={`modal-content ${darkTheme && 'blackTheme'}`}>
@@ -70,7 +77,7 @@ export const MapBoxModal = ({
           <br />
 
           <label id="demo-simple-select-label">Seleccionar Tipo de Mapa</label>
-          <Select2
+          <Select
             onChange={(e) => setChangeMapType(e!)}
             /* value={mapStyle.label} */
             /* onChange={(e) => setChangeMapType(e.target.value)} */
@@ -80,12 +87,7 @@ export const MapBoxModal = ({
 
         <div>
           <label>Seleccionar departamento</label>
-          <Select2
-            onChange={(e) => {
-              onChange(e)
-            }}
-            options={departametsArray}
-          />
+          <Select onChange={onChange} options={departametsArray} />
 
           <DatePickerRange />
 
@@ -93,9 +95,7 @@ export const MapBoxModal = ({
             label="Provincias/municipios"
             isChecked={showOptions}
             /* onChange={handleChange} */
-            onChange={({ target }) => setShowOptions(target.checked)}
-
-
+            onChange={handleChangeFindByProvincia}
           />
 
           {showOptions && (
@@ -110,7 +110,7 @@ export const MapBoxModal = ({
               {showProvMun ? (
                 <>
                   <label>Seleccionar Provincia</label>
-                  <Select2
+                  <Select
                     onChange={(e) => {
                       changeQueryOneFieldToFind('nameLocation', e!.value)
                     }}
@@ -124,7 +124,7 @@ export const MapBoxModal = ({
               ) : (
                 <>
                   <label>Seleccionar Municipio</label>
-                  <Select2
+                  <Select
                     onChange={(e) =>
                       changeQueryOneFieldToFind('nameLocation', e!.value)
                     }

@@ -16,7 +16,7 @@ export interface DateSelectedRangeInterface {
 export interface QueryToFindInterface {
   departamentSelected: string
   image: string
-  typeLocation?: 'provincia' | 'municipio' | null
+  typeLocation?: 'provincia' | 'municipio' | 'departamento' | 'pais' | null
   nameLocation: string
 }
 export interface SelectOptionDateInterface {

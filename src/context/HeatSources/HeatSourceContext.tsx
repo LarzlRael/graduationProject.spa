@@ -96,7 +96,7 @@ const HeatSourcesInitialState: HeatSourcestState = {
     departamentSelected: departametsArray[0].label,
     image: departametsArray[0].value,
     nameLocation: '',
-    typeLocation: null,
+    typeLocation: 'pais',
   },
 }
 

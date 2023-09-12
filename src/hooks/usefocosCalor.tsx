@@ -5,10 +5,9 @@ import {
   mapsTypeStyle,
 } from '../data/data'
 import {
-  getDepartamentPoligone,
-  getHeatAllSources,
   getHeatSourcesByDepartament,
   getHotSourcesByDepType,
+  getHotSourcesByType,
   getMidPoint,
 } from '../provider/heatSourcesservices'
 import { getNombresProvinciasAndMun } from '../provider/analysisServices'
@@ -97,10 +96,12 @@ export const useFocosCalor = () => {
   })
 
   const onChange = (e: OptionAndValueInterface) => {
+    console.log(e)
     changeQueryToFind({
       ...queryToFind,
       departamentSelected: e.label,
       image: e.value,
+      typeLocation: e.label === 'Bolivia' ? 'pais' : 'departamento',
     })
   }
 
@@ -149,7 +150,18 @@ export const useFocosCalor = () => {
     }
   }
 
-  const getAllContry = async () => {
+  const getHeatSourcesByType = async () => {
+    const queryResult = await getHotSourcesByType({
+      dateStart: dateStart!.toISOString().slice(0, 10),
+      dateEnd: dateEnd!.toISOString().slice(0, 10),
+      departamento: queryToFind.departamentSelected,
+      ...queryToFind,
+    })
+
+    changeCurrentGeoJson(queryResult)
+    showSnakBarError(queryResult.features.length)
+  }
+  /* const getAllContry = async () => {
     const queryResult = await getHeatAllSources({
       dateStart: dateStart!.toISOString().slice(0, 10),
       dateEnd: dateEnd!.toISOString().slice(0, 10),
@@ -158,7 +170,7 @@ export const useFocosCalor = () => {
 
     changeCurrentGeoJson(queryResult)
     showSnakBarError(queryResult.features.length)
-  }
+  } */
 
   const consultarPorDepartamentos = async () => {
     const queryResult = await getHeatSourcesByDepartament({
@@ -166,11 +178,7 @@ export const useFocosCalor = () => {
       dateEnd: dateEnd!.toISOString().slice(0, 10),
       departamento: queryToFind.departamentSelected,
     })
-    const poligonesDepartament = await getDepartamentPoligone(
-      queryToFind.departamentSelected,
-    )
 
-    changeCurrentGeoJson(queryResult)
     showSnakBarError(queryResult.features.length)
 
     setSelecteDepartamentCopy({
@@ -178,10 +186,10 @@ export const useFocosCalor = () => {
       departamentSelected: queryToFind.departamentSelected,
       image: queryToFind.image,
     })
-    changeCurrentLatLng({
+    /* changeCurrentLatLng({
       ...currentLatLongMidLocation,
       poligono: poligonesDepartament,
-    })
+    }) */
   }
 
   const consultarByType = async () => {
@@ -204,23 +212,16 @@ export const useFocosCalor = () => {
 
     setLoading(false)
 
-    if (queryToFind.departamentSelected === 'Bolivia') {
-      getAllContry()
-      return
-    }
-    if (!showOptions) {
-      consultarPorDepartamentos()
-      return
-    }
-    if (showProvMun) {
-      consultarByType()
-    }
+    getHeatSourcesByType()
 
     setSelecteDepartamentCopy({
       ...selecteDepartamentCopy,
       departamentSelected: queryToFind.departamentSelected,
       image: queryToFind.image,
     })
+    if (currentGeoJson.features.length > 0) {
+      closeModal()
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])

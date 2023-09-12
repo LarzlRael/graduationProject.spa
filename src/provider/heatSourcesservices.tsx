@@ -25,10 +25,9 @@ export const getHeatSourcesByDepartament = async (
   return resp.data
 }
 
-export const getHeatAllSources = async (
+/* export const getHeatAllSources = async (
   consulHeatSources: HeatSourcesByPlace,
 ): Promise<GeoJSONResponse> => {
-  /* delete consulHeatSources.departamento */
   const resp = await serverAPI.post<Promise<GeoJSONResponse>>(
     '/maps/getbybetweendate',
     {
@@ -38,7 +37,7 @@ export const getHeatAllSources = async (
 
   return resp.data
 }
-
+ */
 export const getnHeatSourceByDepartament = async (
   hottestbydeparament: HeatSourcesByDeparament,
 ): Promise<GeoJSONResponse> => {
@@ -51,7 +50,6 @@ export const getnHeatSourceByDepartament = async (
   return resp.data
 }
 
-
 export const getHotSourcesByDepType = async (
   provincia: HeatSourcesByPlace,
 ): Promise<GeoJSONResponse> => {
@@ -59,6 +57,17 @@ export const getHotSourcesByDepType = async (
     `/maps/get_heat_sources_by_type`,
     {
       ...provincia,
+    },
+  )
+  return resp.data
+}
+export const getHotSourcesByType = async (
+  heatSourcesByPlace: HeatSourcesByPlace,
+): Promise<GeoJSONResponse> => {
+  const resp = await serverAPI.post<GeoJSONResponse>(
+    `/maps/getHeatSourcesAllByType`,
+    {
+      ...heatSourcesByPlace,
     },
   )
   return resp.data
@@ -71,16 +80,6 @@ export const getMidPoint = async (
   const resp = await serverAPI.get<CoordLatLngInt>(
     `/maps/getMidPoint/${typeLocation}/${nameLocation}`,
   )
-  console.log(typeLocation, nameLocation);
-  console.log(resp.data);
-  return resp.data
-}
 
-export const getDepartamentPoligone = async (
-  departament: string,
-): Promise<CoordLatLngInt> => {
-  const resp = await serverAPI.get<any>(
-    `/maps/getDepartmentPoligonoes/${departament}`,
-  )
   return resp.data
 }

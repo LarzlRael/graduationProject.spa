@@ -2,7 +2,7 @@ export interface HeatSourcesByPlace {
   dateStart: string
   dateEnd: string
   nameLocation?: string
-  typeLocation?: 'provincia' | 'municipio' | null
+  typeLocation?: 'provincia' | 'municipio' | 'departamento' | 'pais' | null
   departamento: string
 }
 
