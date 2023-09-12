@@ -96,7 +96,6 @@ export const useFocosCalor = () => {
   })
 
   const onChange = (e: OptionAndValueInterface) => {
-    console.log(e)
     changeQueryToFind({
       ...queryToFind,
       departamentSelected: e.label,
@@ -161,57 +160,12 @@ export const useFocosCalor = () => {
     changeCurrentGeoJson(queryResult)
     showSnakBarError(queryResult.features.length)
   }
-  /* const getAllContry = async () => {
-    const queryResult = await getHeatAllSources({
-      dateStart: dateStart!.toISOString().slice(0, 10),
-      dateEnd: dateEnd!.toISOString().slice(0, 10),
-      departamento: queryToFind.departamentSelected,
-    })
-
-    changeCurrentGeoJson(queryResult)
-    showSnakBarError(queryResult.features.length)
-  } */
-
-  const consultarPorDepartamentos = async () => {
-    const queryResult = await getHeatSourcesByDepartament({
-      dateStart: dateStart!.toISOString().slice(0, 10),
-      dateEnd: dateEnd!.toISOString().slice(0, 10),
-      departamento: queryToFind.departamentSelected,
-    })
-
-    showSnakBarError(queryResult.features.length)
-
-    setSelecteDepartamentCopy({
-      ...selecteDepartamentCopy,
-      departamentSelected: queryToFind.departamentSelected,
-      image: queryToFind.image,
-    })
-    /* changeCurrentLatLng({
-      ...currentLatLongMidLocation,
-      poligono: poligonesDepartament,
-    }) */
-  }
-
-  const consultarByType = async () => {
-    const queryResult = await getHotSourcesByDepType({
-      dateEnd: dateEnd!.toISOString().slice(0, 10),
-      dateStart: dateStart!.toISOString().slice(0, 10),
-      departamento: queryToFind.departamentSelected,
-      typeLocation: queryToFind.typeLocation,
-      nameLocation: queryToFind.nameLocation,
-    })
-    changeCurrentGeoJson(queryResult)
-    showSnakBarError(queryResult.features.length)
-  }
 
   useEffect(() => {
     if (!loading) {
       setLoading(false)
-      return
     }
-
     setLoading(false)
-
     getHeatSourcesByType()
 
     setSelecteDepartamentCopy({
@@ -242,36 +196,38 @@ export const useFocosCalor = () => {
 
   useEffect(() => {
     const getMiddlePoint = async () => {
-      let getMidPointService: CoordLatLngInt
+      console.log('getting middle point')
+      let getMidPointService: CoordLatLngInt | null = null
       /*   if (!queryToFind.municipio) {
         return
       }*/
-
+      if (queryToFind.typeLocation === 'pais') {
+        return
+      }
       if (!showOptions) {
         getMidPointService = await getMidPoint(
           'departamentos',
           queryToFind.departamentSelected,
         )
-        return
       }
 
-      if (showProvMun) {
-        getMidPointService = await getMidPoint(
-          queryToFind.typeLocation + 's',
-          queryToFind.nameLocation,
-        )
-      }
+      getMidPointService = await getMidPoint(
+        queryToFind.typeLocation + 's',
+        queryToFind.nameLocation,
+      )
 
-      if (currentGeoJson.features.length > 0) {
+      console.log(getMidPointService)
+
+      /* if (currentGeoJson.features.length > 0) {
         changeCurrentLatLng({
           coordinates: {
-            latitude: getMidPointService!.coordinates.latitude,
-            longitude: getMidPointService!.coordinates.longitude,
+            latitude: getMidPointService.coordinates.latitude,
+            longitude: getMidPointService.coordinates.longitude,
           },
-          poligono: getMidPointService!.poligono,
+          poligono: getMidPointService.poligono,
         })
         closeModal()
-      }
+      } */
     }
     getMiddlePoint()
   }, [loading])

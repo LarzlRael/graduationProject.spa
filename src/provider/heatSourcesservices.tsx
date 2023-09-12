@@ -80,6 +80,6 @@ export const getMidPoint = async (
   const resp = await serverAPI.get<CoordLatLngInt>(
     `/maps/getMidPoint/${typeLocation}/${nameLocation}`,
   )
-
+  console.log(resp.data)
   return resp.data
 }
