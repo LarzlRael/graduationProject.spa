@@ -10,6 +10,7 @@ export const images = [
   { name: 'Santa Cruz', source: 'santacruz.png' },
 ]
 export const namesDepartamentos = [
+  'Bolivia',
   'La Paz',
   'Oruro',
   'Potosi',

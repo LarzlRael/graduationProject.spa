@@ -63,6 +63,15 @@ export const getCountByDepPro = async (provincia: HeatSourcesByPlace) => {
   )
   return resp.data
 }
+export const getCountByDepType = async (provincia: HeatSourcesByPlace) => {
+  const resp = await serverAPI.post<RespFoco[]>(
+    `/analysis/countDepartamentoByType`,
+    {
+      ...provincia,
+    },
+  )
+  return resp.data
+}
 
 export const getCountByDeMun = async (municipcio: HeatSourcesByPlace) => {
   const resp = await serverAPI.post<RespFoco[]>(
