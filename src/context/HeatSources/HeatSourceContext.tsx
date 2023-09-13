@@ -20,12 +20,9 @@ import {
 
 import moment from 'moment'
 import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.interface'
-import {
-  GeoJsonFeature,
-  IHeatResourcesAndPoint,
-} from '../../interfaces/geoJsonResponse'
+import { IHeatResourcesAndPoint } from '../../interfaces/geoJsonResponse'
 import { SelectOptionDateInterface } from './HeatSourcesReducer'
-import { CoordLatLngInt } from '../../interfaces/countProvinceDepartamento.interface'
+import { addHours } from '../../utils/utils'
 moment.locale('es')
 
 type HeatSourcesStateProps = {
@@ -125,11 +122,6 @@ export const HeatProvider = ({ children }: any) => {
       dateEnd: new Date(),
     })
   }, [])
-
-  const addHours = (h: number, date: Date) => {
-    date.setHours(date.getHours() + h)
-    return date
-  }
 
   const getDatesAvailable = async () => {
     if (state.datesAvailable.length > 0) return

@@ -13,55 +13,7 @@ export const getHigherOrLowerByDate = async (): Promise<DatesResponse> => {
   const { data } = await serverAPI.get<DatesResponse>('/analysis/dates')
   return data
 }
-export const getHeatSourcesByDepartament = async (
-  consulHeatSources: HeatSourcesByPlace,
-): Promise<GeoJSONResponse> => {
-  const resp = await serverAPI.post<Promise<GeoJSONResponse>>(
-    '/maps/getheatsourcesbydeparment',
-    {
-      ...consulHeatSources,
-    },
-  )
 
-  return resp.data
-}
-
-/* export const getHeatAllSources = async (
-  consulHeatSources: HeatSourcesByPlace,
-): Promise<GeoJSONResponse> => {
-  const resp = await serverAPI.post<Promise<GeoJSONResponse>>(
-    '/maps/getbybetweendate',
-    {
-      ...consulHeatSources,
-    },
-  )
-
-  return resp.data
-}
- */
-export const getnHeatSourceByDepartament = async (
-  hottestbydeparament: HeatSourcesByDeparament,
-): Promise<GeoJSONResponse> => {
-  const resp = await serverAPI.post<Promise<GeoJSONResponse>>(
-    '/analysis/getnheatsourcebydepartament',
-    {
-      ...hottestbydeparament,
-    },
-  )
-  return resp.data
-}
-
-export const getHotSourcesByDepType = async (
-  provincia: HeatSourcesByPlace,
-): Promise<GeoJSONResponse> => {
-  const resp = await serverAPI.post<GeoJSONResponse>(
-    `/maps/get_heat_sources_by_type`,
-    {
-      ...provincia,
-    },
-  )
-  return resp.data
-}
 export const getHotSourcesByType = async (
   heatSourcesByPlace: HeatSourcesByPlace,
 ): Promise<IHeatResourcesAndPoint> => {
@@ -71,16 +23,5 @@ export const getHotSourcesByType = async (
       ...heatSourcesByPlace,
     },
   )
-  return resp.data
-}
-
-export const getMidPoint = async (
-  typeLocation: string,
-  nameLocation: string,
-): Promise<CoordLatLngInt> => {
-  const resp = await serverAPI.get<CoordLatLngInt>(
-    `/maps/getMidPoint/${typeLocation}/${nameLocation}`,
-  )
-  console.log(resp.data)
   return resp.data
 }

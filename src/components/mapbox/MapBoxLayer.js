@@ -39,7 +39,7 @@ export const MapBoxLayer = () => {
     left: 10,
     top: 10,
   }
-
+  console.log(viewport);
   return (
     <div className="mapContainer">
       <Map

@@ -19,16 +19,13 @@ import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
 /* import './react-leaflet.css'; */
 
 export const InteractiveMap = () => {
-  const position = [-17.390915, -66.2137434]
   const {
-    viewport,
-    setViewport,
     loading,
-    loadingState,
+
     onChange,
     currentHeatSources,
     selecteDepartamentCopy,
-    layerStyle,
+
     getHeatSources,
     stateArrMunProv,
     //state from usestate
@@ -43,7 +40,9 @@ export const InteractiveMap = () => {
     queryToFind,
     changeQueryOneFieldToFind,
     setShowProvinvicaMun,
+    loadingNetworl,
   } = useFocosCalor()
+
   function convertToGeoJson(): GeoJsonObject {
     const { type, ...rest } = currentHeatSources.heatResources
     return {
@@ -61,7 +60,8 @@ export const InteractiveMap = () => {
   const [key, setKey] = useState(generateUniqueKey())
   useEffect(() => {
     setKey(generateUniqueKey())
-  }, [currentHeatSources.heatResources, viewport])
+  }, [currentHeatSources.heatResources])
+  const initialPosition = [-17.390915, -66.2137434]
 
   return (
     <div>
@@ -70,6 +70,7 @@ export const InteractiveMap = () => {
           marginTop: '1rem',
         }}
       />
+
       <MapBoxModal
         showProvinvicaMun={setShowProvinvicaMun}
         imageUrl={selecteDepartamentCopy.image}
@@ -87,7 +88,7 @@ export const InteractiveMap = () => {
         getHeatSources={getHeatSources}
       />
       <MapContainer
-        center={[-17.390915, -66.2137434]}
+        center={[initialPosition[0], initialPosition[1]]}
         zoom={7}
         key={key}
         scrollWheelZoom={true}
@@ -98,19 +99,23 @@ export const InteractiveMap = () => {
         />
         <GeoJSON data={convertToGeoJson()} />
         <GeoJSON data={polyToGeoJson()} />
-        {/*  <RecenterAutomatically
-          lat={viewport.latitude}
-          lng={viewport.longitude}
-        /> */}
+
+        {currentHeatSources.middlePoint.coordinates.longitude !== undefined && (
+          <RecenterAutomatically
+            lat={currentHeatSources.middlePoint.coordinates.longitude}
+            lng={currentHeatSources.middlePoint.coordinates.latitude}
+          />
+        )}
       </MapContainer>
     </div>
   )
 }
 const RecenterAutomatically = ({ lat, lng }: any) => {
+  console.log(lat, lng)
   const map = useMap()
   useEffect(() => {
     map.setView([lat, lng])
-    map.setZoom(10)
+    map.setZoom(9)
   }, [lat, lng])
   return null
 }

@@ -90,3 +90,8 @@ export const convertMonths = (date: string): string => {
     return date
   
 }
+
+export const addHours = (h: number, date: Date) => {
+  date.setHours(date.getHours() + h)
+  return date
+}
