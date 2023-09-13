@@ -13,12 +13,12 @@ export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
   const {
     dateSelectedAndRange,
     queryToFind,
-    currentGeoJson,
+    currentHeatSources,
     showOptions,
     showProvMun,
   } = useContext(HeatSourcesContext)
 
- /*  const renderPlaceName = (): string => {
+  /*  const renderPlaceName = (): string => {
     if (!showOptions) {
       return ''
     }
@@ -40,13 +40,13 @@ export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
           {!dateSelectedAndRange.findbyOneDate ? (
             <>
               <b>{moment(dateSelectedAndRange.dateStart).format('LL')}</b>
-              <b>es de {currentGeoJson.features.length}</b>
+              {/* <b>es de {currentGeoJson.features.length}</b> */}
             </>
           ) : (
             <>
               <b>{moment(dateSelectedAndRange.dateStart).format('LL')}</b> hasta{' '}
               <b>{moment(dateSelectedAndRange.dateEnd).format('LL')}</b> es de{' '}
-              <b>{currentGeoJson.features.length}</b>
+              {/* <b>{currentGeoJson.features.length}</b> */}
             </>
           )}
         </span>

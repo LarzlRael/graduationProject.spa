@@ -7,6 +7,7 @@ import {
   CoordLatLngInt,
   LatLngInt,
 } from '../interfaces/countProvinceDepartamento.interface'
+import { IHeatResourcesAndPoint } from '../interfaces/geoJsonResponse'
 
 export const getHigherOrLowerByDate = async (): Promise<DatesResponse> => {
   const { data } = await serverAPI.get<DatesResponse>('/analysis/dates')
@@ -63,8 +64,8 @@ export const getHotSourcesByDepType = async (
 }
 export const getHotSourcesByType = async (
   heatSourcesByPlace: HeatSourcesByPlace,
-): Promise<GeoJSONResponse> => {
-  const resp = await serverAPI.post<GeoJSONResponse>(
+): Promise<IHeatResourcesAndPoint> => {
+  const resp = await serverAPI.post<IHeatResourcesAndPoint>(
     `/maps/getHeatSourcesAllByType`,
     {
       ...heatSourcesByPlace,

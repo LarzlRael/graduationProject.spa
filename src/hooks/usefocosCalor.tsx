@@ -5,9 +5,9 @@ import {
   mapsTypeStyle,
 } from '../data/data'
 import {
+  getHotSourcesByType,
   getHeatSourcesByDepartament,
   getHotSourcesByDepType,
-  getHotSourcesByType,
   getMidPoint,
 } from '../provider/heatSourcesservices'
 import { getNombresProvinciasAndMun } from '../provider/analysisServices'
@@ -17,7 +17,6 @@ import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 /* import { FlyToInterpolator } from 'react-map-gl' */
 import { CommonContext } from '../context/commonContext/CommonContext_'
 import { IProvinciasAndMunicipios } from '../interfaces/provMun.interface'
-import { CoordLatLngInt } from '../interfaces/countProvinceDepartamento.interface'
 
 export const useFocosCalor = () => {
   const {
@@ -25,12 +24,11 @@ export const useFocosCalor = () => {
     loadingState,
     showProvMun,
     showOptions,
-    currentLatLongMidLocation,
     mapStyle,
-    currentGeoJson,
+    currentHeatSources,
     setShowOptions,
     setChangeMapType,
-    changeCurrentLatLng,
+
     changeCurrentGeoJson,
     changeQueryOneFieldToFind,
     changeQueryToFind,
@@ -64,10 +62,10 @@ export const useFocosCalor = () => {
   const [viewport, setViewport] = useState({
     /* width: 'fit',
     height: '100vh', */
-    longitude: currentLatLongMidLocation.coordinates.longitude,
-    latitude: currentLatLongMidLocation.coordinates.latitude,
+    longitude: currentHeatSources.middlePoint.coordinates.longitude,
+    latitude: currentHeatSources.middlePoint.coordinates.latitude,
     zoom: 5.2,
-    poligone: currentLatLongMidLocation.poligono,
+    poligone: currentHeatSources.middlePoint.poligono,
     transitionDuration: 5000,
     /* transitionInterpolator: new FlyToInterpolator(), */
   })
@@ -75,9 +73,9 @@ export const useFocosCalor = () => {
   const goTo = () => {
     setViewport({
       ...viewport,
-      longitude: currentLatLongMidLocation.coordinates.longitude,
-      latitude: currentLatLongMidLocation.coordinates.latitude,
-      poligone: currentLatLongMidLocation.poligono,
+      longitude: currentHeatSources.middlePoint.coordinates.longitude,
+      latitude: currentHeatSources.middlePoint.coordinates.latitude,
+      poligone: currentHeatSources.middlePoint.poligono,
       zoom: 6,
       transitionDuration: 1000,
       /* transitionInterpolator: new FlyToInterpolator(), */
@@ -158,7 +156,7 @@ export const useFocosCalor = () => {
     })
 
     changeCurrentGeoJson(queryResult)
-    showSnakBarError(queryResult.features.length)
+    showSnakBarError(queryResult.heatResources.features.length)
   }
 
   useEffect(() => {
@@ -173,9 +171,6 @@ export const useFocosCalor = () => {
       departamentSelected: queryToFind.departamentSelected,
       image: queryToFind.image,
     })
-    if (currentGeoJson.features.length > 0) {
-      closeModal()
-    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])
@@ -194,47 +189,9 @@ export const useFocosCalor = () => {
     getArray()
   }, [queryToFind.departamentSelected])
 
-  useEffect(() => {
-    const getMiddlePoint = async () => {
-      console.log('getting middle point')
-      let getMidPointService: CoordLatLngInt | null = null
-      /*   if (!queryToFind.municipio) {
-        return
-      }*/
-      if (queryToFind.typeLocation === 'pais') {
-        return
-      }
-      if (!showOptions) {
-        getMidPointService = await getMidPoint(
-          'departamentos',
-          queryToFind.departamentSelected,
-        )
-      }
-
-      getMidPointService = await getMidPoint(
-        queryToFind.typeLocation + 's',
-        queryToFind.nameLocation,
-      )
-
-      console.log(getMidPointService)
-
-      /* if (currentGeoJson.features.length > 0) {
-        changeCurrentLatLng({
-          coordinates: {
-            latitude: getMidPointService.coordinates.latitude,
-            longitude: getMidPointService.coordinates.longitude,
-          },
-          poligono: getMidPointService.poligono,
-        })
-        closeModal()
-      } */
-    }
-    getMiddlePoint()
-  }, [loading])
-
-  useEffect(() => {
+  /* useEffect(() => {
     goTo()
-  }, [currentLatLongMidLocation])
+  }, [currentLatLongMidLocation]) */
 
   useEffect(() => {
     changeQueryToFind({
@@ -250,7 +207,7 @@ export const useFocosCalor = () => {
     setViewport,
     onChange,
     loading,
-    currentGeoJson,
+    currentHeatSources,
     selecteDepartamentCopy,
     layerStyle,
     stateArrMunProv,

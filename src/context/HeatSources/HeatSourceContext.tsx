@@ -20,7 +20,10 @@ import {
 
 import moment from 'moment'
 import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.interface'
-import { GeoJsonFeature } from '../../interfaces/geoJsonResponse'
+import {
+  GeoJsonFeature,
+  IHeatResourcesAndPoint,
+} from '../../interfaces/geoJsonResponse'
 import { SelectOptionDateInterface } from './HeatSourcesReducer'
 import { CoordLatLngInt } from '../../interfaces/countProvinceDepartamento.interface'
 moment.locale('es')
@@ -35,8 +38,8 @@ type HeatSourcesStateProps = {
   mounthAndYearSelected: SelectOptionDateInterface
   titleArray: string[]
   countByDates: DatesHeatSources[]
-  currentLatLongMidLocation: CoordLatLngInt
-  currentGeoJson: GeoJsonFeature
+
+  currentHeatSources: IHeatResourcesAndPoint
   dateSelectedAndRange: DateSelectedRangeInterface
   queryToFind: QueryToFindInterface
   setShowProvinvicaMun: (newState: boolean) => void
@@ -45,8 +48,7 @@ type HeatSourcesStateProps = {
   changeTypeGraph: (value: string) => void
   setMounthSelected: (value: SelectOptionDateInterface) => void
   getHeatSourcesInfoToGragh: (monthNumber: number, year: number) => void
-  changeCurrentLatLng: (currentLatLong: CoordLatLngInt) => void
-  changeCurrentGeoJson: (geoJsonCurrent: GeoJsonFeature) => void
+  changeCurrentGeoJson: (geoJsonCurrent: IHeatResourcesAndPoint) => void
   changeDateSelectedAndRanked: (
     dateSelectedAndRange: DateSelectedRangeInterface,
   ) => void
@@ -71,19 +73,21 @@ const HeatSourcesInitialState: HeatSourcestState = {
   },
   countByDates: [],
   titleArray: [],
-  currentLatLongMidLocation: {
-    coordinates: {
-      longitude: -66.2137434,
-      latitude: -17.390915,
+  currentHeatSources: {
+    heatResources: {
+      type: 'FeatureCollection',
+      features: [],
     },
-    poligono: {
-      type: 'MultiPolygon',
-      coordinates: [],
+    middlePoint: {
+      coordinates: {
+        longitude: -66.2137434,
+        latitude: -17.390915,
+      },
+      poligono: {
+        type: 'MultiPolygon',
+        coordinates: [],
+      },
     },
-  },
-  currentGeoJson: {
-    type: 'FeatureCollection',
-    features: [],
   },
 
   dateSelectedAndRange: {
@@ -220,16 +224,10 @@ export const HeatProvider = ({ children }: any) => {
       payload: arrayTitles,
     })
   }
-  const changeCurrentLatLng = (coordLatLog: CoordLatLngInt) => {
-    dispatch({
-      type: 'setLatLong',
-      payload: coordLatLog,
-    })
-  }
 
-  const changeCurrentGeoJson = (currentGeoJson: GeoJsonFeature) => {
+  const changeCurrentGeoJson = (currentGeoJson: IHeatResourcesAndPoint) => {
     dispatch({
-      type: 'setCurrentGeoJson',
+      type: 'setCurrentHeatSources',
       payload: currentGeoJson,
     })
   }
@@ -272,7 +270,6 @@ export const HeatProvider = ({ children }: any) => {
         changeTypeGraph,
         setMounthSelected,
         getHeatSourcesInfoToGragh,
-        changeCurrentLatLng,
         changeCurrentGeoJson,
         changeDateSelectedAndRanked,
         changeQueryOneFieldToFind,

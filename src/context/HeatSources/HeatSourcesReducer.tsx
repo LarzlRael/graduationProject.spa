@@ -5,7 +5,10 @@ import {
   LatLngInt,
 } from '../../interfaces/countProvinceDepartamento.interface'
 import { MapStyleIntOption } from '../../data/data'
-import { GeoJsonFeature } from '../../interfaces/geoJsonResponse'
+import {
+  GeoJsonFeature,
+  IHeatResourcesAndPoint,
+} from '../../interfaces/geoJsonResponse'
 
 export interface DateSelectedRangeInterface {
   dateStart: Date | null
@@ -34,8 +37,7 @@ export interface HeatSourcestState {
   mounthAndYearSelected: SelectOptionDateInterface
   countByDates: DatesHeatSources[]
   titleArray: string[]
-  currentLatLongMidLocation: CoordLatLngInt
-  currentGeoJson: GeoJsonFeature
+  currentHeatSources: IHeatResourcesAndPoint
 
   dateSelectedAndRange: DateSelectedRangeInterface
   queryToFind: QueryToFindInterface
@@ -51,8 +53,7 @@ type HeatSourceAction =
   | { type: 'changeMounthOrYear'; payload: SelectOptionDateInterface }
   | { type: 'changeCountByDates'; payload: DatesHeatSources[] }
   | { type: 'setTitlesArray'; payload: string[] }
-  | { type: 'setLatLong'; payload: CoordLatLngInt }
-  | { type: 'setCurrentGeoJson'; payload: GeoJsonFeature }
+  | { type: 'setCurrentHeatSources'; payload: IHeatResourcesAndPoint }
   | { type: 'dateSelectedAndRange'; payload: DateSelectedRangeInterface }
   | { type: 'setQueryToFind'; payload: QueryToFindInterface }
   | {
@@ -119,15 +120,11 @@ export const heatSourcesReducer = (
         ...state,
         titleArray: action.payload,
       }
-    case 'setLatLong':
+
+    case 'setCurrentHeatSources':
       return {
         ...state,
-        currentLatLongMidLocation: action.payload,
-      }
-    case 'setCurrentGeoJson':
-      return {
-        ...state,
-        currentGeoJson: action.payload,
+        currentHeatSources: action.payload,
       }
 
     case 'dateSelectedAndRange':

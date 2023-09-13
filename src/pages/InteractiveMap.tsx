@@ -26,7 +26,7 @@ export const InteractiveMap = () => {
     loading,
     loadingState,
     onChange,
-    currentGeoJson,
+    currentHeatSources,
     selecteDepartamentCopy,
     layerStyle,
     getHeatSources,
@@ -45,14 +45,14 @@ export const InteractiveMap = () => {
     setShowProvinvicaMun,
   } = useFocosCalor()
   function convertToGeoJson(): GeoJsonObject {
-    const { type, ...rest } = currentGeoJson
+    const { type, ...rest } = currentHeatSources.heatResources
     return {
       type: 'Point',
       ...rest,
     }
   }
   function polyToGeoJson(): GeoJsonObject {
-    const { type, ...rest } = viewport.poligone
+    const { type, ...rest } = currentHeatSources.middlePoint.poligono
     return {
       type: 'MultiPolygon',
       ...rest,
@@ -61,7 +61,7 @@ export const InteractiveMap = () => {
   const [key, setKey] = useState(generateUniqueKey())
   useEffect(() => {
     setKey(generateUniqueKey())
-  }, [currentGeoJson, viewport])
+  }, [currentHeatSources.heatResources, viewport])
 
   return (
     <div>

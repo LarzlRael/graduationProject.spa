@@ -20,7 +20,6 @@
     "jsx": "react-jsx",
     "resolveJsonModule": true,
     "suppressImplicitAnyIndexErrors": true,
-    
   },
   "include": [
     "src"

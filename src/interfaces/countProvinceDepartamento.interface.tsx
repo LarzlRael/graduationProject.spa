@@ -14,9 +14,9 @@ export interface DatesHeatSources {
   focos_calor: string
 }
 
-export interface CoordLatLngInt{
+export interface CoordLatLngInt {
   coordinates: LatLngInt
-  poligono:any
+  poligono: any
 }
 export interface LatLngInt {
   longitude: number
