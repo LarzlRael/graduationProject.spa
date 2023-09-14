@@ -28,7 +28,6 @@ export const useFocosCalor = () => {
     changeQueryOneFieldToFind,
     changeQueryToFind,
 
-    dateSelectedAndRange,
     queryToFind,
     setShowProvinvicaMun,
   } = useContext(HeatSourcesContext)
@@ -123,8 +122,6 @@ export const useFocosCalor = () => {
   const getHeatSourcesByType = async () => {
     setLoadingNetwork(true)
     const queryResult = await getHotSourcesByType({
-      /* dateStart: dateStart!.toISOString().slice(0, 10),
-      dateEnd: dateEnd!.toISOString().slice(0, 10), */
       ...queryToFind,
     })
     setLoadingNetwork(false)

@@ -9,6 +9,7 @@ import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import { DateSelectedRangeInterface } from '../context/HeatSources/HeatSourcesReducer'
 import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
 import { Switch } from '../form/Switch'
+import { useFocosCalor } from '../hooks/usefocosCalor'
 
 export const DatePickerRange = () => {
   const {
@@ -23,15 +24,18 @@ export const DatePickerRange = () => {
     dateEnd,
     findbyOneDate: isShowSwith,
   } = dateSelectedAndRange
-
+  const { queryToFind, changeQueryToFind } = useFocosCalor()
   useEffect(() => {
     /* setEndDateRange(moment(dateStart,).add(6, 'days').toDate()); */
     changeDateSelectedAndRanked({
       ...dateSelectedAndRange,
       dateEnd: moment(dateStart).add(6, 'days').toDate(),
     })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    changeQueryToFind({
+      ...queryToFind,
+      dateStart: dateStart!.toISOString().slice(0, 10),
+      dateEnd: moment(dateStart).add(6, 'days').toDate().toISOString().slice(0, 10)
+    })
   }, [dateStart])
 
   useEffect(() => {
@@ -45,6 +49,10 @@ export const DatePickerRange = () => {
     changeDateSelectedAndRanked({
       ...dateSelectedAndRange,
       dateEnd: moment(dateStart).add(6, 'days').toDate(),
+    })
+    changeQueryToFind({
+      ...queryToFind,
+      dateEnd: dateStart!.toISOString().slice(0, 10),
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShowSwith])
