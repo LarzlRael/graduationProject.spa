@@ -94,13 +94,16 @@ export const GraphByMonths = () => {
       if (elements.length === 0) {
         return
       }
-      console.log(elements)
-      console.log(titleArray[elements[0].index])
+
+      if (monthName.includes(titleArray[elements[0].index])) {
+        return
+      }
 
       changeQueryToFind({
         ...queryToFind,
         typeLocation: 'pais',
-        
+        dateStart: titleArray[elements[0].index],
+        dateEnd: titleArray[elements[0].index],
       })
       navigate('/mapa')
     },

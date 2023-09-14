@@ -121,6 +121,11 @@ export const HeatProvider = ({ children }: any) => {
       dateStart: new Date(),
       dateEnd: new Date(),
     })
+    changeQueryToFind({
+      ...state.queryToFind,
+      dateStart: new Date().toISOString().slice(0, 10),
+      dateEnd: new Date().toISOString().slice(0, 10),
+    })
   }, [])
 
   const getDatesAvailable = async () => {

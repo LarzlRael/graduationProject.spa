@@ -43,8 +43,6 @@ export const useFocosCalor = () => {
     }
   }, [darkTheme])
 
-  const { dateStart, dateEnd } = dateSelectedAndRange
-
   const [loading, setLoading] = useState(true)
   const [loadingNetworl, setLoadingNetwork] = useState(false)
   const [viewport, setViewport] = useState({
@@ -125,8 +123,8 @@ export const useFocosCalor = () => {
   const getHeatSourcesByType = async () => {
     setLoadingNetwork(true)
     const queryResult = await getHotSourcesByType({
-      dateStart: dateStart!.toISOString().slice(0, 10),
-      dateEnd: dateEnd!.toISOString().slice(0, 10),
+      /* dateStart: dateStart!.toISOString().slice(0, 10),
+      dateEnd: dateEnd!.toISOString().slice(0, 10), */
       ...queryToFind,
     })
     setLoadingNetwork(false)
