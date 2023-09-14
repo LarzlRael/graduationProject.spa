@@ -57,7 +57,6 @@ export const Select = () => {
       <BasicDropdownSelect>
         {/* Opciones del select */}
         <option value="">2</option>
-        
       </BasicDropdownSelect>
     </BasicDropdownContainer>
   )

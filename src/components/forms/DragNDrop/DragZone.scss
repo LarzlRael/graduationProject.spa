@@ -1,0 +1,20 @@
+.StyledDropzone__label {
+  color: var(--form-label-color);
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0;
+  font-weight: 400;
+}
+.Dropzone__filename {
+  word-break: break-word;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  font-weight: 500;
+  color: var(--form-label-color);
+}
+
+.Dropzone__extension {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  font-weight: 500;
+}

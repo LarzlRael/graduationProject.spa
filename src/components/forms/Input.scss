@@ -1,0 +1,39 @@
+.Input__check {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.Input__check label {
+  margin-right: 5px;
+  color: var(--color-text);
+}
+
+.Input__check input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  border: 1px solid var(--color-text);
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .Input__check {
+    margin-top: 10px;
+  }
+  .Input__check label {
+    margin-right: 5px;
+    font-size: 14px;
+    color: var(--color-text);
+  }
+}
+
+.Form__input--container {
+  position: relative;
+}
+.Form__input--icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}

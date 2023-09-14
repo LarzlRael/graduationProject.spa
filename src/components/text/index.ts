@@ -1,0 +1,5 @@
+export { Span } from './Span'
+export { H2 } from './H2'
+export { P } from './P'
+export { Label } from './Label'
+export { Descripcion } from './Descripcion'
