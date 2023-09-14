@@ -27,8 +27,7 @@ export const useGraficos = ({
 
   const [stringTitle, setStringTitle] = useState<string[]>([''])
   const [tipoGrafico, setTipoGrafico] = useState<string>()
-  const navigate = useNavigate()
-  const { changeQueryToFind } = useFocosCalor()
+
   useEffect(() => {
     const arrayTitles: string[] = []
 
@@ -36,10 +35,6 @@ export const useGraficos = ({
 
     setStringTitle(arrayTitles)
   }, [info])
-
-  const handleNav = () => {
-    navigate('/mapa')
-  }
 
   const data = {
     labels: stringTitle,
@@ -73,7 +68,7 @@ export const useGraficos = ({
         return
       }
       selected({
-        value: stringTitle[elements[0].index],
+        nameLocation: stringTitle[elements[0].index],
         departamentSelected: nombreDepartamento,
       })
     },
@@ -102,7 +97,7 @@ export const useGraficos = ({
         return
       }
       selected({
-        value: stringTitle[elements[0].index],
+        nameLocation: stringTitle[elements[0].index],
         departamentSelected: nombreDepartamento,
       })
     },

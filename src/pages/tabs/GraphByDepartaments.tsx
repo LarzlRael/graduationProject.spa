@@ -15,6 +15,7 @@ import { FilledButton } from '../../components/widgets/buttons/FilledButton'
 import Select from 'react-select'
 import { Switch } from '../../form/Switch'
 import { useNavigate } from 'react-router-dom'
+import { useFocosCalor } from '../../hooks/usefocosCalor'
 
 export const GraphByDepartaments = () => {
   const {
@@ -45,6 +46,7 @@ export const GraphByDepartaments = () => {
 
   const [countDepProvState, setCountDepProvState] = useState<RespFoco[]>([])
   const [loading, setLoading] = useState(false)
+  const { getHeatSources } = useFocosCalor()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getProvinciasNamesService = async () => {
@@ -176,9 +178,19 @@ export const GraphByDepartaments = () => {
           console.log(queryToFind)
           changeQueryToFind({
             ...queryToFind,
-            departamentSelected: value.departamentSelected,
-            nameLocation: value.value,
+            departamentSelected: departamentoProvincia.todosDepartamentos
+              ? value.nameLocation
+              : departamentoProvincia.departamentSelected,
+
+            nameLocation: value.nameLocation,
+            typeLocation: departamentoProvincia.todosDepartamentos
+              ? 'departamento'
+              : showProvMun
+              ? 'provincia'
+              : 'municipio',
           })
+          getHeatSources()
+          navigate('/mapa')
         }}
         /*  selected={(value) => {
           console.log(value)
