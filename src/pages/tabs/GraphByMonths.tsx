@@ -25,6 +25,8 @@ import {
 } from 'chart.js'
 import { LoadingElipsis } from '../../components/widgets/loadings/LoadingElipsis'
 import { Switch } from '../../form/Switch'
+import { useFocosCalor } from '../../hooks/usefocosCalor'
+import { useNavigate } from 'react-router-dom'
 moment.locale('es')
 
 export const GraphByMonths = () => {
@@ -37,8 +39,11 @@ export const GraphByMonths = () => {
     titleArray,
     loadingState,
     countByDates,
+    changeQueryToFind,
+    queryToFind,
   } = useContext(HeatSourcesContext)
-
+  const { getHeatSources } = useFocosCalor()
+  const navigate = useNavigate()
   useEffect(() => {
     getHeatSourcesInfoToGragh(
       mounthAndYearSelected.month,
@@ -59,7 +64,7 @@ export const GraphByMonths = () => {
           : [],
         backgroundColor: titleArray.map(() => getRandomColor()),
         borderColor: titleArray.map(() => getRandomColor()),
-        borderWidth: 3,
+        borderWidth: 2,
       },
     ],
   }
@@ -84,6 +89,20 @@ export const GraphByMonths = () => {
       bar: {
         borderWidth: 5,
       },
+    },
+    onClick: function (evt: any, elements: any) {
+      if (elements.length === 0) {
+        return
+      }
+      console.log(elements)
+      console.log(titleArray[elements[0].index])
+
+      changeQueryToFind({
+        ...queryToFind,
+        typeLocation: 'pais',
+        
+      })
+      navigate('/mapa')
     },
   }
 

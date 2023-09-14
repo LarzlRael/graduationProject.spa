@@ -15,11 +15,11 @@ import {
   RespFoco,
 } from '../interfaces/countProvinceDepartamento.interface'
 import {
-  HeatSourcesByPlace,
   CountInterface,
   IProvinciasAndMunicipios,
 } from '../interfaces/provMun.interface'
 import { DatesResponse } from '../interfaces/datesResponse'
+import { QueryToFindInterface } from '../context/HeatSources/HeatSourcesReducer'
 
 export const getNombresMunicipios = async (departamento: string) => {
   const resp = await serverAPI.get<MunResp[]>(
@@ -43,7 +43,7 @@ export const getNombresProvinciasAndMun = async (departamento: string) => {
 }
 
 export const getCountByDepartamaments = async (
-  departamentos: HeatSourcesByPlace,
+  departamentos: QueryToFindInterface,
 ) => {
   const resp = await serverAPI.post<RespFoco[]>(
     `/analysis/getcountdepartamentos`,
@@ -54,7 +54,7 @@ export const getCountByDepartamaments = async (
   return resp.data
 }
 
-export const getCountByDepPro = async (provincia: HeatSourcesByPlace) => {
+export const getCountByDepPro = async (provincia: QueryToFindInterface) => {
   const resp = await serverAPI.post<RespFoco[]>(
     `/analysis/countdepartamentosprovincias`,
     {
@@ -63,7 +63,7 @@ export const getCountByDepPro = async (provincia: HeatSourcesByPlace) => {
   )
   return resp.data
 }
-export const getCountByDepType = async (provincia: HeatSourcesByPlace) => {
+export const getCountByDepType = async (provincia: QueryToFindInterface) => {
   const resp = await serverAPI.post<RespFoco[]>(
     `/analysis/countDepartamentoByType`,
     {
@@ -73,7 +73,7 @@ export const getCountByDepType = async (provincia: HeatSourcesByPlace) => {
   return resp.data
 }
 
-export const getCountByDeMun = async (municipcio: HeatSourcesByPlace) => {
+export const getCountByDeMun = async (municipcio: QueryToFindInterface) => {
   const resp = await serverAPI.post<RespFoco[]>(
     `/analysis/countdepartamentosmunicipios`,
     {

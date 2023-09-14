@@ -1,14 +1,6 @@
-import {
-  CoordLatLngInt,
-  CountByDates,
-  DatesHeatSources,
-  LatLngInt,
-} from '../../interfaces/countProvinceDepartamento.interface'
+import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.interface'
 import { MapStyleIntOption } from '../../data/data'
-import {
-  GeoJsonFeature,
-  IHeatResourcesAndPoint,
-} from '../../interfaces/geoJsonResponse'
+import { IHeatResourcesAndPoint } from '../../interfaces/geoJsonResponse'
 
 export interface DateSelectedRangeInterface {
   dateStart: Date | null
@@ -17,10 +9,12 @@ export interface DateSelectedRangeInterface {
   findbyOneDate: boolean
 }
 export interface QueryToFindInterface {
-  departamentSelected: string
+  departamento: string
   image: string
   typeLocation?: 'provincia' | 'municipio' | 'departamento' | 'pais' | null
   nameLocation: string
+  dateStart?: string
+  dateEnd?: string
 }
 export interface SelectOptionDateInterface {
   month: number
@@ -122,7 +116,7 @@ export const heatSourcesReducer = (
       }
 
     case 'setCurrentHeatSources':
-      console.log(action.payload);
+      console.log(action.payload)
       return {
         ...state,
         currentHeatSources: action.payload,

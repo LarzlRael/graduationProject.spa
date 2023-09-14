@@ -92,7 +92,7 @@ export const useGraficos = ({
         text: nombreDepartamento,
       },
     },
-    onClick: function (evt: any, elements: any) {
+    onClick: function (evt: any, elements: any[]) {
       if (elements.length === 0) {
         return
       }

@@ -71,7 +71,7 @@ export const useFocosCalor = () => {
   const onChange = (e: OptionAndValueInterface) => {
     changeQueryToFind({
       ...queryToFind,
-      departamentSelected: e.label,
+      departamento: e.label,
       image: e.value,
       typeLocation: e.label === 'Bolivia' ? 'pais' : 'departamento',
     })
@@ -127,11 +127,10 @@ export const useFocosCalor = () => {
     const queryResult = await getHotSourcesByType({
       dateStart: dateStart!.toISOString().slice(0, 10),
       dateEnd: dateEnd!.toISOString().slice(0, 10),
-      departamento: queryToFind.departamentSelected,
       ...queryToFind,
     })
     setLoadingNetwork(false)
-    console.log(queryResult.middlePoint.coordinates);
+    console.log(queryResult.middlePoint.coordinates)
     changeCurrentGeoJson(queryResult)
     /* setViewport({
       ...viewport,
@@ -154,7 +153,7 @@ export const useFocosCalor = () => {
 
     setSelecteDepartamentCopy({
       ...selecteDepartamentCopy,
-      departamentSelected: queryToFind.departamentSelected,
+      departamentSelected: queryToFind.departamento,
       image: queryToFind.image,
     })
 
@@ -164,7 +163,7 @@ export const useFocosCalor = () => {
   useEffect(() => {
     const getProvAndMunNamesArray = async () => {
       const arrayProvinciasList = await getNombresProvinciasAndMun(
-        queryToFind.departamentSelected,
+        queryToFind.departamento,
       )
 
       setArrMunProv({
@@ -173,7 +172,7 @@ export const useFocosCalor = () => {
       })
     }
     getProvAndMunNamesArray()
-  }, [queryToFind.departamentSelected])
+  }, [queryToFind.departamento])
 
   /* useEffect(() => {
     changeQueryToFind({

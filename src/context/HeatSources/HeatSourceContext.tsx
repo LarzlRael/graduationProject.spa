@@ -94,7 +94,7 @@ const HeatSourcesInitialState: HeatSourcestState = {
     findbyOneDate: false,
   },
   queryToFind: {
-    departamentSelected: departametsArray[0].label,
+    departamento: departametsArray[0].label,
     image: departametsArray[0].value,
     nameLocation: '',
     typeLocation: 'pais',

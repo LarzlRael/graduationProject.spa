@@ -57,6 +57,7 @@ export const GraphByDepartaments = () => {
 
     setCountDepProvState(
       await getCountByDepPro({
+        ...queryToFind,
         dateStart: dateStartToQuery!,
         dateEnd: dateEndToQuery!,
         departamento: departamentoProvincia.departamentSelected,
@@ -73,6 +74,7 @@ export const GraphByDepartaments = () => {
 
     setCountDepProvState(
       await getCountByDepartamaments({
+        ...queryToFind,
         dateStart: dateStartToQuery!,
         dateEnd: dateEndToQuery!,
         departamento: departamentoProvincia.departamentSelected,
@@ -89,6 +91,7 @@ export const GraphByDepartaments = () => {
 
     setCountDepProvState(
       await getCountByDeMun({
+        ...queryToFind,
         dateStart: dateStartToQuery!,
         dateEnd: dateEndToQuery!,
         departamento: departamentoProvincia.departamentSelected,
@@ -112,14 +115,7 @@ export const GraphByDepartaments = () => {
         setShowSwitch(true)
       }
     }
-  }, [
-    departamentoProvincia.todosDepartamentos,
-    getDepartamentosNamesService,
-    getMunicipiosServices,
-    getProvinciasNamesService,
-    loading,
-    showProvMun,
-  ])
+  }, [loading])
 
   const consultar = () => {
     setLoading(true)
@@ -178,7 +174,7 @@ export const GraphByDepartaments = () => {
           console.log(queryToFind)
           changeQueryToFind({
             ...queryToFind,
-            departamentSelected: departamentoProvincia.todosDepartamentos
+            departamento: departamentoProvincia.todosDepartamentos
               ? value.nameLocation
               : departamentoProvincia.departamentSelected,
 
