@@ -10,8 +10,8 @@ import { CommonContext } from '../../context/commonContext/CommonContext_'
 export const TabNavigator = () => {
   const { tab, setTabPosition } = useContext(CommonContext)
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setTabPosition(parseInt(newValue))
+  const handleSelected = (newValue: number) => {
+    setTabPosition(newValue)
   }
 
   return (
@@ -34,16 +34,22 @@ export const TabNavigator = () => {
           <GraphByDepartaments />
         </TabPanel>
       </TabContext> */}
-      <Tabs>
+      <Tabs
+        selected={true}
+        selectedIndex={tab}
+        /* selectedIndex={tab} */
+        onSelect={handleSelected}
+        /* onChange={(index) => {
+          console.log(index)
+        }} */
+      >
         <TabList>
           <Tab>Departamentos</Tab>
           <Tab>Gráficos por periodo de tiempo</Tab>
           <Tab>Gráficos por departamentos</Tab>
         </TabList>
 
-        <TabPanel >
-          <MapBoxLayer />
-        </TabPanel>
+        <TabPanel>{/* <MapBoxLayer /> */}</TabPanel>
         <TabPanel>
           <GraphByMonths />
         </TabPanel>

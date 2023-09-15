@@ -12,6 +12,7 @@ import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 /* import { FlyToInterpolator } from 'react-map-gl' */
 import { CommonContext } from '../context/commonContext/CommonContext_'
 import { IProvinciasAndMunicipios } from '../interfaces/provMun.interface'
+import { validateArray } from '../utils/validation'
 
 export const useFocosCalor = () => {
   const {
@@ -125,17 +126,20 @@ export const useFocosCalor = () => {
       ...queryToFind,
     })
     setLoadingNetwork(false)
-    console.log(queryResult.middlePoint.coordinates)
     changeCurrentGeoJson(queryResult)
-    /* setViewport({
+
+    setViewport({
       ...viewport,
       longitude: queryResult.middlePoint.coordinates.latitude,
       latitude: queryResult.middlePoint.coordinates.longitude,
       poligone: queryResult.middlePoint.poligono,
       zoom: 6,
       transitionDuration: 1000,
-    }) */
-    showSnakBarError(queryResult.heatResources.features.length)
+    })
+  /*   if (validateArray(queryResult.heatResources.features)) {
+      closeModal()
+    } */
+    /* showSnakBarError(queryResult.heatResources.features.length) */
   }
 
   useEffect(() => {

@@ -116,7 +116,6 @@ export const heatSourcesReducer = (
       }
 
     case 'setCurrentHeatSources':
-      console.log(action.payload)
       return {
         ...state,
         currentHeatSources: action.payload,

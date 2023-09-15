@@ -80,6 +80,7 @@ const HeatSourcesInitialState: HeatSourcestState = {
         longitude: -66.2137434,
         latitude: -17.390915,
       },
+
       poligono: {
         type: 'MultiPolygon',
         coordinates: [],

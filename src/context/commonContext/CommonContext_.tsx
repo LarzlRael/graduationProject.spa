@@ -20,7 +20,7 @@ const CommonInitialState: CommonState = {
     kind: true,
   },
   darkTheme: localStorage.getItem('darktheme') === 'true' ? true : false,
-  tab: 1,
+  tab: 0,
   modalIsOpen: false,
 }
 

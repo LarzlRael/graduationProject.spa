@@ -3,9 +3,7 @@ import { useContext } from 'react'
 import { AuthAdminContext } from '../../../context/LoginContext/AuthAdminContext'
 import { CommonContext } from '../../../context/commonContext/CommonContext_'
 
-const LoadingElipsisStyles = styled.div<{
-  darkTheme: boolean
-}>`
+const LoadingElipsisStyles = styled.div`
   .Loading {
     text-align: center;
     margin-right: 10px;
@@ -22,7 +20,7 @@ const LoadingElipsisStyles = styled.div<{
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: ${({ darkTheme }) => darkTheme ? 'var(--primary-color)' : 'var(--primary-dark-color)'};;
+    background: ${({ theme }) => theme.darkTheme ? 'var(--primary-color)' : 'var(--primary-dark-color)'};
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   .lds-ellipsis div:nth-child(1) {
@@ -70,7 +68,7 @@ const LoadingElipsisStyles = styled.div<{
 export const LoadingElipsis = (props: any) => {
   const { darkTheme } = useContext(CommonContext)
   return (
-    <LoadingElipsisStyles darkTheme={darkTheme}>
+    <LoadingElipsisStyles theme={{ darkTheme }}>
       <div className="Loading">
         <div className="lds-ellipsis">
           <div></div>

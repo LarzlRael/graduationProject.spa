@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { ChangeEvent } from 'react'
 import { IoCloseCircleSharp } from 'react-icons/io5'
@@ -39,26 +39,32 @@ export const UpdateInformation = () => {
   }
 
   useDocumentTitle('Actualizar Focos de calor')
+  const inputRef = useRef<any>(null)
 
+  const handleClick = () => {
+    // 👇️ open file input box on click of another element
+    inputRef.current.click()
+  }
   return (
     <div>
       <h2>Actualizar focos de calor</h2>
       <span>¿De donde consigo el archivo ?</span>
       <br />
       <span>
-        Subir achivo de formato <b>.CVS</b>{' '}
+        Subir achivo de formato <b>.CVS</b>
       </span>
       <br />
       <input
         accept=".csv"
         /* className={classes.input} */
         style={{ display: 'none' }}
-        id="raised-button-file"
+        ref={inputRef}
         type="file"
         onChange={changeHandler}
+        id="raised-button-file"
       />
       <label htmlFor="raised-button-file">
-        <FilledButton>
+        <FilledButton onClick={handleClick}>
           Seleccionar archivo CVS
         </FilledButton>
       </label>

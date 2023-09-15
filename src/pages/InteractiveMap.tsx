@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { MapBoxLayer } from '../components/mapbox/MapBoxLayer'
+
 import {
   MapContainer,
   Marker,
@@ -7,6 +7,7 @@ import {
   TileLayer,
   useMap,
   GeoJSON,
+  Tooltip
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import './InteractiveMap.css'
@@ -16,14 +17,15 @@ import { MapBoxModal } from '../components/mapbox/MapBoxModal'
 import { mapsTypeStyle } from '../data/data'
 import { generateUniqueKey } from '../utils/key_utils'
 import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
-/* import './react-leaflet.css'; */
+import { LatLngInt } from '../interfaces/countProvinceDepartamento.interface'
+
 
 export const InteractiveMap = () => {
   const {
     loading,
 
-    onChange,
     currentHeatSources,
+    onChange,
     selecteDepartamentCopy,
 
     getHeatSources,
@@ -43,6 +45,26 @@ export const InteractiveMap = () => {
     loadingNetworl,
   } = useFocosCalor()
 
+  const [key, setKey] = useState(generateUniqueKey())
+  useEffect(() => {
+    setKey(generateUniqueKey())
+  }, [currentHeatSources.heatResources])
+
+  const [middlePosition, setMiddlePosition] = useState<LatLngInt>({
+    latitude: currentHeatSources.middlePoint.coordinates.latitude,
+    longitude: currentHeatSources.middlePoint.coordinates.longitude,
+  })
+
+  useEffect(() => {
+    if (
+      currentHeatSources.middlePoint.coordinates.latitude !== undefined ||
+      currentHeatSources.middlePoint.coordinates.longitude !== undefined
+    ) {
+      setMiddlePosition(currentHeatSources.middlePoint.coordinates)
+    }
+    console.log(middlePosition)
+  }, [currentHeatSources.middlePoint.coordinates])
+
   function convertToGeoJson(): GeoJsonObject {
     const { type, ...rest } = currentHeatSources.heatResources
     return {
@@ -57,12 +79,17 @@ export const InteractiveMap = () => {
       ...rest,
     }
   }
-  const [key, setKey] = useState(generateUniqueKey())
-  useEffect(() => {
-    setKey(generateUniqueKey())
-  }, [currentHeatSources.heatResources])
-  const initialPosition = [-17.390915, -66.2137434]
-
+  function setInfoMarkers() {
+    const { type, ...rest } = currentHeatSources.heatResources
+    return rest.features.map((marker) => {
+      const marker2 = [
+        marker.properties.latitude,
+        marker.properties.longitude,
+      ]
+      return { marker2, title: JSON.stringify(marker.properties) }
+    })
+  }
+  console.log(middlePosition);
   return (
     <div>
       <ButtonIcon
@@ -88,7 +115,7 @@ export const InteractiveMap = () => {
         getHeatSources={getHeatSources}
       />
       <MapContainer
-        center={[initialPosition[0], initialPosition[1]]}
+        center={[middlePosition.latitude, middlePosition.longitude]}
         zoom={7}
         key={key}
         scrollWheelZoom={true}
@@ -97,25 +124,24 @@ export const InteractiveMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <GeoJSON data={convertToGeoJson()} />
-        <GeoJSON data={polyToGeoJson()} />
+        {setInfoMarkers().map(({ marker2, title }, index) => (
+          <Marker key={index} position={[marker2[0], marker2[1]]}>
+            {/* <Popup>{title}</Popup> */}
+            <Tooltip>{title}</Tooltip>
+          </Marker>
+        ))}
 
-        {currentHeatSources.middlePoint.coordinates.longitude !== undefined && (
-          <RecenterAutomatically
-            lat={currentHeatSources.middlePoint.coordinates.longitude}
-            lng={currentHeatSources.middlePoint.coordinates.latitude}
-          />
-        )}
+        <GeoJSON data={polyToGeoJson()} />
       </MapContainer>
     </div>
   )
 }
-const RecenterAutomatically = ({ lat, lng }: any) => {
+const RecenterAutomatically = ({ lat, lng }: { lat: number; lng: number }) => {
   console.log(lat, lng)
   const map = useMap()
   useEffect(() => {
     map.setView([lat, lng])
-    map.setZoom(9)
+    map.setZoom(7)
   }, [lat, lng])
   return null
 }

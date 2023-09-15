@@ -1,12 +1,4 @@
 import { serverAPI } from './serverConfig'
-import {
-  ProvinciasResponse,
-  RespProvincia,
-} from '../interfaces/provinciasResponse.interface'
-import {
-  MunResp,
-  MunicipiosResponse,
-} from '../interfaces/municipiosResponse.interface'
 
 import {
   CountDepProMun,
@@ -20,20 +12,6 @@ import {
 } from '../interfaces/provMun.interface'
 import { DatesResponse } from '../interfaces/datesResponse'
 import { QueryToFindInterface } from '../context/HeatSources/HeatSourcesReducer'
-
-export const getNombresMunicipios = async (departamento: string) => {
-  const resp = await serverAPI.get<MunResp[]>(
-    `/analysis/nombres_municipios/${departamento}`,
-  )
-  return resp.data
-}
-
-export const getNombresProvincias = async (departamento: string) => {
-  const resp = await serverAPI.get<RespProvincia[]>(
-    `/analysis/nombres_provincias/${departamento}`,
-  )
-  return resp.data
-}
 
 export const getNombresProvinciasAndMun = async (departamento: string) => {
   const resp = await serverAPI.get<IProvinciasAndMunicipios>(
