@@ -20,49 +20,43 @@ export const DatePickerRange = () => {
   } = useContext(HeatSourcesContext)
 
   const {
-    dateStart,
-    dateEnd,
+    /* dateStart,
+    dateEnd, */
     findbyOneDate: isShowSwith,
   } = dateSelectedAndRange
   const { queryToFind, changeQueryToFind } = useFocosCalor()
   useEffect(() => {
-    /* setEndDateRange(moment(dateStart,).add(6, 'days').toDate()); */
-    changeDateSelectedAndRanked({
-      ...dateSelectedAndRange,
-      dateEnd: moment(dateStart).add(6, 'days').toDate(),
-    })
+    
     changeQueryToFind({
       ...queryToFind,
-      dateStart: moment(dateStart).toDate(),
-      dateEnd: moment(dateStart).toDate(),
+      dateEnd: moment(queryToFind.dateStart).add(6, 'days').toDate(),
     })
-  }, [dateStart])
+  }, [queryToFind.dateStart])
 
   useEffect(() => {
     if (!isShowSwith) {
-      changeDateSelectedAndRanked({
-        ...dateSelectedAndRange,
-        dateEnd: dateStart,
+      changeQueryToFind({
+        ...queryToFind,
+        dateEnd: queryToFind.dateStart!,
       })
       return
     }
-    changeDateSelectedAndRanked({
-      ...dateSelectedAndRange,
-      dateEnd: moment(dateStart).add(6, 'days').toDate(),
-    })
     changeQueryToFind({
       ...queryToFind,
-      dateEnd: moment(dateStart).toDate(),
+      dateEnd: moment(queryToFind.dateStart).add(6, 'days').toDate(),
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShowSwith])
 
   const onChange = (
-    value: any,
     nameField: keyof DateSelectedRangeInterface,
+    value: any,
   ) => {
     changeDateSelectedAndRanked({
       ...dateSelectedAndRange,
+      [nameField]: value,
+    })
+    changeQueryToFind({
+      ...queryToFind,
       [nameField]: value,
     })
   }
@@ -72,20 +66,20 @@ export const DatePickerRange = () => {
       <div>
         <div>
           <DatePicker
-            selected={dateStart}
+            selected={queryToFind.dateStart}
             maxDate={datesAvailable.max_date}
             dateFormat="dd/MM/yyyy"
-            onChange={(e: any) => onChange(e!, 'dateStart')}
+            onChange={(e: any) => onChange('dateStart', e!)}
           />
         </div>
         {isShowSwith && (
           <div>
             <DatePicker
-              selected={dateEnd}
-              minDate={dateStart ? dateStart : null}
+              selected={queryToFind.dateEnd}
               dateFormat="dd/MM/yyyy"
-              maxDate={dateEnd ? dateEnd : datesAvailable.max_date}
-              onChange={(e: any) => onChange(e!, 'dateEnd')}
+              minDate={queryToFind.dateStart}
+              maxDate={queryToFind.dateEnd ?? queryToFind.dateEnd}
+              onChange={(e: any) => onChange('dateEnd', e!)}
             />
           </div>
         )}
@@ -93,7 +87,7 @@ export const DatePickerRange = () => {
 
       <Switch
         checked={dateSelectedAndRange.findbyOneDate}
-        onChange={(e) => onChange(e.target.checked, 'findbyOneDate')}
+        onChange={(e) => onChange('findbyOneDate', e.target.checked)}
         label={`Buscando por ${isShowSwith ? 'Rango' : 'Un solo dia'}`}
       />
     </>

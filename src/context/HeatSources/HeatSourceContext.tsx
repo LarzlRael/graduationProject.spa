@@ -120,11 +120,7 @@ export const HeatProvider = ({ children }: any) => {
       year: new Date().getFullYear(),
       onlyYear: true,
     })
-    changeDateSelectedAndRanked({
-      ...state.dateSelectedAndRange,
-      dateStart: new Date(),
-      dateEnd: new Date(),
-    })
+
     changeQueryToFind({
       ...state.queryToFind,
       dateStart: new Date(),
@@ -188,6 +184,7 @@ export const HeatProvider = ({ children }: any) => {
   const getHeatSourcesInfoToGragh = async (month: number, year: number) => {
     let getInformation: DatesHeatSources[]
     const arrayTitles: string[] = []
+
     dispatch({
       type: 'loading',
       payload: true,

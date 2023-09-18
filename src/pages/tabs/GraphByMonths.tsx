@@ -42,7 +42,6 @@ export const GraphByMonths = () => {
     changeQueryToFind,
     queryToFind,
   } = useContext(HeatSourcesContext)
-  const { getHeatSources } = useFocosCalor()
   const navigate = useNavigate()
   useEffect(() => {
     getHeatSourcesInfoToGragh(
@@ -82,7 +81,7 @@ export const GraphByMonths = () => {
           ? monthName[mounthAndYearSelected.month] +
             '-' +
             mounthAndYearSelected.year
-          : mounthAndYearSelected.year + '',
+          : mounthAndYearSelected.year.toString(),
       },
     },
     elements: {

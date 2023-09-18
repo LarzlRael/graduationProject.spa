@@ -13,8 +13,6 @@ import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2'
 import { GraphProps } from '../components/Graficos'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import { graphTypeArray } from '../data/data'
-import { useNavigate } from 'react-router-dom'
-import { useFocosCalor } from './usefocosCalor'
 
 export const useGraficos = ({
   info,
@@ -50,6 +48,19 @@ export const useGraficos = ({
       },
     ],
   }
+
+  const data2 = {
+    labels: stringTitle,
+
+    datasets: info?.map((ele) => ({
+      label: ele.nombre,
+      data: parseInt(ele.focos_calor),
+      backgroundColor: getRandomColor(),
+      borderColor: getRandomColor(),
+    })),
+  }
+  console.log('data ok ', data)
+  console.log(':( ', data2)
 
   const options = {
     scales: {
