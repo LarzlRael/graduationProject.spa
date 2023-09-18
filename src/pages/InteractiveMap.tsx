@@ -7,7 +7,7 @@ import {
   TileLayer,
   useMap,
   GeoJSON,
-  Tooltip
+  Tooltip,
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import './InteractiveMap.css'
@@ -18,7 +18,6 @@ import { mapsTypeStyle } from '../data/data'
 import { generateUniqueKey } from '../utils/key_utils'
 import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
 import { LatLngInt } from '../interfaces/countProvinceDepartamento.interface'
-
 
 export const InteractiveMap = () => {
   const {
@@ -51,8 +50,8 @@ export const InteractiveMap = () => {
   }, [currentHeatSources.heatResources])
 
   const [middlePosition, setMiddlePosition] = useState<LatLngInt>({
-    latitude: currentHeatSources.middlePoint.coordinates.latitude,
-    longitude: currentHeatSources.middlePoint.coordinates.longitude,
+    latitude: currentHeatSources.middlePoint.coordinates.latitude ?? 0,
+    longitude: currentHeatSources.middlePoint.coordinates.longitude ?? 0,
   })
 
   useEffect(() => {
@@ -82,14 +81,11 @@ export const InteractiveMap = () => {
   function setInfoMarkers() {
     const { type, ...rest } = currentHeatSources.heatResources
     return rest.features.map((marker) => {
-      const marker2 = [
-        marker.properties.latitude,
-        marker.properties.longitude,
-      ]
+      const marker2 = [marker.properties.latitude, marker.properties.longitude]
       return { marker2, title: JSON.stringify(marker.properties) }
     })
   }
-  console.log(middlePosition);
+  console.log(middlePosition)
   return (
     <div>
       <ButtonIcon

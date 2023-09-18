@@ -138,8 +138,10 @@ export const GraphByDepartaments = () => {
         <div>
           <Select
             options={optionsGenerated}
-            /* value={nameDepartament} */
-
+          /*   value={optionsGenerated.filter(
+              (option) =>
+                option.value === departamentoProvincia.departamentSelected,
+            )} */
             onChange={(e) =>
               setDepartamentoProvincia((previosState) => ({
                 ...previosState,
@@ -170,8 +172,6 @@ export const GraphByDepartaments = () => {
         loading={loading}
         nombreDepartamento={departamentoProvincia.departamentSelected}
         selected={(value) => {
-          console.log(value)
-          console.log(queryToFind)
           changeQueryToFind({
             ...queryToFind,
             departamento: departamentoProvincia.todosDepartamentos
@@ -188,20 +188,6 @@ export const GraphByDepartaments = () => {
           getHeatSources()
           navigate('/mapa')
         }}
-        /*  selected={(value) => {
-          console.log(value)
-          changeQueryToFind({
-            ...queryToFind,
-            [showProvMun ? 'provincia' : 'municipio']: value,
-            departamentSelected: departamentoProvincia.departamentSelected,
-          })
-          console.log(queryToFind)
-          if (showProvMun) {
-            consultarMunicipio().then(() => navigate('/mapa'))
-          } else {
-            consultarProvincias().then(() => navigate('/mapa'))
-          }
-        }} */
       />
     </div>
   )
