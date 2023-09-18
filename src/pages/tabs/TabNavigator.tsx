@@ -44,12 +44,12 @@ export const TabNavigator = () => {
         }} */
       >
         <TabList>
-          <Tab>Departamentos</Tab>
+          {/* <Tab>Departamentos</Tab> */}
           <Tab>Gráficos por periodo de tiempo</Tab>
           <Tab>Gráficos por departamentos</Tab>
         </TabList>
 
-        <TabPanel>{/* <MapBoxLayer /> */}</TabPanel>
+        {/* <TabPanel>{ <MapBoxLayer />}</TabPanel> */}
         <TabPanel>
           <GraphByMonths />
         </TabPanel>

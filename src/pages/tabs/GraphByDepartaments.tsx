@@ -42,13 +42,10 @@ export const GraphByDepartaments = () => {
   const [loading, setLoading] = useState(false)
   const { getHeatSources } = useFocosCalor()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-
   const getDepartamentosNamesService = async () => {
     setCountDepProvState(
       await getCountByDepartamaments({
         ...queryToFind,
-        /* departamento: departamentoProvincia.departamentSelected, */
       }),
     )
     setLoading(false)
@@ -68,7 +65,6 @@ export const GraphByDepartaments = () => {
     if (loading) {
       if (queryToFind.isAllDepartamentos) {
         getDepartamentosNamesService()
-        setShowSwitch(false)
         return
       }
       getProvinciasOrProv()
@@ -107,9 +103,8 @@ export const GraphByDepartaments = () => {
               changeQueryToFind({
                 ...queryToFind,
                 departamento: e!.value,
-                typeLocation: queryToFind.isAllDepartamentos
-                  ? 'pais'
-                  : 'departamento',
+                isAllDepartamentos: e!.value === 'Bolivia',
+                typeLocation: e!.value === 'Bolivia' ? 'pais' : 'departamento',
               })
             }}
           />

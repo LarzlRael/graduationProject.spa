@@ -66,7 +66,7 @@ export const DatePickerRange = () => {
       [nameField]: value,
     })
   }
-  console.log(datesAvailable);
+
   return !loadingState ? (
     <>
       <>

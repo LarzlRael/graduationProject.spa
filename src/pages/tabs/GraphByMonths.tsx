@@ -158,6 +158,20 @@ export const GraphByMonths = () => {
         <>
           <label>Seleccionar Fecha</label>
           <Select
+            value={
+              mounthAndYearSelected.onlyYear
+                ? generateOption().filter(
+                    (option) =>
+                      option.value === mounthAndYearSelected.year.toString(),
+                  )
+                : generateOption().filter(
+                    (option) =>
+                      option.value ===
+                      mounthAndYearSelected.month +
+                        '-' +
+                        mounthAndYearSelected.year.toString(),
+                  )
+            }
             options={generateOption()}
             onChange={(e) => handleChange(e!.value)}
           />

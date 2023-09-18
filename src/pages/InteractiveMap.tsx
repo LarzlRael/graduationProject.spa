@@ -65,7 +65,6 @@ export const InteractiveMap = () => {
     ) {
       setMiddlePosition(coordinates)
     }
-    console.log(middlePosition)
   }, [coordinates])
 
   function convertToGeoJson(): GeoJsonObject {
@@ -83,14 +82,13 @@ export const InteractiveMap = () => {
     }
   }
   function setInfoMarkers() {
-    console.log(heatResources);
     const { type, ...rest } = heatResources
     return rest.features.map((marker) => {
       const marker2 = [marker.properties.latitude, marker.properties.longitude]
       return { marker2, title: JSON.stringify(marker.properties) }
     })
   }
-  console.log(middlePosition)
+
   return (
     <div>
       <ButtonIcon
@@ -142,7 +140,6 @@ export const InteractiveMap = () => {
   )
 }
 const RecenterAutomatically = ({ lat, lng }: { lat: number; lng: number }) => {
-  console.log(lat, lng)
   const map = useMap()
   useEffect(() => {
     map.setView([lat, lng])
