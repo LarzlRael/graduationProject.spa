@@ -1,6 +1,7 @@
 import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.interface'
 import { MapStyleIntOption } from '../../data/data'
 import { IHeatResourcesAndPoint } from '../../interfaces/geoJsonResponse'
+import { IavailablesDates } from '../../interfaces/datesResponse'
 
 export interface DateSelectedRangeInterface {
   dateStart: Date | null
@@ -23,7 +24,7 @@ export interface SelectOptionDateInterface {
   onlyYear: boolean
 }
 export interface HeatSourcestState {
-  datesAvailable: Date[]
+  datesAvailable: IavailablesDates
   loadingState: boolean
   showProvMun: boolean
   showOptions: boolean
@@ -39,7 +40,7 @@ export interface HeatSourcestState {
 }
 
 type HeatSourceAction =
-  | { type: 'dates'; payload: { dates: Date[] } }
+  | { type: 'dates'; payload: IavailablesDates }
   | { type: 'loading'; payload: boolean }
   | { type: 'showProvMun'; payload: boolean }
   | { type: 'showOptions'; payload: boolean }
@@ -68,7 +69,7 @@ export const heatSourcesReducer = (
     case 'dates':
       return {
         ...state,
-        datesAvailable: action.payload.dates,
+        datesAvailable: action.payload,
       }
     case 'loading':
       return {

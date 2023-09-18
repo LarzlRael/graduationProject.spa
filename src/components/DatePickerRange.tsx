@@ -69,12 +69,11 @@ export const DatePickerRange = () => {
 
   return !loadingState ? (
     <>
-      <>
-        <br />
+      <div>
         <div>
           <DatePicker
             selected={dateStart}
-            maxDate={datesAvailable[1]}
+            maxDate={datesAvailable.max_date}
             dateFormat="dd/MM/yyyy"
             onChange={(e: any) => onChange(e!, 'dateStart')}
           />
@@ -85,12 +84,12 @@ export const DatePickerRange = () => {
               selected={dateEnd}
               minDate={dateStart ? dateStart : null}
               dateFormat="dd/MM/yyyy"
-              maxDate={dateEnd ? dateEnd : datesAvailable[1]}
+              maxDate={dateEnd ? dateEnd : datesAvailable.max_date}
               onChange={(e: any) => onChange(e!, 'dateEnd')}
             />
           </div>
         )}
-      </>
+      </div>
 
       <Switch
         checked={dateSelectedAndRange.findbyOneDate}

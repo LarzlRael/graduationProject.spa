@@ -1,10 +1,10 @@
 import { serverAPI } from './serverConfig'
-import { DatesResponse } from '../interfaces/datesResponse'
+import { IavailablesDates } from '../interfaces/datesResponse'
 import { IHeatResourcesAndPoint } from '../interfaces/geoJsonResponse'
 import { QueryToFindInterface } from '../context/HeatSources/HeatSourcesReducer'
 
-export const getHigherOrLowerByDate = async (): Promise<DatesResponse> => {
-  const { data } = await serverAPI.get<DatesResponse>('/analysis/dates')
+export const getHigherOrLowerByDate = async (): Promise<IavailablesDates> => {
+  const { data } = await serverAPI.get<IavailablesDates>('/analysis/dates')
   return data
 }
 

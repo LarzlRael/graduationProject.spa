@@ -10,7 +10,7 @@ import {
   CountInterface,
   IProvinciasAndMunicipios,
 } from '../interfaces/provMun.interface'
-import { DatesResponse } from '../interfaces/datesResponse'
+import { IavailablesDates } from '../interfaces/datesResponse'
 import { QueryToFindInterface } from '../context/HeatSources/HeatSourcesReducer'
 
 export const getNombresProvinciasAndMun = async (departamento: string) => {
@@ -62,7 +62,7 @@ export const getCountByDeMun = async (municipcio: QueryToFindInterface) => {
 }
 
 export const getAvailableDatesServer = async () => {
-  const resp = await serverAPI.get<DatesResponse>(`/analysis/dates`)
+  const resp = await serverAPI.get<IavailablesDates>(`/analysis/dates`)
   return resp.data
 }
 

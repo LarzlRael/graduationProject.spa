@@ -24,10 +24,11 @@ import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.int
 import { IHeatResourcesAndPoint } from '../../interfaces/geoJsonResponse'
 import { SelectOptionDateInterface } from './HeatSourcesReducer'
 import { addHours } from '../../utils/utils'
+import { IavailablesDates } from '../../interfaces/datesResponse'
 moment.locale('es')
 
 type HeatSourcesStateProps = {
-  datesAvailable: Date[]
+  datesAvailable: IavailablesDates
   loadingState: boolean
   showProvMun: boolean
   showOptions: boolean
@@ -58,7 +59,10 @@ type HeatSourcesStateProps = {
 }
 
 const HeatSourcesInitialState: HeatSourcestState = {
-  datesAvailable: [],
+  datesAvailable: {
+    min_date: new Date(),
+    max_date: new Date(),
+  },
   loadingState: false,
   showProvMun: false,
   showOptions: false,
@@ -129,7 +133,6 @@ export const HeatProvider = ({ children }: any) => {
   }, [])
 
   const getDatesAvailable = async () => {
-    if (state.datesAvailable.length > 0) return
     try {
       dispatch({ type: 'loading', payload: true })
       const dates = await getAvailableDatesServer()
@@ -137,10 +140,8 @@ export const HeatProvider = ({ children }: any) => {
       dispatch({
         type: 'dates',
         payload: {
-          dates: [
-            addHours(8, new Date(dates.min_date)),
-            addHours(8, new Date(dates.max_date)),
-          ],
+          min_date: addHours(8, new Date(dates.min_date)),
+          max_date: addHours(8, new Date(dates.max_date)),
         },
       })
       dispatch({ type: 'loading', payload: false })
