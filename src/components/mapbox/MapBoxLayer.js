@@ -6,7 +6,7 @@ import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { MapBoxModal } from './MapBoxModal'
 import { mapsTypeStyle } from '../../data/data'
 
-const apikey = process.env.REACT_APP_MAPBOX_KEY
+const apikey = import.meta.env.VITE_MAPBOX_KEY
 
 export const MapBoxLayer = () => {
   const {
