@@ -1,3 +1,7 @@
+export const initialCoordinates = {
+  longitude: -66.2137434,
+  latitude: -17.390915,
+}
 export const images = [
   { name: 'La Paz', source: 'lapaz.png' },
   { name: 'Oruro', source: 'Oruro.png' },

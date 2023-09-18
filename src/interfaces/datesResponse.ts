@@ -1,3 +1,4 @@
 export interface DatesResponse {
-  dates: Date[]
+  max_date: Date
+  min_date: Date
 }

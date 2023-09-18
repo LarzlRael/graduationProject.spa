@@ -16,6 +16,7 @@ import {
   meses,
   MapStyleIntOption,
   departametsArray,
+  initialCoordinates,
 } from '../../data/data'
 
 import moment from 'moment'
@@ -76,10 +77,7 @@ const HeatSourcesInitialState: HeatSourcestState = {
       features: [],
     },
     middlePoint: {
-      coordinates: {
-        longitude: -66.2137434,
-        latitude: -17.390915,
-      },
+      coordinates: initialCoordinates,
 
       poligono: {
         type: 'MultiPolygon',
@@ -124,8 +122,8 @@ export const HeatProvider = ({ children }: any) => {
     })
     changeQueryToFind({
       ...state.queryToFind,
-      dateStart: new Date().toISOString().slice(0, 10),
-      dateEnd: new Date().toISOString().slice(0, 10),
+      dateStart: new Date(),
+      dateEnd: new Date(),
     })
   }, [])
 
@@ -134,13 +132,13 @@ export const HeatProvider = ({ children }: any) => {
     try {
       dispatch({ type: 'loading', payload: true })
       const dates = await getAvailableDatesServer()
-
+      console.log(dates)
       dispatch({
         type: 'dates',
         payload: {
           dates: [
-            addHours(8, new Date(dates[0])),
-            addHours(8, new Date(dates[1])),
+            addHours(8, new Date(dates.min_date)),
+            addHours(8, new Date(dates.max_date)),
           ],
         },
       })

@@ -33,8 +33,8 @@ export const DatePickerRange = () => {
     })
     changeQueryToFind({
       ...queryToFind,
-      dateStart: dateStart!.toISOString().slice(0, 10),
-      dateEnd: moment(dateStart).add(6, 'days').toDate().toISOString().slice(0, 10)
+      dateStart: moment(dateStart).toDate(),
+      dateEnd: moment(dateStart).toDate(),
     })
   }, [dateStart])
 
@@ -52,7 +52,7 @@ export const DatePickerRange = () => {
     })
     changeQueryToFind({
       ...queryToFind,
-      dateEnd: dateStart!.toISOString().slice(0, 10),
+      dateEnd: moment(dateStart).toDate(),
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShowSwith])
@@ -66,6 +66,7 @@ export const DatePickerRange = () => {
       [nameField]: value,
     })
   }
+  console.log(datesAvailable);
   return !loadingState ? (
     <>
       <>

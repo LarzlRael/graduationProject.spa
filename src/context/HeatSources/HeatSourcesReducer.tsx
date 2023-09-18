@@ -13,8 +13,8 @@ export interface QueryToFindInterface {
   image: string
   typeLocation?: 'provincia' | 'municipio' | 'departamento' | 'pais' | null
   nameLocation: string
-  dateStart?: string
-  dateEnd?: string
+  dateStart?: Date | null
+  dateEnd?: Date | null
 }
 export interface SelectOptionDateInterface {
   month: number

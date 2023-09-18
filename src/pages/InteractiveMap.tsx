@@ -14,7 +14,7 @@ import './InteractiveMap.css'
 import { useFocosCalor } from '../hooks/usefocosCalor'
 import { GeoJsonObject } from 'geojson'
 import { MapBoxModal } from '../components/mapbox/MapBoxModal'
-import { mapsTypeStyle } from '../data/data'
+import { initialCoordinates, mapsTypeStyle } from '../data/data'
 import { generateUniqueKey } from '../utils/key_utils'
 import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
 import { LatLngInt } from '../interfaces/countProvinceDepartamento.interface'
@@ -44,42 +44,47 @@ export const InteractiveMap = () => {
     loadingNetworl,
   } = useFocosCalor()
 
+  const {
+    heatResources,
+    middlePoint: { coordinates, poligono },
+  } = currentHeatSources
   const [key, setKey] = useState(generateUniqueKey())
   useEffect(() => {
     setKey(generateUniqueKey())
-  }, [currentHeatSources.heatResources])
+  }, [heatResources])
 
   const [middlePosition, setMiddlePosition] = useState<LatLngInt>({
-    latitude: currentHeatSources.middlePoint.coordinates.latitude ?? 0,
-    longitude: currentHeatSources.middlePoint.coordinates.longitude ?? 0,
+    latitude: coordinates.latitude ?? initialCoordinates.latitude,
+    longitude: coordinates.longitude ?? initialCoordinates.longitude,
   })
 
   useEffect(() => {
     if (
-      currentHeatSources.middlePoint.coordinates.latitude !== undefined ||
-      currentHeatSources.middlePoint.coordinates.longitude !== undefined
+      coordinates.latitude !== undefined ||
+      coordinates.longitude !== undefined
     ) {
-      setMiddlePosition(currentHeatSources.middlePoint.coordinates)
+      setMiddlePosition(coordinates)
     }
     console.log(middlePosition)
-  }, [currentHeatSources.middlePoint.coordinates])
+  }, [coordinates])
 
   function convertToGeoJson(): GeoJsonObject {
-    const { type, ...rest } = currentHeatSources.heatResources
+    const { type, ...rest } = heatResources
     return {
       type: 'Point',
       ...rest,
     }
   }
   function polyToGeoJson(): GeoJsonObject {
-    const { type, ...rest } = currentHeatSources.middlePoint.poligono
+    const { type, ...rest } = poligono
     return {
       type: 'MultiPolygon',
       ...rest,
     }
   }
   function setInfoMarkers() {
-    const { type, ...rest } = currentHeatSources.heatResources
+    console.log(heatResources);
+    const { type, ...rest } = heatResources
     return rest.features.map((marker) => {
       const marker2 = [marker.properties.latitude, marker.properties.longitude]
       return { marker2, title: JSON.stringify(marker.properties) }
@@ -128,6 +133,10 @@ export const InteractiveMap = () => {
         ))}
 
         <GeoJSON data={polyToGeoJson()} />
+        <RecenterAutomatically
+          lat={middlePosition.latitude}
+          lng={middlePosition.longitude}
+        />
       </MapContainer>
     </div>
   )

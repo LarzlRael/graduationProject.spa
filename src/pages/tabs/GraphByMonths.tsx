@@ -102,8 +102,8 @@ export const GraphByMonths = () => {
       changeQueryToFind({
         ...queryToFind,
         typeLocation: 'pais',
-        dateStart: titleArray[elements[0].index],
-        dateEnd: titleArray[elements[0].index],
+        dateStart: moment(titleArray[elements[0].index]).toDate(),
+        dateEnd: moment(titleArray[elements[0].index]).toDate(),
       })
       navigate('/mapa')
     },
