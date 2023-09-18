@@ -18,8 +18,10 @@ export const ResponsiveDatePickers = () => {
     generateShapeFile,
   } = useReport()
 
-  const [startDate, setStartDate] = useState<Date | null>(datesAvailable[1])
-  const [endDate, setEndDate] = useState<Date | null>(datesAvailable[1])
+  const [startDate, setStartDate] = useState<Date | null>(
+    datesAvailable.min_date,
+  )
+  const [endDate, setEndDate] = useState<Date | null>(datesAvailable.max_date)
 
   const [typeFile, setTypeFile] = useState('')
 
@@ -58,8 +60,8 @@ export const ResponsiveDatePickers = () => {
           <DatePicker
             /* label="Desde" */
             selected={startDate}
-            maxDate={datesAvailable[1]}
-            minDate={datesAvailable[0]}
+            maxDate={datesAvailable.min_date}
+            minDate={datesAvailable.max_date}
             onChange={(newValue: any) => {
               setStartDate(newValue)
             }}
@@ -68,8 +70,8 @@ export const ResponsiveDatePickers = () => {
           <DatePicker
             /* label="Hasta" */
             selected={endDate}
-            minDate={datesAvailable[0]}
-            maxDate={datesAvailable[1]}
+            minDate={datesAvailable.min_date}
+            maxDate={datesAvailable.max_date}
             onChange={(newValue: any) => {
               setEndDate(newValue)
             }}

@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-
+import './LoginAdmin.css'
 /* import ErrorLabel from '../error-label';
 import LoginContext from '../login/LoginContext'; */
 /* import { getDates } from '../provider/services';
@@ -79,16 +79,12 @@ export const AdminLogin = () => {
   useDocumentTitle('Login')
 
   return (
-    <>
-      <ButtonIcon
-        style={{
-          marginTop: '1rem',
-        }}
-      />
+    <div className="LoginAdmin">
+      <ButtonIcon className="LoginAdmin__button-icon" />
       <div className="login-div animate__animated animate__fadeIn">
         <div className="form animate__animated animate__fadeInUp">
           <form className="formLogin" onSubmit={handleSumbit}>
-            <h3 className="title ">Login</h3>
+            <h3 className="title">Login</h3>
             <input
               className={error_message ? 'input-login error' : 'input-login'}
               placeholder="Usuario"
@@ -124,7 +120,7 @@ export const AdminLogin = () => {
           </form>
         </div>
         <div className="info-login animate__animated animate__fadeInDown">
-          <h1>Administrar Cars System</h1>
+          <h1>Focos de calor en Bolivia</h1>
           <span>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. A qui ipsam
             numquam dolore quo, aperiam voluptates labore, error totam rem hic,
@@ -132,6 +128,6 @@ export const AdminLogin = () => {
           </span>
         </div>
       </div>
-    </>
+    </div>
   )
 }

@@ -15,8 +15,8 @@ export const CustomDateRangePickerDay = () => {
   const { datesAvailable } = useContext(HeatSourcesContext)
 
   const [dates, setValue] = useState<Date[]>([
-    datesAvailable[1],
-    datesAvailable[1],
+    datesAvailable.min_date,
+    datesAvailable.max_date,
   ])
   const {
     generateCVSreport,

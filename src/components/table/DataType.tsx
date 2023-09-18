@@ -2,7 +2,6 @@
 import { convertD } from '../../utils/ConvertDate'
 import { urlAvatar } from '../../utils/Constant' */
 
-
 type TypeEnum =
   | 'img'
   | 'date'
@@ -14,10 +13,7 @@ type TypeEnum =
   | 'img'
 
 export interface Datatype {
-  key: string
-  name: string
-  type?: TypeEnum
-  color?: string
+  [key: string]: any
 }
 interface Props {
   a: Datatype

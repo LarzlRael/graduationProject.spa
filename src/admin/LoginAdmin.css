@@ -1,0 +1,12 @@
+.LoginAdmin {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+
+.LoginAdmin__button-icon {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}

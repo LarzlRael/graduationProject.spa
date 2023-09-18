@@ -10,7 +10,7 @@ import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 // Create Document Component
 
 export const useReport = () => {
-  const { datesAvailable: dates } = useContext(HeatSourcesContext)
+  const { datesAvailable } = useContext(HeatSourcesContext)
   const [dateFromTo, setDates] = useState<Date[]>()
   const [loading, setLoading] = useState<boolean>()
 
@@ -21,7 +21,10 @@ export const useReport = () => {
 
   const setStatus = async () => {
     if (!loading) {
-      setDates([new Date(dates[0]), new Date(dates[1])])
+      setDates([
+        new Date(datesAvailable.min_date),
+        new Date(datesAvailable.max_date),
+      ])
     }
   }
 

@@ -35,33 +35,31 @@ export const Navigator = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
 
   return (
-    <div className="theme">
-      <Router>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
 
-          <Route path="/inicio" element={<LandingPage />} />
-          <Route path="/mapa" element={<InteractiveMap />} />
-          <Route path="/login" element={<AdminLogin />} />
-          <Route path="/reportes" element={<ReportsLists />} />
-          <Route path="/ley1171" element={<Ley1171 />} />
-          <Route path="/departamentos" element={<Departaments />} />
-          {/* <Route path="/report" component={MyDocument} /> */}
-          {/* <Route path="/dashboard" component={AdminDashboard} /> */}
+        <Route path="/inicio" element={<LandingPage />} />
+        <Route path="/mapa" element={<InteractiveMap />} />
+        <Route path="/login" element={<AdminLogin />} />
+        <Route path="/reportes" element={<ReportsLists />} />
+        <Route path="/ley1171" element={<Ley1171 />} />
+        <Route path="/departamentos" element={<Departaments />} />
+        {/* <Route path="/report" component={MyDocument} /> */}
+        {/* <Route path="/dashboard" component={AdminDashboard} /> */}
 
-          {/* <PrivateRoute path="/dashboard" component={AdminDashboard} /> */}
+        {/* <PrivateRoute path="/dashboard" component={AdminDashboard} /> */}
 
-          {/* <Redirect from="/*" to="/inicio" /> */}
-          <Route
-            path="/dashboard/*"
-            element={
-              <PrivateRoute>
-                <AdminDashboard />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </Router>
-    </div>
+        {/* <Redirect from="/*" to="/inicio" /> */}
+        <Route
+          path="/dashboard/*"
+          element={
+            <PrivateRoute>
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </Router>
   )
 }

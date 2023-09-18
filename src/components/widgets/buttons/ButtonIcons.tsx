@@ -3,12 +3,18 @@ import '../styles/ButtonIcons.css'
 interface Props {
   to?: string
   icon?: string
-  style: React.CSSProperties
+  style?: React.CSSProperties
+  className?: string
 }
-export const ButtonIcon = ({ to, icon = 'chevron-left', style }: Props) => {
+export const ButtonIcon = ({
+  to,
+  icon = 'chevron-left',
+  style,
+  className,
+}: Props) => {
   const navigator = useNavigate()
   return (
-    <div style={style}>
+    <div style={style} className={className}>
       <button
         onClick={() => (to ? navigator('/') : navigator(-1))}
         className="ButtonIcon"

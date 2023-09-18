@@ -1,112 +1,112 @@
 .ReactModal__Body--open {
-    overflow: a;
-    position: fixed;
-    width: 100%;
-    height: 100%;
+  overflow: a;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 .dashContentContainer {
-    margin: 2rem;
+  margin: 2rem;
 }
 
 .align-calendar {
-    display: flex;
-    align-items: flex-end;
+  display: flex;
+  align-items: flex-end;
 }
 
 .table-download {
-    width: 500px;
+  width: 500px;
 }
 
 .calendar-buttons {
-    display: flex;
+  display: flex;
 }
 .css-quj9j6-MuiTable-root {
-    width: 25%;
+  width: 25%;
 }
 
 .layout_page {
-    width: 1200px;
-    margin: 1rem auto;
+  width: 1200px;
+  margin: 1rem auto;
 
-    @include media(sm) {
-        width: 100%;
-        margin: 0;
-        position: relative;
-    }
+  @include media(sm) {
+    width: 100%;
+    margin: 0;
+    position: relative;
+  }
 }
 
 .buttons-groups {
-    display: flex;
-    flex-direction: column;
-    button {
-        margin: 0.5rem 1rem;
-    }
+  display: flex;
+  flex-direction: column;
+  button {
+    margin: 0.5rem 1rem;
+  }
 }
 
 .app-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .map {
-    margin: 0 auto;
-    max-width: 800px;
-    height: 600px;
+  margin: 0 auto;
+  max-width: 800px;
+  height: 600px;
 }
 
 .grafic-square {
-    margin: auto;
-    width: 800px;
-    @include media(sm) {
-        width: 100%;
-    }
+  margin: auto;
+  width: 800px;
+  @include media(sm) {
+    width: 100%;
+  }
 }
 .grafic-circle {
-    margin: auto;
-    width: 550px;
-    @include media(sm) {
-        width: 100%;
-    }
+  margin: auto;
+  width: 550px;
+  @include media(sm) {
+    width: 100%;
+  }
 }
 .css-heg063-MuiTabs-flexContainer {
-    @include media(sm) {
-        margin-top: 4rem;
-    }
+  @include media(sm) {
+    margin-top: 4rem;
+  }
 }
 .title_close {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .close-button {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    .close-button {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: white;
-        background: rgb(207, 6, 6);
-        border: none;
-        padding: 5px 1rem;
-        border-radius: 8px;
-    }
+    justify-content: space-between;
+    color: white;
+    background: rgb(207, 6, 6);
+    border: none;
+    padding: 5px 1rem;
+    border-radius: 8px;
+  }
 }
 .modal-wrapper {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    overflow: scroll;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  overflow: scroll;
 }
 .modal-content {
-    display: grid;
+  display: grid;
 
-    z-index: 100;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    gap: 1.5rem;
-    /* flex-direction: row;
+  z-index: 100;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 1.5rem;
+  /* flex-direction: row;
 
     @include media(sm) {
         flex-direction: column;
@@ -114,37 +114,34 @@
             margin-bottom: 1.5rem;
         }
     } */
-    &.blackTheme {
-        background: $primary-dark-color;
-    }
+  &.blackTheme {
+    background: $primary-dark-color;
+  }
 }
 .ReactModalPortal {
-    background: $primary-dark-color;
+  background: $primary-dark-color;
 }
 
 .switchContainer {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 
 .graphDepartaments {
-    display: flex;
-    flex-direction: column;
-    .combo {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-bottom:2rem;
-        @include media(sm) {
-            grid-template-columns: 1fr;
-        }
+  display: flex;
+  flex-direction: column;
+  .combo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    @include media(sm) {
+      grid-template-columns: 1fr;
     }
-    
+  }
 }
 
-
-.datePicker{
-    width: 100%;
-    
+.datePicker {
+  width: 100%;
 }
