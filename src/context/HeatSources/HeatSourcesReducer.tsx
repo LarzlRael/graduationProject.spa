@@ -15,6 +15,7 @@ export interface QueryToFindInterface {
   nameLocation: string
   dateStart?: Date | null
   dateEnd?: Date | null
+  isAllDepartamentos: boolean
 }
 export interface SelectOptionDateInterface {
   month: number

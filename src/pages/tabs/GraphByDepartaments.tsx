@@ -19,7 +19,6 @@ import { useFocosCalor } from '../../hooks/usefocosCalor'
 
 export const GraphByDepartaments = () => {
   const {
-    dateSelectedAndRange,
     showProvMun,
     setShowProvinvicaMun,
     queryToFind,
@@ -27,14 +26,9 @@ export const GraphByDepartaments = () => {
     changeQueryToFind,
   } = useContext(HeatSourcesContext)
 
-  const { dateStart, dateEnd, findbyOneDate } = dateSelectedAndRange
   const [showSwitch, setShowSwitch] = useState<boolean>(true)
   const navigate = useNavigate()
 
-  const [departamentoProvincia, setDepartamentoProvincia] = useState({
-    departamentSelected: departametsArray[0].label,
-    todosDepartamentos: false,
-  })
   const onchangeAndSetType = (e: any) => {
     changeQueryOneFieldToFind(
       'typeLocation',
@@ -49,85 +43,53 @@ export const GraphByDepartaments = () => {
   const { getHeatSources } = useFocosCalor()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getProvinciasNamesService = async () => {
-    const dateStartToQuery = dateStart?.toISOString().slice(0, 10)
-    const dateEndToQuery = findbyOneDate
-      ? dateEnd?.toISOString().slice(0, 10)
-      : dateStart?.toISOString().slice(0, 10)
-
-    setCountDepProvState(
-      await getCountByDepPro({
-        ...queryToFind,
-        dateStart: dateStartToQuery!,
-        dateEnd: dateEndToQuery!,
-        departamento: departamentoProvincia.departamentSelected,
-      }),
-    )
-    setLoading(false)
-  }
 
   const getDepartamentosNamesService = async () => {
-    const dateStartToQuery = dateStart?.toISOString().slice(0, 10)
-    const dateEndToQuery = findbyOneDate
-      ? dateEnd?.toISOString().slice(0, 10)
-      : dateStart?.toISOString().slice(0, 10)
-
     setCountDepProvState(
       await getCountByDepartamaments({
         ...queryToFind,
-        dateStart: dateStartToQuery!,
-        dateEnd: dateEndToQuery!,
-        departamento: departamentoProvincia.departamentSelected,
+        /* departamento: departamentoProvincia.departamentSelected, */
       }),
     )
     setLoading(false)
   }
 
-  const getMunicipiosServices = async () => {
-    const dateStartToQuery = dateStart?.toISOString().slice(0, 10)
-    const dateEndToQuery = findbyOneDate
-      ? dateEnd?.toISOString().slice(0, 10)
-      : dateStart?.toISOString().slice(0, 10)
+  const getProvinciasOrProv = async () => {
+    let resp: RespFoco[] = []
+    resp = showProvMun
+      ? await getCountByDepPro(queryToFind)
+      : await getCountByDeMun(queryToFind)
 
-    setCountDepProvState(
-      await getCountByDeMun({
-        ...queryToFind,
-        dateStart: dateStartToQuery!,
-        dateEnd: dateEndToQuery!,
-        departamento: departamentoProvincia.departamentSelected,
-      }),
-    )
+    setCountDepProvState(resp)
     setLoading(false)
   }
 
   useEffect(() => {
     if (loading) {
-      if (departamentoProvincia.todosDepartamentos) {
+      if (queryToFind.isAllDepartamentos) {
         getDepartamentosNamesService()
         setShowSwitch(false)
         return
       }
-      if (showProvMun) {
-        getProvinciasNamesService()
-        setShowSwitch(true)
-      } else {
-        getMunicipiosServices()
-        setShowSwitch(true)
-      }
+      getProvinciasOrProv()
+      setShowSwitch(true)
     }
   }, [loading])
 
   const consultar = () => {
     setLoading(true)
   }
+  useEffect(() => {
+    consultar()
+  }, [])
 
   useEffect(() => {
-    if (departamentoProvincia.todosDepartamentos) {
+    if (queryToFind.isAllDepartamentos) {
       setShowSwitch(false)
       return
     }
     setShowSwitch(true)
-  }, [departamentoProvincia.departamentSelected])
+  }, [queryToFind.departamento])
   const optionsGenerated = namesDepartamentos.map((departament) => ({
     value: departament,
     label: departament,
@@ -138,17 +100,18 @@ export const GraphByDepartaments = () => {
         <div>
           <Select
             options={optionsGenerated}
-          /*   value={optionsGenerated.filter(
-              (option) =>
-                option.value === departamentoProvincia.departamentSelected,
-            )} */
-            onChange={(e) =>
-              setDepartamentoProvincia((previosState) => ({
-                ...previosState,
-                departamentSelected: e!.value,
-                todosDepartamentos: e!.value === 'Bolivia',
-              }))
-            }
+            value={optionsGenerated.filter(
+              (option) => option.value === queryToFind.departamento,
+            )}
+            onChange={(e) => {
+              changeQueryToFind({
+                ...queryToFind,
+                departamento: e!.value,
+                typeLocation: queryToFind.isAllDepartamentos
+                  ? 'pais'
+                  : 'departamento',
+              })
+            }}
           />
 
           {showSwitch && (
@@ -170,16 +133,16 @@ export const GraphByDepartaments = () => {
         ref={myRef}
         info={countDepProvState}
         loading={loading}
-        nombreDepartamento={departamentoProvincia.departamentSelected}
+        nombreDepartamento={queryToFind.departamento}
         selected={(value) => {
           changeQueryToFind({
             ...queryToFind,
-            departamento: departamentoProvincia.todosDepartamentos
+            departamento: queryToFind.isAllDepartamentos
               ? value.nameLocation
-              : departamentoProvincia.departamentSelected,
+              : queryToFind.departamento,
 
             nameLocation: value.nameLocation,
-            typeLocation: departamentoProvincia.todosDepartamentos
+            typeLocation: queryToFind.isAllDepartamentos
               ? 'departamento'
               : showProvMun
               ? 'provincia'
