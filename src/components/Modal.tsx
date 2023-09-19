@@ -3,7 +3,7 @@ import { IoCloseCircle } from 'react-icons/io5'
 import styled from 'styled-components'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import { sizeMedia } from '../utils/mediaQuerys'
-import { CommonContext } from '../context/commonContext/CommonContext_'
+import { CommonContext } from '../context/commonContext/CommonContext'
 
 export interface LayoutProps {
   children: React.ReactNode

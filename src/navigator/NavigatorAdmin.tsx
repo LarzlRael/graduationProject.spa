@@ -8,7 +8,7 @@ import { Ley1171 } from '../pages/Ley1171'
 import { Departaments } from '../pages/Departaments'
 import { PrivateRoute } from './AdminRoutes'
 
-import { CommonContext } from '../context/commonContext/CommonContext_'
+import { CommonContext } from '../context/commonContext/CommonContext'
 import { AuthAdminContext } from '../context/LoginContext/AuthAdminContext'
 import { LoadingSpin } from '../components/widgets/loadings/Loading'
 import { InteractiveMap } from '../pages/InteractiveMap'

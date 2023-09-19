@@ -14,7 +14,7 @@ import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
 import { FilledButton } from '../components/widgets/buttons/FilledButton'
 import { postAction } from '../provider/services/action/action'
 import { validateStatus } from '../utils/validation'
-import { CommonContext } from '../context/commonContext/CommonContext_'
+import { CommonContext } from '../context/commonContext/CommonContext'
 export const AdminLogin = () => {
   const { showSnackBar } = useContext(CommonContext)
   const { startSession, logged, loading } = useContext(AuthAdminContext)

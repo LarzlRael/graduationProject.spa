@@ -10,7 +10,7 @@ import { getNombresProvinciasAndMun } from '../provider/analysisServices'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 
 /* import { FlyToInterpolator } from 'react-map-gl' */
-import { CommonContext } from '../context/commonContext/CommonContext_'
+import { CommonContext } from '../context/commonContext/CommonContext'
 import { IProvinciasAndMunicipios } from '../interfaces/provMun.interface'
 import { validateArray } from '../utils/validation'
 

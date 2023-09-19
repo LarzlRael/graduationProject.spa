@@ -1,6 +1,6 @@
 import { Header } from './Header'
 import { useContext } from 'react'
-import { CommonContext } from '../context/commonContext/CommonContext_'
+import { CommonContext } from '../context/commonContext/CommonContext'
 
 interface LayoutProps {
   children: any

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 
 import { Modal } from './Modal'
 import { FilledButton } from './widgets/buttons/FilledButton'
-import { CommonContext } from '../context/commonContext/CommonContext_'
+import { CommonContext } from '../context/commonContext/CommonContext'
 
 interface ModalProps {
   children: React.ReactNode

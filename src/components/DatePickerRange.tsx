@@ -6,27 +6,17 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import moment from 'moment'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
-import { DateSelectedRangeInterface } from '../context/HeatSources/HeatSourcesReducer'
+import { QueryToFindInterface } from '../context/HeatSources/HeatSourcesReducer'
 import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
 import { Switch } from '../form/Switch'
 import { useFocosCalor } from '../hooks/usefocosCalor'
 
 export const DatePickerRange = () => {
-  const {
-    dateSelectedAndRange,
-    datesAvailable,
-    changeDateSelectedAndRanked,
-    loadingState,
-  } = useContext(HeatSourcesContext)
+  const { datesAvailable, loadingState } = useContext(HeatSourcesContext)
 
-  const {
-    /* dateStart,
-    dateEnd, */
-    findbyOneDate: isShowSwith,
-  } = dateSelectedAndRange
   const { queryToFind, changeQueryToFind } = useFocosCalor()
+  const { findbyOneDate: isShowSwith } = queryToFind
   useEffect(() => {
-    
     changeQueryToFind({
       ...queryToFind,
       dateEnd: moment(queryToFind.dateStart).add(6, 'days').toDate(),
@@ -47,14 +37,7 @@ export const DatePickerRange = () => {
     })
   }, [isShowSwith])
 
-  const onChange = (
-    nameField: keyof DateSelectedRangeInterface,
-    value: any,
-  ) => {
-    changeDateSelectedAndRanked({
-      ...dateSelectedAndRange,
-      [nameField]: value,
-    })
+  const onChange = (nameField: keyof QueryToFindInterface, value: any) => {
     changeQueryToFind({
       ...queryToFind,
       [nameField]: value,
@@ -86,7 +69,7 @@ export const DatePickerRange = () => {
       </div>
 
       <Switch
-        checked={dateSelectedAndRange.findbyOneDate}
+        checked={isShowSwith}
         onChange={(e) => onChange('findbyOneDate', e.target.checked)}
         label={`Buscando por ${isShowSwith ? 'Rango' : 'Un solo dia'}`}
       />

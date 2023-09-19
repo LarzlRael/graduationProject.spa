@@ -1,7 +1,7 @@
 import { Navigator } from './navigator/NavigatorAdmin'
 import { AuthProvider } from './context/LoginContext/AuthAdminContext'
 import { HeatProvider } from './context/HeatSources/HeatSourceContext'
-import { CommonProvider } from './context/commonContext/CommonContext_'
+import { CommonProvider } from './context/commonContext/CommonContext'
 import { Snackbar } from './components/widgets/snackBar/SnackBar';
 
 const App = () => {

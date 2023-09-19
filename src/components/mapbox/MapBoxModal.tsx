@@ -14,7 +14,7 @@ import Select from 'react-select'
 import { FilledButton } from '../widgets/buttons/FilledButton'
 import Checkbox from '../../form/Checkbox'
 import { IProvinciasAndMunicipios } from '../../interfaces/provMun.interface'
-import { CommonContext } from '../../context/commonContext/CommonContext_'
+import { CommonContext } from '../../context/commonContext/CommonContext'
 import { useContext } from 'react'
 import { Switch } from '../../form/Switch'
 interface Props {

@@ -5,7 +5,7 @@ import 'react-tabs/style/react-tabs.css'
 /* import { MapBoxLayer } from '../../components/mapbox/MapBoxLayer' */
 import { GraphByDepartaments } from './GraphByDepartaments'
 import { GraphByMonths } from './GraphByMonths'
-import { CommonContext } from '../../context/commonContext/CommonContext_'
+import { CommonContext } from '../../context/commonContext/CommonContext'
 
 export const TabNavigator = () => {
   const { tab, setTabPosition } = useContext(CommonContext)

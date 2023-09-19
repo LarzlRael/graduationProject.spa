@@ -11,7 +11,7 @@ import { serverAPI } from '../../provider/serverConfig'
 import { singInAdmin } from '../../provider/authServices'
 import tokenAuth from '../../utils/token_auth'
 import { authReducer, AuthState } from './AuthAdminReducer'
-import { CommonContext } from '../commonContext/CommonContext_'
+import { CommonContext } from '../commonContext/CommonContext'
 
 type AuthContextProps = {
   errorMessage: string

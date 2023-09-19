@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import '../styles/SnackBar.css'
 import { SnackbarError, SnackbarSuccess } from './index'
-import { CommonContext } from '../../../context/commonContext/CommonContext_'
+import { CommonContext } from '../../../context/commonContext/CommonContext'
 export const Snackbar = () => {
   const { showSnackBar, snackBar } = useContext(CommonContext)
   const { isOpen, message, kind } = snackBar

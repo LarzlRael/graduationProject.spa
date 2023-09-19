@@ -3,12 +3,6 @@ import { MapStyleIntOption } from '../../data/data'
 import { IHeatResourcesAndPoint } from '../../interfaces/geoJsonResponse'
 import { IavailablesDates } from '../../interfaces/datesResponse'
 
-export interface DateSelectedRangeInterface {
-  dateStart: Date | null
-  dateEnd: Date | null
-  dateEndRange: number
-  findbyOneDate: boolean
-}
 export interface QueryToFindInterface {
   departamento: string
   image: string
@@ -17,6 +11,7 @@ export interface QueryToFindInterface {
   dateStart?: Date | null
   dateEnd?: Date | null
   isAllDepartamentos: boolean
+  findbyOneDate: boolean
 }
 export interface SelectOptionDateInterface {
   month: number
@@ -34,8 +29,6 @@ export interface HeatSourcestState {
   countByDates: DatesHeatSources[]
   titleArray: string[]
   currentHeatSources: IHeatResourcesAndPoint
-
-  dateSelectedAndRange: DateSelectedRangeInterface
   queryToFind: QueryToFindInterface
 }
 
@@ -50,7 +43,6 @@ type HeatSourceAction =
   | { type: 'changeCountByDates'; payload: DatesHeatSources[] }
   | { type: 'setTitlesArray'; payload: string[] }
   | { type: 'setCurrentHeatSources'; payload: IHeatResourcesAndPoint }
-  | { type: 'dateSelectedAndRange'; payload: DateSelectedRangeInterface }
   | { type: 'setQueryToFind'; payload: QueryToFindInterface }
   | {
       type: 'setOneFieldQueryToFind'
@@ -123,11 +115,6 @@ export const heatSourcesReducer = (
         currentHeatSources: action.payload,
       }
 
-    case 'dateSelectedAndRange':
-      return {
-        ...state,
-        dateSelectedAndRange: action.payload,
-      }
     case 'setOneFieldQueryToFind':
       return {
         ...state,

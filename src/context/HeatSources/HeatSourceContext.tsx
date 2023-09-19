@@ -2,7 +2,6 @@ import { createContext, useEffect, useReducer } from 'react'
 import {
   heatSourcesReducer,
   HeatSourcestState,
-  DateSelectedRangeInterface,
   QueryToFindInterface,
 } from './HeatSourcesReducer'
 import {
@@ -39,7 +38,6 @@ type HeatSourcesStateProps = {
   countByDates: DatesHeatSources[]
 
   currentHeatSources: IHeatResourcesAndPoint
-  dateSelectedAndRange: DateSelectedRangeInterface
   queryToFind: QueryToFindInterface
   setShowProvinvicaMun: (newState: boolean) => void
   setShowOptions: (newState: boolean) => void
@@ -48,9 +46,7 @@ type HeatSourcesStateProps = {
   setMounthSelected: (value: SelectOptionDateInterface) => void
   getHeatSourcesInfoToGragh: (monthNumber: number, year: number) => void
   changeCurrentGeoJson: (geoJsonCurrent: IHeatResourcesAndPoint) => void
-  changeDateSelectedAndRanked: (
-    dateSelectedAndRange: DateSelectedRangeInterface,
-  ) => void
+
   changeQueryOneFieldToFind: (
     field: keyof QueryToFindInterface,
     value: string,
@@ -90,18 +86,13 @@ const HeatSourcesInitialState: HeatSourcestState = {
     },
   },
 
-  dateSelectedAndRange: {
-    dateStart: null,
-    dateEnd: null,
-    dateEndRange: 7,
-    findbyOneDate: false,
-  },
   queryToFind: {
     departamento: departametsArray[0].label,
     image: departametsArray[0].value,
     nameLocation: '',
     typeLocation: 'pais',
     isAllDepartamentos: true,
+    findbyOneDate: true,
   },
 }
 
@@ -227,20 +218,13 @@ export const HeatProvider = ({ children }: any) => {
     })
   }
 
-  const changeDateSelectedAndRanked = (
-    dateSelectedAndRange: DateSelectedRangeInterface,
-  ) => {
-    dispatch({
-      type: 'dateSelectedAndRange',
-      payload: dateSelectedAndRange,
-    })
-  }
   const changeQueryToFind = (queryToFind: QueryToFindInterface) => {
     dispatch({
       type: 'setQueryToFind',
       payload: queryToFind,
     })
   }
+
   const changeQueryOneFieldToFind = (
     field: keyof QueryToFindInterface,
     value: string,
@@ -266,7 +250,6 @@ export const HeatProvider = ({ children }: any) => {
         setMounthSelected,
         getHeatSourcesInfoToGragh,
         changeCurrentGeoJson,
-        changeDateSelectedAndRanked,
         changeQueryOneFieldToFind,
         changeQueryToFind,
       }}
