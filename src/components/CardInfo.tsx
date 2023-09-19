@@ -1,7 +1,7 @@
 /* import { es } from "date-fns/locale"; */
 import moment from 'moment'
 import 'moment/locale/es' // without this line it didn't work
-import { HeatSourcestState } from '../context/HeatSources/HeatSourcesReducer'
+
 import { useContext, useEffect } from 'react'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 moment.locale('es')
@@ -11,7 +11,6 @@ interface CardInfoInterface {
 }
 export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
   const {
-    dateSelectedAndRange,
     queryToFind,
     currentHeatSources,
     showOptions,
@@ -37,15 +36,15 @@ export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
         </h2>
         <span>
           {/* Focos de calor detectados en {renderPlaceName()}{' '} */}
-          {!dateSelectedAndRange.findbyOneDate ? (
+          {!queryToFind.findbyOneDate ? (
             <>
-              <b>{moment(dateSelectedAndRange.dateStart).format('LL')}</b>
+              <b>{moment(queryToFind.dateStart).format('LL')}</b>
               {/* <b>es de {currentGeoJson.features.length}</b> */}
             </>
           ) : (
             <>
-              <b>{moment(dateSelectedAndRange.dateStart).format('LL')}</b> hasta{' '}
-              <b>{moment(dateSelectedAndRange.dateEnd).format('LL')}</b> es de{' '}
+              <b>{moment(queryToFind.dateStart).format('LL')}</b> hasta{' '}
+              <b>{moment(queryToFind.dateEnd).format('LL')}</b> es de{' '}
               {/* <b>{currentGeoJson.features.length}</b> */}
             </>
           )}

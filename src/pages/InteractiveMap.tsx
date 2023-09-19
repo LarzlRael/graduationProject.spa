@@ -18,6 +18,9 @@ import { initialCoordinates, mapsTypeStyle } from '../data/data'
 import { generateUniqueKey } from '../utils/key_utils'
 import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
 import { LatLngInt } from '../interfaces/countProvinceDepartamento.interface'
+import MarkerClusterGroup from 'react-leaflet-cluster'
+
+import PixiOverlay from 'react-leaflet-pixi-overlay'
 
 export const InteractiveMap = () => {
   const {
@@ -123,12 +126,24 @@ export const InteractiveMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {setInfoMarkers().map(({ marker2, title }, index) => (
-          <Marker key={index} position={[marker2[0], marker2[1]]}>
-            {/* <Popup>{title}</Popup> */}
-            <Tooltip>{title}</Tooltip>
-          </Marker>
-        ))}
+
+        {setInfoMarkers().length > 1000 ? (
+          <MarkerClusterGroup chunkedLoading>
+            {setInfoMarkers().map(({ marker2, title }, index) => (
+              <Marker key={index} position={[marker2[0], marker2[1]]}>
+                {/* <Popup>{title}</Popup> */}
+                <Tooltip>{title}</Tooltip>
+              </Marker>
+            ))}
+          </MarkerClusterGroup>
+        ) : (
+          setInfoMarkers().map(({ marker2, title }, index) => (
+            <Marker key={index} position={[marker2[0], marker2[1]]}>
+              {/* <Popup>{title}</Popup> */}
+              <Tooltip>{title}</Tooltip>
+            </Marker>
+          ))
+        )}
 
         <GeoJSON data={polyToGeoJson()} />
         <RecenterAutomatically

@@ -8,7 +8,6 @@ import { DatePickerRange } from '../DatePickerRange'
 import { ModalComponent } from '../ModalComponent'
 
 import { LoadingElipsis } from '../widgets/loadings/LoadingElipsis'
-import { QueryToFindInterface } from '../../context/HeatSources/HeatSourcesReducer'
 
 import Select from 'react-select'
 import { FilledButton } from '../widgets/buttons/FilledButton'
@@ -17,6 +16,7 @@ import { IProvinciasAndMunicipios } from '../../interfaces/provMun.interface'
 import { CommonContext } from '../../context/commonContext/CommonContext'
 import { useContext } from 'react'
 import { Switch } from '../../form/Switch'
+import { QueryToFindInterface } from '../../interfaces/heatResources.interfaces'
 interface Props {
   imageUrl: string
   mapTypeStyle: IMapStyleIntOption[]
