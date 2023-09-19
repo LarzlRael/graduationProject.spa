@@ -15,6 +15,9 @@ import { FilledButton } from '../components/widgets/buttons/FilledButton'
 import { postAction } from '../provider/services/action/action'
 import { validateStatus } from '../utils/validation'
 import { CommonContext } from '../context/commonContext/CommonContext'
+import { Form, Formik } from 'formik'
+import { Input } from '../components/forms'
+import * as Yup from 'yup'
 export const AdminLogin = () => {
   const { showSnackBar } = useContext(CommonContext)
   const { startSession, logged, loading } = useContext(AuthAdminContext)
@@ -28,22 +31,11 @@ export const AdminLogin = () => {
     // eslint-disable-next-line
   }, [logged])
 
-  const [userAdmin, setUserAdmin] = useState({
-    email: 'admin@admin.com',
-    password: 'Fantasticbaby11xdA',
-  })
-  //? Error state
-  const [Error, setError] = useState({
-    error_message: null,
-  })
-  const { error_message } = Error
-
-  const handleSumbit = (e: any) => {
-    e.preventDefault()
+  const handleSumbit = ({ username, password }: initialValuesI) => {
     /* singIn({ username: userAdmin.email, password: userAdmin.password }) */
     postAction('auth/signin', {
-      username: userAdmin.email,
-      password: userAdmin.password,
+      username,
+      password,
     }).then((res: any) => {
       if (validateStatus(res.status)) {
         window.localStorage.setItem('token', res.data.accessToken)
@@ -63,61 +55,72 @@ export const AdminLogin = () => {
     })
   }
 
-  const { email, password } = userAdmin
+  useDocumentTitle('Iniciar sesión')
 
-  const onChange = (e: any) => {
-    setUserAdmin({
-      ...userAdmin,
-      [e.target.name]: e.target.value,
-    })
-    setError({
-      ...Error,
-      error_message: null,
-    })
+  interface initialValuesI {
+    username: string
+    password: string
   }
+  const initialValues = {
+    username: 'admin@admin.com',
+    password: 'Fantasticbaby11xdA',
+  }
+  const LoginSchema = Yup.object({
+    username: Yup.string()
+      .email('Email no valido')
+      .required('El email es requerido'),
+    password: Yup.string()
 
-  useDocumentTitle('Login')
+      //Minimum Character Validation
+      .min(3, 'La contraseña debe tener al menos 3 caracteres')
+      .required('La contraseña es requerida'),
+  })
 
   return (
     <div className="LoginAdmin">
       <ButtonIcon className="LoginAdmin__button-icon" />
       <div className="login-div animate__animated animate__fadeIn">
         <div className="form animate__animated animate__fadeInUp">
-          <form className="formLogin" onSubmit={handleSumbit}>
-            <h3 className="title">Login</h3>
-            <input
-              className={error_message ? 'input-login error' : 'input-login'}
-              placeholder="Usuario"
-              onChange={onChange}
-              name="email"
-              value={email}
-              type="text"
-            />
-            <br />
-            <input
-              className={error_message ? 'input-login error' : 'input-login'}
-              placeholder="Contraseña"
-              onChange={onChange}
-              value={password}
-              name="password"
-              type="password"
-            />
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSumbit}
+            validationSchema={LoginSchema}
+          >
+            <Form className="Form__login">
+              <h3 className="Form__input-title">Iniciar sesion</h3>
+              <Input
+                label="Usuario"
+                className="Form__input"
+                placeholder="Ingrese su usuario o email"
+                name="username"
+                type="text"
+                disabled={loading}
+                /* showClearIcon={true} */
+              />
 
-            {!loading ? (
-              <FilledButton
-                type="submit"
-                className="button-login pointer"
-                fontSize="1rem"
-              >
-                Iniciar Sesion
-              </FilledButton>
-            ) : (
-              <LoadingElipsis />
-            )}
-
-            {/* {error_message &&
-                        <ErrorLabel message={error_message} />} */}
-          </form>
+              <Input
+                label="Contraseña"
+                className="Form__input"
+                placeholder="Ingrese su contraseña"
+                name="password"
+                type="password"
+                disabled={loading}
+              />
+              {loading ? (
+                <LoadingElipsis />
+              ) : (
+                <FilledButton
+                  /* background="var(--secondary-color)" */
+                  type="submit"
+                  className="button-login pointer"
+                  margin="1rem 0"
+                  borderRadius="20px"
+                >
+                  Iniciar Sesion
+                </FilledButton>
+              )}
+            </Form>
+          </Formik>
         </div>
         <div className="info-login animate__animated animate__fadeInDown">
           <h1>Focos de calor en Bolivia</h1>

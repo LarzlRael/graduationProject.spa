@@ -23,7 +23,7 @@ export const Input = ({ label, type, showClearIcon, ...props }: Props) => {
 
   return (
     <>
-      <label className="Form__label--pyme" htmlFor={props.id || props.name}>
+      <label className="Input__label" htmlFor={props.id || props.name}>
         {label}
       </label>
       <div className="Form__input--container">

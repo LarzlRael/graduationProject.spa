@@ -1,7 +1,7 @@
-import { IMapStyleIntOption } from "../data/data"
-import { IavailablesDates } from "./datesResponse"
-import { DatesHeatSources } from './countProvinceDepartamento.interface';
-import { IHeatResourcesAndPoint } from "./geoJsonResponse";
+import { IMapStyleIntOption } from '../data/data'
+import { IavailablesDates } from './datesResponse'
+import { DatesHeatSources } from './countProvinceDepartamento.interface'
+import { IHeatResourcesAndPoint } from './geoJsonResponse'
 
 export interface QueryToFindInterface {
   departamento: string
@@ -30,4 +30,12 @@ export interface IHeatSourcestState {
   titleArray: string[]
   currentHeatSources: IHeatResourcesAndPoint
   queryToFind: QueryToFindInterface
+}
+
+export enum GraphType {
+  VerticalBar = 'Barras Vertical',
+  HorizontalBar = 'Barras Horizontal',
+  Pie = 'Pie',
+  Line = 'Lineas',
+  Donut = 'Dona',
 }

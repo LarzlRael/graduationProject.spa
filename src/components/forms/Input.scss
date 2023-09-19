@@ -37,3 +37,17 @@
   transform: translateY(-50%);
   right: 10px;
 }
+
+.Input__label {
+  font-size: 14px;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.Form__text-error {
+  display: block;
+  color: red;
+  font-size: 0.8rem;
+  padding: 0.5rem 0;
+}
