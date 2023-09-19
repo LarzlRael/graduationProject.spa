@@ -1,9 +1,6 @@
 import { createContext, useEffect, useReducer } from 'react'
-import {
-  heatSourcesReducer,
-  HeatSourcestState,
-  QueryToFindInterface,
-} from './HeatSourcesReducer'
+import { heatSourcesReducer } from './HeatSourcesReducer'
+
 import {
   getAvailableDatesServer,
   getCountHeatSourcesByMonth,
@@ -13,17 +10,22 @@ import {
   graphTypeArray,
   mapsTypeStyle,
   meses,
-  MapStyleIntOption,
   departametsArray,
   initialCoordinates,
+  IMapStyleIntOption,
 } from '../../data/data'
 
 import moment from 'moment'
 import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.interface'
 import { IHeatResourcesAndPoint } from '../../interfaces/geoJsonResponse'
-import { SelectOptionDateInterface } from './HeatSourcesReducer'
+
 import { addHours } from '../../utils/utils'
 import { IavailablesDates } from '../../interfaces/datesResponse'
+import {
+  IHeatSourcestState,
+  QueryToFindInterface,
+  SelectOptionDateInterface,
+} from '../../interfaces/heatResources.interfaces'
 moment.locale('es')
 
 type HeatSourcesStateProps = {
@@ -31,7 +33,7 @@ type HeatSourcesStateProps = {
   loadingState: boolean
   showProvMun: boolean
   showOptions: boolean
-  mapStyle: MapStyleIntOption
+  mapStyle: IMapStyleIntOption
   graphType: string
   mounthAndYearSelected: SelectOptionDateInterface
   titleArray: string[]
@@ -41,7 +43,7 @@ type HeatSourcesStateProps = {
   queryToFind: QueryToFindInterface
   setShowProvinvicaMun: (newState: boolean) => void
   setShowOptions: (newState: boolean) => void
-  setChangeMapType: (mapStyle: MapStyleIntOption) => void
+  setChangeMapType: (mapStyle: IMapStyleIntOption) => void
   changeTypeGraph: (value: string) => void
   setMounthSelected: (value: SelectOptionDateInterface) => void
   getHeatSourcesInfoToGragh: (monthNumber: number, year: number) => void
@@ -54,7 +56,7 @@ type HeatSourcesStateProps = {
   changeQueryToFind: (queryToFindInterface: QueryToFindInterface) => void
 }
 
-const HeatSourcesInitialState: HeatSourcestState = {
+const HeatSourcesInitialState: IHeatSourcestState = {
   datesAvailable: {
     min_date: new Date(),
     max_date: new Date(),
@@ -150,7 +152,7 @@ export const HeatProvider = ({ children }: any) => {
     })
   }
 
-  const setChangeMapType = (mapStyle: MapStyleIntOption) => {
+  const setChangeMapType = (mapStyle: IMapStyleIntOption) => {
     dispatch({
       type: 'changeMapType',
       payload: mapStyle,

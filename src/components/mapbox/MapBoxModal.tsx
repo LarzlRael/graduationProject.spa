@@ -1,7 +1,7 @@
 import {
   mapsTypeStyle,
   departametsArray,
-  MapStyleIntOption,
+  IMapStyleIntOption,
 } from '../../data/data'
 import { CardInfo } from '../CardInfo'
 import { DatePickerRange } from '../DatePickerRange'
@@ -19,9 +19,9 @@ import { useContext } from 'react'
 import { Switch } from '../../form/Switch'
 interface Props {
   imageUrl: string
-  mapTypeStyle: MapStyleIntOption[]
-  mapStyle: MapStyleIntOption
-  setChangeMapType: (mapStyle: MapStyleIntOption) => void
+  mapTypeStyle: IMapStyleIntOption[]
+  mapStyle: IMapStyleIntOption
+  setChangeMapType: (mapStyle: IMapStyleIntOption) => void
   queryToFind: QueryToFindInterface
   changeQueryOneFieldToFind: (
     field: keyof QueryToFindInterface,

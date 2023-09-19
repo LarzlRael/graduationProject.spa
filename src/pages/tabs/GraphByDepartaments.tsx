@@ -35,6 +35,7 @@ export const GraphByDepartaments = () => {
       e.target.checked ? 'provincia' : 'municipio',
     )
     setShowProvinvicaMun(e.target.checked)
+    consultar()
   }
   const myRef = useRef(null)
 
@@ -106,6 +107,7 @@ export const GraphByDepartaments = () => {
                 isAllDepartamentos: e!.value === 'Bolivia',
                 typeLocation: e!.value === 'Bolivia' ? 'pais' : 'departamento',
               })
+              consultar()
             }}
           />
 

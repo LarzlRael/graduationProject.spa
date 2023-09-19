@@ -6,10 +6,11 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import moment from 'moment'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
-import { QueryToFindInterface } from '../context/HeatSources/HeatSourcesReducer'
+
 import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
 import { Switch } from '../form/Switch'
 import { useFocosCalor } from '../hooks/usefocosCalor'
+import { QueryToFindInterface } from '../interfaces/heatResources.interfaces'
 
 export const DatePickerRange = () => {
   const { datesAvailable, loadingState } = useContext(HeatSourcesContext)

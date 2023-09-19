@@ -1,43 +1,22 @@
-import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.interface'
-import { MapStyleIntOption } from '../../data/data'
+
+
 import { IHeatResourcesAndPoint } from '../../interfaces/geoJsonResponse'
 import { IavailablesDates } from '../../interfaces/datesResponse'
+import {
+  IHeatSourcestState,
+  QueryToFindInterface,
+  SelectOptionDateInterface,
+} from '../../interfaces/heatResources.interfaces'
 
-export interface QueryToFindInterface {
-  departamento: string
-  image: string
-  typeLocation?: 'provincia' | 'municipio' | 'departamento' | 'pais' | null
-  nameLocation: string
-  dateStart?: Date | null
-  dateEnd?: Date | null
-  isAllDepartamentos: boolean
-  findbyOneDate: boolean
-}
-export interface SelectOptionDateInterface {
-  month: number
-  year: number
-  onlyYear: boolean
-}
-export interface HeatSourcestState {
-  datesAvailable: IavailablesDates
-  loadingState: boolean
-  showProvMun: boolean
-  showOptions: boolean
-  mapStyle: MapStyleIntOption
-  graphType: string
-  mounthAndYearSelected: SelectOptionDateInterface
-  countByDates: DatesHeatSources[]
-  titleArray: string[]
-  currentHeatSources: IHeatResourcesAndPoint
-  queryToFind: QueryToFindInterface
-}
+import { DatesHeatSources } from '../../interfaces/countProvinceDepartamento.interface'
+import { IMapStyleIntOption } from '../../data/data'
 
 type HeatSourceAction =
   | { type: 'dates'; payload: IavailablesDates }
   | { type: 'loading'; payload: boolean }
   | { type: 'showProvMun'; payload: boolean }
   | { type: 'showOptions'; payload: boolean }
-  | { type: 'changeMapType'; payload: MapStyleIntOption }
+  | { type: 'changeMapType'; payload: IMapStyleIntOption }
   | { type: 'changeGraphType'; payload: string }
   | { type: 'changeMounthOrYear'; payload: SelectOptionDateInterface }
   | { type: 'changeCountByDates'; payload: DatesHeatSources[] }
@@ -54,9 +33,9 @@ type HeatSourceAction =
 | { type: 'logout' } 
  */
 export const heatSourcesReducer = (
-  state: HeatSourcestState,
+  state: IHeatSourcestState,
   action: HeatSourceAction,
-): HeatSourcestState => {
+): IHeatSourcestState => {
   switch (action.type) {
     case 'dates':
       return {

@@ -151,12 +151,12 @@ export const mapType = [
   'navigation-day-v1',
   'navigation-night-v1',
 ]
-export interface MapStyleIntOption {
+export interface IMapStyleIntOption {
   value: string
   label: string
 }
 
-export const mapsTypeStyle: MapStyleIntOption[] = [
+export const mapsTypeStyle: IMapStyleIntOption[] = [
   {
     label: 'Mapa de Calles',
     value: 'streets-v11',
