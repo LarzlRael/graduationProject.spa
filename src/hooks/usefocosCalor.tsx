@@ -16,21 +16,12 @@ import { validateArray } from '../utils/validation'
 
 export const useFocosCalor = () => {
   const {
-    datesAvailable,
     loadingState,
-    showProvMun,
-    showOptions,
-    mapStyle,
     currentHeatSources,
-    setShowOptions,
     setChangeMapType,
-
     changeCurrentGeoJson,
-    changeQueryOneFieldToFind,
     changeQueryToFind,
-
     queryToFind,
-    setShowProvinvicaMun,
   } = useContext(HeatSourcesContext)
 
   const { darkTheme, showSnackBar } = useContext(CommonContext)
@@ -136,7 +127,7 @@ export const useFocosCalor = () => {
       zoom: 6,
       transitionDuration: 1000,
     })
-  /*   if (validateArray(queryResult.heatResources.features)) {
+    /*   if (validateArray(queryResult.heatResources.features)) {
       closeModal()
     } */
     /* showSnakBarError(queryResult.heatResources.features.length) */
@@ -190,19 +181,12 @@ export const useFocosCalor = () => {
     selecteDepartamentCopy,
     layerStyle,
     stateArrMunProv,
-    showOptions,
     getHeatSources,
-    setShowOptions,
     /* States from provider usestate */
-    datesAvailable,
     loadingState,
-    showProvMun,
     setChangeMapType,
-    mapStyle,
     loadingNetworl,
     queryToFind,
     changeQueryToFind,
-    changeQueryOneFieldToFind,
-    setShowProvinvicaMun,
   }
 }

@@ -3,6 +3,7 @@ import { RespFoco } from '../interfaces/countProvinceDepartamento.interface'
 import { useGraficos } from '../hooks/useGraficos'
 import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
 import Select from 'react-select'
+import { LoadingExpanded, LoadingSpin } from './widgets/loadings/Loading'
 export interface GraphProps {
   info?: RespFoco[]
   nombreDepartamento: string
@@ -32,7 +33,7 @@ export const Graficos = (graphProps: GraphProps) => {
     label: graph,
   }))
   return (
-    <>
+    <div>
       <label>Tipo de grafico</label>
       <Select
         /* renderValue={(value) => `${graphType}`} */
@@ -59,6 +60,6 @@ export const Graficos = (graphProps: GraphProps) => {
           <ShowGraphic />
         </div>
       )}
-    </>
+    </div>
   )
 }

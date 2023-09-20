@@ -13,7 +13,7 @@ import { FilledButton } from '../widgets/buttons/FilledButton'
 import Checkbox from '../../form/Checkbox'
 import { IProvinciasAndMunicipios } from '../../interfaces/provMun.interface'
 import { CommonContext } from '../../context/commonContext/CommonContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Switch } from '../../form/Switch'
 import { QueryToFindInterface } from '../../interfaces/heatResources.interfaces'
 import { ModalComponent } from '../modal/ModalComponent'
@@ -53,7 +53,7 @@ export const MapBoxModal = ({
   showProvinvicaMun,
 }: Props) => {
   const { darkTheme } = useContext(CommonContext)
-
+  const [check, setCheck] = useState(false)
   const handleChange = (e: any) => {
     showProvinvicaMun(e.target.checked)
 
@@ -62,8 +62,11 @@ export const MapBoxModal = ({
       e.target.checked ? 'provincia' : 'municipio',
     )
   }
-  const handleChangeFindByProvincia = (e: any) => {
+  const handleChangeFindByProvAndMun = (e: any) => {
+    console.log('value of checkbox: ', e.target.checked)
     setShowOptions(e.target.checked)
+    console.log('value of setOption: ', showOptions)
+
     changeQueryOneFieldToFind(
       'typeLocation',
       e.target.checked ? 'municipio' : 'departamento',
@@ -94,8 +97,12 @@ export const MapBoxModal = ({
           <Checkbox
             label="Provincias/municipios"
             isChecked={showOptions}
-            /* onChange={handleChange} */
-            onChange={handleChangeFindByProvincia}
+            onChange={handleChangeFindByProvAndMun}
+          />
+          <Checkbox
+            label="TExt"
+            isChecked={check}
+            onChange={(e) => setCheck((prev)=>(!prev))}
           />
 
           {showOptions && (

@@ -3,12 +3,12 @@ import styled from 'styled-components'
 export const LoadingSpin = () => {
   return (
     <>
-      <LoadingSpiner>
+      <LoadingSpinerStyles>
         <div></div>
         <div></div>
         <div></div>
         <div></div>
-      </LoadingSpiner>
+      </LoadingSpinerStyles>
     </>
   )
 }
@@ -24,16 +24,16 @@ export const LoadingExpanded = () => {
         alignItems: 'center',
       }}
     >
-      <LoadingSpiner>
+      <LoadingSpinerStyles>
         <div></div>
         <div></div>
         <div></div>
         <div></div>
-      </LoadingSpiner>
+      </LoadingSpinerStyles>
     </div>
   )
 }
-const LoadingSpiner = styled.div`
+const LoadingSpinerStyles = styled.div`
     display: block;
     margin: auto;
     position: relative;

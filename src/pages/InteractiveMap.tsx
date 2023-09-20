@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, useContext } from 'react'
 
 import {
   MapContainer,
@@ -21,36 +21,35 @@ import { LatLngInt } from '../interfaces/countProvinceDepartamento.interface'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 
 import PixiOverlay from 'react-leaflet-pixi-overlay'
+import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 
 export const InteractiveMap = () => {
   const {
     loading,
-
     currentHeatSources,
     onChange,
     selecteDepartamentCopy,
-
     getHeatSources,
     stateArrMunProv,
-    //state from usestate
-    // menu controls
-    showProvMun,
-    showOptions,
-    setShowOptions,
-    //style maps
     setChangeMapType,
-    mapStyle,
     //query to find
     queryToFind,
-    changeQueryOneFieldToFind,
-    setShowProvinvicaMun,
     loadingNetworl,
   } = useFocosCalor()
 
   const {
     heatResources,
+
     middlePoint: { coordinates, poligono },
   } = currentHeatSources
+  const {
+    showOptions,
+    setShowOptions,
+    setShowProvinvicaMun,
+    showProvMun,
+    mapStyle,
+    changeQueryOneFieldToFind,
+  } = useContext(HeatSourcesContext)
   const [key, setKey] = useState(generateUniqueKey())
   useEffect(() => {
     setKey(generateUniqueKey())
