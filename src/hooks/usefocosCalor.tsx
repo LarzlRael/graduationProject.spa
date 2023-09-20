@@ -33,7 +33,7 @@ export const useFocosCalor = () => {
     setShowProvinvicaMun,
   } = useContext(HeatSourcesContext)
 
-  const { darkTheme, showSnackBar, closeModal } = useContext(CommonContext)
+  const { darkTheme, showSnackBar } = useContext(CommonContext)
 
   useEffect(() => {
     if (darkTheme) {

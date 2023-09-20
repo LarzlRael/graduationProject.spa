@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 
 import { ChangeEvent } from 'react'
 import { IoCloseCircleSharp } from 'react-icons/io5'
@@ -10,11 +10,20 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import ToolTip from '../../components/ToolTip'
 import { FilledButton } from '../../components/widgets/buttons/FilledButton'
+import { CommonContext } from '../../context/commonContext/CommonContext'
+import {
+  Loading2,
+  LoadingSpin,
+} from '../../components/widgets/loadings/Loading'
+import { LoadingElipsis } from '../../components/widgets/loadings/LoadingElipsis'
+import { postAction } from '../../provider/services/action/ActionAuthorization'
+import { validateStatus } from '../../utils/validation'
 
 export const UpdateInformation = () => {
   const [selectedFile, setSelectedFile] = useState<File>()
+  const [loading, setLoading] = useState(false)
   const [isSelected, setIsSelected] = useState(false)
-
+  const { changeSimpleModal } = useContext(CommonContext)
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return
     setSelectedFile(e.target.files[0])
@@ -24,13 +33,55 @@ export const UpdateInformation = () => {
 
   const uploadFile = async () => {
     if (!selectedFile) return
-    const message = await uploadFileCVS(selectedFile)
 
-    if (message.ok) {
-      toast.success(message.msg, {})
-    } else {
-      toast.error(message.msg)
-    }
+    let formData = new FormData()
+    formData.append('csv', selectedFile)
+
+    changeSimpleModal({
+      isOpen: true,
+      title: 'ACTUALIZANDO BASE DE DATOS',
+
+      contentModal: (
+        <div>
+          <h5>Se esta subiendo los datos, no cierre este ventana</h5>
+          <LoadingElipsis />
+        </div>
+      ),
+      isButtonClose: true,
+      width: '350px',
+    })
+
+    setLoading(true)
+    postAction('maps/uploadcsvupdate', formData)
+      .then((res: any) => {
+        /* console.log(res.status)
+        if (validateStatus(res.status)) {
+          toast.success(res.data.msg)
+
+          changeSimpleModal({
+            isOpen: false,
+            title: '',
+            contentModal: null,
+          })
+        } else {
+          toast.error('Error al subir el archivo')
+          changeSimpleModal({
+            isOpen: false,
+            title: '',
+            contentModal: null,
+          })
+        } */
+      })
+      .catch((err: any) => {
+        toast.error(err)
+        changeSimpleModal({
+          isOpen: false,
+          title: '',
+          contentModal: null,
+        })
+      })
+
+    setLoading(false)
   }
 
   const clearFile = () => {
@@ -86,8 +137,6 @@ export const UpdateInformation = () => {
           <IoCloseCircleSharp size="1.5rem" onClick={clearFile} />
         </>
       )}
-
-      <ToastContainer />
     </div>
   )
 }

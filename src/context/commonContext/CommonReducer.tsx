@@ -3,18 +3,35 @@ export interface ISnackbar {
   message: string
   kind: boolean
 }
+export interface IModal {
+  status: boolean
+  title: string
+  contentModal: React.ReactNode
+  butttonText: string
+  onClick?: (() => void) | null | undefined
+  width?: string | null | undefined
+}
+export interface ISimpleModal {
+  isOpen: boolean
+  title: string
+  contentModal: React.ReactNode
+  isButtonClose?: boolean
+  width?: string | undefined
+}
 export interface CommonState {
   snackBar: ISnackbar
   darkTheme: boolean
   tab: number
-  modalIsOpen: boolean
+  globalModal: IModal
+  simpleModal: ISimpleModal
 }
 
 type CommonAction =
   | { type: 'changeTheme'; payload: boolean }
   | { type: 'openSnackBar'; payload: ISnackbar }
   | { type: 'changeTab'; payload: number }
-  | { type: 'setModalIsOpen'; payload: boolean }
+  | { type: 'changeModal'; payload: IModal }
+  | { type: 'changeSimpleModal'; payload: ISimpleModal }
 /* | { type: 'removeError' }
   | { type: 'noAuthenticated' } 
   | { type: 'logout' }
@@ -45,12 +62,17 @@ export const commonReducer = (
         ...state,
         tab: action.payload,
       }
-
-    case 'setModalIsOpen':
+    case 'changeModal':
       return {
         ...state,
-        modalIsOpen: action.payload,
+        globalModal: action.payload,
       }
+    case 'changeSimpleModal':
+      return {
+        ...state,
+        simpleModal: action.payload,
+      }
+
     default:
       return state
   }

@@ -141,7 +141,7 @@ export const InteractiveMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {setInfoMarkers().length > 500 ? (
+        {setInfoMarkers().length > 100 ? (
           <MarkerClusterGroup chunkedLoading>
             {setInfoMarkers().map(({ marker2, title }, index) => (
               <Marker key={index} position={[marker2[0], marker2[1]]}>

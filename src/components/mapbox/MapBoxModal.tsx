@@ -5,7 +5,6 @@ import {
 } from '../../data/data'
 import { CardInfo } from '../CardInfo'
 import { DatePickerRange } from '../DatePickerRange'
-import { ModalComponent } from '../ModalComponent'
 
 import { LoadingElipsis } from '../widgets/loadings/LoadingElipsis'
 
@@ -17,6 +16,7 @@ import { CommonContext } from '../../context/commonContext/CommonContext'
 import { useContext } from 'react'
 import { Switch } from '../../form/Switch'
 import { QueryToFindInterface } from '../../interfaces/heatResources.interfaces'
+import { ModalComponent } from '../modal/ModalComponent'
 interface Props {
   imageUrl: string
   mapTypeStyle: IMapStyleIntOption[]

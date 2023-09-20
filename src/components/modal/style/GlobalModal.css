@@ -1,0 +1,38 @@
+.GlobalModal {
+  background: var(--white);
+  width: fit-content;
+  margin: 0 auto;
+  padding: 10px 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+.GlobalModal h2 {
+  font-size: 2rem;
+  margin: 0 0 5px;
+}
+.GlobalModal__p {
+  font-size: 1.6rem;
+  margin: 0 0 15px;
+}
+.GlobalModal .GlobalModal__btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.GlobalModal .NormalButton {
+  width: fit-content;
+  padding: 5px 20px;
+}
+@media screen and (max-width: 425px) {
+  .GlobalModal {
+    width: 80%;
+  }
+  .GlobalModal .GlobalModal__btns {
+    flex-direction: column;
+    gap: 0;
+  }
+  .GlobalModal button {
+    width: 100%;
+  }
+}

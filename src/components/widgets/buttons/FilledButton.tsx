@@ -15,7 +15,7 @@ font-size: ${({ fontSize }) => fontSize};
   align-content: center;
   justify-content: center;
   align-items: center;
-  margin: ${({ margin }) => margin};
+  margin: ${({ $margin }) => $margin};
 
   cursor: pointer;
   /* &:hover {
@@ -30,7 +30,7 @@ interface ButtonProps {
   backGroundColor?: string
   textColor?: string
   type?: 'button' | 'submit'
-  margin?: string
+  $margin?: string
   className?: string
   borderRadius?: string
   padding?: string
@@ -44,7 +44,7 @@ export const FilledButton = ({
   backGroundColor,
   textColor,
   type = 'button',
-  margin = '0',
+  $margin = '0',
   className,
   borderRadius,
   padding,
@@ -58,7 +58,7 @@ export const FilledButton = ({
       backGroundColor={backGroundColor}
       onClick={onClick}
       textColor={textColor}
-      margin={margin}
+      $margin={$margin}
       borderRadius={borderRadius}
       className={className}
       padding={padding}

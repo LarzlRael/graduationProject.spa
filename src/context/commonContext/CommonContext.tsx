@@ -1,16 +1,23 @@
 import { createContext, useReducer } from 'react'
-import { commonReducer, CommonState, ISnackbar } from './CommonReducer'
+import {
+  commonReducer,
+  CommonState,
+  IModal,
+  ISimpleModal,
+  ISnackbar,
+} from './CommonReducer'
 
 type CommonContextProps = {
   snackBar: ISnackbar
   darkTheme: boolean
   tab: number
-  modalIsOpen: boolean
+  globalModal: IModal
+  simpleModal: ISimpleModal
   showSnackBar: (parameters: ISnackbar) => void
   setTheme: () => void
   setTabPosition: (tabPosition: number) => void
-  closeModal: () => void
-  openModal: () => void
+  changeModal: (parameters: IModal) => void
+  changeSimpleModal: (parameters: ISimpleModal) => void
 }
 
 const CommonInitialState: CommonState = {
@@ -19,9 +26,22 @@ const CommonInitialState: CommonState = {
     message: '',
     kind: true,
   },
+  globalModal: {
+    status: false,
+    title: '',
+    contentModal: null,
+    butttonText: '',
+    onClick: null,
+    width: null,
+  },
+  simpleModal: {
+    isOpen: false,
+    title: '',
+    contentModal: null,
+    isButtonClose: true,
+  },
   darkTheme: localStorage.getItem('darktheme') === 'true' ? true : false,
   tab: 0,
-  modalIsOpen: false,
 }
 
 export const CommonContext = createContext({} as CommonContextProps)
@@ -36,6 +56,12 @@ export const CommonProvider = ({ children }: any) => {
     dispatch({ type: 'changeTab', payload: tab })
   }
 
+  const changeSimpleModal = (parameters: ISimpleModal) => {
+    dispatch({
+      type: 'changeSimpleModal',
+      payload: parameters,
+    })
+  }
   const setTheme = () => {
     localStorage.setItem('darktheme', JSON.stringify(!state.darkTheme))
     dispatch({
@@ -43,7 +69,7 @@ export const CommonProvider = ({ children }: any) => {
       payload: !state.darkTheme,
     })
   }
-  const closeModal = () => {
+  /* const closeModal = () => {
     dispatch({
       type: 'setModalIsOpen',
       payload: false,
@@ -54,6 +80,13 @@ export const CommonProvider = ({ children }: any) => {
       type: 'setModalIsOpen',
       payload: true,
     })
+  } */
+
+  const changeModal = (parameters: IModal) => {
+    dispatch({
+      type: 'changeModal',
+      payload: parameters,
+    })
   }
 
   return (
@@ -63,9 +96,8 @@ export const CommonProvider = ({ children }: any) => {
         setTheme,
         showSnackBar,
         setTabPosition,
-
-        closeModal,
-        openModal,
+        changeModal,
+        changeSimpleModal,
       }}
     >
       {children}
