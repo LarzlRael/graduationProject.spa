@@ -72,6 +72,13 @@ export const MapBoxModal = () => {
       e.target.checked ? 'municipio' : 'departamento',
     )
   }
+
+  const generateOptionSelect = (arrayString: string[]) => {
+    return arrayString.map((item) => ({
+      value: item,
+      label: item,
+    }))
+  }
   return (
     <div className={`modal-content ${darkTheme && 'blackTheme'}`}>
       <div className="modal-info">
@@ -114,37 +121,32 @@ export const MapBoxModal = () => {
                     showProvMun ? 'Provincia' : 'Municipio'
                   }`}
                 />
-                {showProvMun ? (
-                  <>
-                    <label>Seleccionar Provincia</label>
-                    <Select
-                      onChange={(e) => {
-                        changeQueryOneFieldToFind('nameLocation', e!.value)
-                      }}
-                      /* options={stateArrMunProv.sArrayPro} */
-                      options={stateArrMunProv.provincias.map((provincia) => ({
-                        value: provincia,
-                        label: provincia,
-                      }))}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <label>Seleccionar Municipio</label>
-                    <Select
-                      onChange={(e) =>
-                        changeQueryOneFieldToFind('nameLocation', e!.value)
-                      }
-                      options={stateArrMunProv.municipios.map((municipio) => ({
-                        value: municipio,
-                        label: municipio,
-                      }))}
-                    />
-                  </>
-                )}
+                <>
+                  <label>Seleccionar Provincia</label>
+                  <Select
+                    onChange={(e) => {
+                      changeQueryOneFieldToFind('nameLocation', e!.value)
+                    }}
+                    value={
+                      showProvMun
+                        ? generateOptionSelect(stateArrMunProv.provincias)
+                        : generateOptionSelect(
+                            stateArrMunProv.municipios,
+                          ).filter(
+                            (option) =>
+                              option.value === queryToFind.nameLocation,
+                          )
+                    }
+                    options={
+                      showProvMun
+                        ? generateOptionSelect(stateArrMunProv.provincias)
+                        : generateOptionSelect(stateArrMunProv.municipios)
+                    }
+                  />
+                </>
               </>
             )}
-            <br />
+
             <br />
             {!loading ? (
               <center>

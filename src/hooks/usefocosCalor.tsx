@@ -160,17 +160,17 @@ export const useFocosCalor = () => {
         ...stateArrMunProv,
         ...arrayProvinciasList,
       })
+      changeQueryToFind({
+        ...queryToFind,
+
+        nameLocation:
+          queryToFind.typeLocation === 'provincia'
+            ? stateArrMunProv.provincias[0]
+            : arrayProvinciasList.municipios[0],
+      })
     }
     getProvAndMunNamesArray()
   }, [queryToFind.departamento])
-
-  /* useEffect(() => {
-    changeQueryToFind({
-      ...queryToFind,
-      municipio: stateArrMunProv.municipios[0] ?? '',
-      provincia: stateArrMunProv.provincias[0] ?? '',
-    })
-  }, [queryToFind.departamentSelected]) */
 
   return {
     viewport,
