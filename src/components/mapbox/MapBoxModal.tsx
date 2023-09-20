@@ -40,7 +40,7 @@ export const MapBoxModal = () => {
     /* imageUrl, */
     setChangeMapType,
     onChange,
-    stateArrMunProv,
+    stateArrayMunProv,
     loading,
     getHeatSources,
   } = useFocosCalor()
@@ -60,10 +60,13 @@ export const MapBoxModal = () => {
   const handleProvOrMunChange = (e: any) => {
     setShowProvinvicaMun(e.target.checked)
 
-    changeQueryOneFieldToFind(
-      'typeLocation',
-      e.target.checked ? 'provincia' : 'municipio',
-    )
+    changeQueryToFind({
+      ...queryToFind,
+      typeLocation: e.target.checked ? 'provincia' : 'municipio',
+      nameLocation: e.target.checked
+        ? stateArrayMunProv.provincias[0]
+        : stateArrayMunProv.municipios[0],
+    })
   }
   const handleChangeFindByProvAndMun = (e: any) => {
     setShowOptions(e.target.checked)
@@ -127,20 +130,17 @@ export const MapBoxModal = () => {
                     onChange={(e) => {
                       changeQueryOneFieldToFind('nameLocation', e!.value)
                     }}
-                    value={
+                    value={generateOptionSelect(
                       showProvMun
-                        ? generateOptionSelect(stateArrMunProv.provincias)
-                        : generateOptionSelect(
-                            stateArrMunProv.municipios,
-                          ).filter(
-                            (option) =>
-                              option.value === queryToFind.nameLocation,
-                          )
-                    }
+                        ? stateArrayMunProv.provincias
+                        : stateArrayMunProv.municipios,
+                    ).filter(
+                      (option) => option.value === queryToFind.nameLocation,
+                    )}
                     options={
                       showProvMun
-                        ? generateOptionSelect(stateArrMunProv.provincias)
-                        : generateOptionSelect(stateArrMunProv.municipios)
+                        ? generateOptionSelect(stateArrayMunProv.provincias)
+                        : generateOptionSelect(stateArrayMunProv.municipios)
                     }
                   />
                 </>

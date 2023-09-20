@@ -11,7 +11,7 @@ import {
   IProvinciasAndMunicipios,
 } from '../interfaces/provMun.interface'
 import { IavailablesDates } from '../interfaces/datesResponse'
-import { QueryToFindInterface } from '../context/HeatSources/HeatSourcesReducer'
+import { QueryToFindInterface } from '../interfaces/heatResources.interfaces'
 
 export const getNombresProvinciasAndMun = async (departamento: string) => {
   const resp = await serverAPI.get<IProvinciasAndMunicipios>(

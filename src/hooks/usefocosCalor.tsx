@@ -52,7 +52,9 @@ export const useFocosCalor = () => {
     image: departametsArray[0].value,
   })
 
-  const [stateArrMunProv, setArrMunProv] = useState<IProvinciasAndMunicipios>({
+  const [stateArrayMunProv, setArrayMunProv] = useState<
+    IProvinciasAndMunicipios
+  >({
     municipios: [],
     provincias: [],
   })
@@ -156,16 +158,16 @@ export const useFocosCalor = () => {
         queryToFind.departamento,
       )
 
-      setArrMunProv({
-        ...stateArrMunProv,
-        ...arrayProvinciasList,
+      setArrayMunProv({
+        municipios: arrayProvinciasList.municipios,
+        provincias: arrayProvinciasList.provincias,
       })
       changeQueryToFind({
         ...queryToFind,
 
         nameLocation:
           queryToFind.typeLocation === 'provincia'
-            ? stateArrMunProv.provincias[0]
+            ? stateArrayMunProv.provincias[0]
             : arrayProvinciasList.municipios[0],
       })
     }
@@ -180,7 +182,7 @@ export const useFocosCalor = () => {
     currentHeatSources,
     selecteDepartamentCopy,
     layerStyle,
-    stateArrMunProv,
+    stateArrayMunProv,
     getHeatSources,
     /* States from provider usestate */
     loadingState,
