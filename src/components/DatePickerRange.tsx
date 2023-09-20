@@ -16,7 +16,7 @@ export const DatePickerRange = () => {
   const { datesAvailable, loadingState } = useContext(HeatSourcesContext)
 
   const { queryToFind, changeQueryToFind } = useFocosCalor()
-  const { findbyOneDate: isShowSwith } = queryToFind
+  const { findMultipleDates: isShowSwith } = queryToFind
   useEffect(() => {
     changeQueryToFind({
       ...queryToFind,
@@ -71,7 +71,7 @@ export const DatePickerRange = () => {
 
       <Switch
         checked={isShowSwith}
-        onChange={(e) => onChange('findbyOneDate', e.target.checked)}
+        onChange={(e) => onChange('findMultipleDates', e.target.checked)}
         label={`Buscando por ${isShowSwith ? 'Rango' : 'Un solo dia'}`}
       />
     </>

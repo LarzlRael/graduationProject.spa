@@ -11,7 +11,7 @@ export interface QueryToFindInterface {
   dateStart?: Date | null
   dateEnd?: Date | null
   isAllDepartamentos: boolean
-  findbyOneDate: boolean
+  findMultipleDates: boolean
 }
 export interface SelectOptionDateInterface {
   month: number

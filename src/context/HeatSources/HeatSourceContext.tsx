@@ -94,7 +94,7 @@ const HeatSourcesInitialState: IHeatSourcestState = {
     nameLocation: '',
     typeLocation: 'pais',
     isAllDepartamentos: true,
-    findbyOneDate: true,
+    findMultipleDates: false,
   },
 }
 

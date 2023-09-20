@@ -56,8 +56,8 @@ export const MapBoxModal = () => {
     changeQueryToFind,
     setShowOptions,
   } = useContext(HeatSourcesContext)
-  const [check, setCheck] = useState(false)
-  const handleChange = (e: any) => {
+
+  const handleProvOrMunChange = (e: any) => {
     setShowProvinvicaMun(e.target.checked)
 
     changeQueryOneFieldToFind(
@@ -66,10 +66,7 @@ export const MapBoxModal = () => {
     )
   }
   const handleChangeFindByProvAndMun = (e: any) => {
-    console.log('value of checkbox: ', e.target.checked)
     setShowOptions(e.target.checked)
-    console.log('value of setOption: ', showOptions)
-
     changeQueryOneFieldToFind(
       'typeLocation',
       e.target.checked ? 'municipio' : 'departamento',
@@ -85,6 +82,9 @@ export const MapBoxModal = () => {
       <div>
         <label>Seleccionar departamento</label>
         <Select
+          value={departametsArray.filter(
+            (option) => option.label === queryToFind.departamento,
+          )}
           onChange={(e) => {
             changeQueryToFind({
               ...queryToFind,
@@ -97,66 +97,66 @@ export const MapBoxModal = () => {
         />
 
         <DatePickerRange />
-
-        <Checkbox
-          label="Provincias/municipios"
-          isChecked={showOptions}
-          onChange={handleChangeFindByProvAndMun}
-        />
-        <Checkbox
-          label="TExt"
-          isChecked={check}
-          onChange={(e) => setCheck((prev) => !prev)}
-        />
-
-        {showOptions && (
+        {queryToFind.typeLocation !== 'pais' && (
           <>
-            <Switch
-              checked={showProvMun}
-              onChange={handleChange}
-              label={`Buscando por ${showProvMun ? 'Provincia' : 'Municipio'}`}
+            <Checkbox
+              label="Provincias/municipios"
+              isChecked={showOptions}
+              onChange={handleChangeFindByProvAndMun}
             />
-            {showProvMun ? (
+
+            {showOptions && (
               <>
-                <label>Seleccionar Provincia</label>
-                <Select
-                  onChange={(e) => {
-                    changeQueryOneFieldToFind('nameLocation', e!.value)
-                  }}
-                  /* options={stateArrMunProv.sArrayPro} */
-                  options={stateArrMunProv.provincias.map((provincia) => ({
-                    value: provincia,
-                    label: provincia,
-                  }))}
+                <Switch
+                  checked={showProvMun}
+                  onChange={handleProvOrMunChange}
+                  label={`Buscando por ${
+                    showProvMun ? 'Provincia' : 'Municipio'
+                  }`}
                 />
-              </>
-            ) : (
-              <>
-                <label>Seleccionar Municipio</label>
-                <Select
-                  onChange={(e) =>
-                    changeQueryOneFieldToFind('nameLocation', e!.value)
-                  }
-                  options={stateArrMunProv.municipios.map((municipio) => ({
-                    value: municipio,
-                    label: municipio,
-                  }))}
-                />
+                {showProvMun ? (
+                  <>
+                    <label>Seleccionar Provincia</label>
+                    <Select
+                      onChange={(e) => {
+                        changeQueryOneFieldToFind('nameLocation', e!.value)
+                      }}
+                      /* options={stateArrMunProv.sArrayPro} */
+                      options={stateArrMunProv.provincias.map((provincia) => ({
+                        value: provincia,
+                        label: provincia,
+                      }))}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <label>Seleccionar Municipio</label>
+                    <Select
+                      onChange={(e) =>
+                        changeQueryOneFieldToFind('nameLocation', e!.value)
+                      }
+                      options={stateArrMunProv.municipios.map((municipio) => ({
+                        value: municipio,
+                        label: municipio,
+                      }))}
+                    />
+                  </>
+                )}
               </>
             )}
-          </>
-        )}
-        <br />
-        <br />
-        {!loading ? (
-          <center>
             <br />
-            <FilledButton onClick={getHeatSources} disabled={loading}>
-              Consultar
-            </FilledButton>
-          </center>
-        ) : (
-          <LoadingElipsis />
+            <br />
+            {!loading ? (
+              <center>
+                <br />
+                <FilledButton onClick={getHeatSources} disabled={loading}>
+                  Consultar
+                </FilledButton>
+              </center>
+            ) : (
+              <LoadingElipsis />
+            )}
+          </>
         )}
       </div>
     </div>

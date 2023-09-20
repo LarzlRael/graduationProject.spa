@@ -17,26 +17,25 @@ export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
     showProvMun,
   } = useContext(HeatSourcesContext)
 
-  /*  const renderPlaceName = (): string => {
+  const renderPlaceName = (): string | null | undefined => {
     if (!showOptions) {
       return ''
     }
     return showOptions && showProvMun
-      ? queryToFind.typeLocation
-      : queryToFind.nameLocation
-  } */
+      ? queryToFind.typeLocation + ' ' + queryToFind.nameLocation
+      : queryToFind.typeLocation + ' ' + queryToFind.nameLocation
+  }
 
   return (
     <div>
       <img height="160" src={imageUrl} alt="Contemplative Reptile" />
       <div>
         <h2>
-          //TODO fix this
-          {/* {queryToFind.departamentSelected} {renderPlaceName()} */}
+          {queryToFind.departamento} {renderPlaceName()}
         </h2>
         <span>
           {/* Focos de calor detectados en {renderPlaceName()}{' '} */}
-          {!queryToFind.findbyOneDate ? (
+          {!queryToFind.findMultipleDates ? (
             <>
               <b>{moment(queryToFind.dateStart).format('LL')}</b>
               {/* <b>es de {currentGeoJson.features.length}</b> */}
