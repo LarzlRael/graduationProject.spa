@@ -39,7 +39,7 @@ export const MapBoxLayer = () => {
     left: 10,
     top: 10,
   }
-  console.log(viewport);
+  console.log(viewport)
   return (
     <div className="mapContainer">
       <Map
@@ -57,7 +57,7 @@ export const MapBoxLayer = () => {
         <NavigationControl style={navControlStyle} />
 
         <MapBoxModal
-        showProvinvicaMunicipio={showProvMun}
+          showProvinvicaMunicipio={showProvMun}
           imageUrl={selecteDepartamentCopy.image}
           isDarkTheme={darkTheme}
           mapTypeStyle={mapsTypeStyle}

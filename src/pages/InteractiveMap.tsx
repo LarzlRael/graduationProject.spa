@@ -13,7 +13,7 @@ import 'leaflet/dist/leaflet.css'
 import './InteractiveMap.css'
 import { useFocosCalor } from '../hooks/usefocosCalor'
 import { GeoJsonObject } from 'geojson'
-import { MapBoxModal } from '../components/mapbox/MapBoxModal'
+import { MapBoxModal, MapBoxModal2 } from '../components/mapbox/MapBoxModal'
 import { initialCoordinates, mapsTypeStyle } from '../data/data'
 import { generateUniqueKey } from '../utils/key_utils'
 import { ButtonIcon } from '../components/widgets/buttons/ButtonIcons'
@@ -113,22 +113,7 @@ export const InteractiveMap = () => {
         }}
       />
 
-      <MapBoxModal
-        showProvinvicaMun={setShowProvinvicaMun}
-        imageUrl={selecteDepartamentCopy.image}
-        mapTypeStyle={mapsTypeStyle}
-        mapStyle={mapStyle}
-        setChangeMapType={setChangeMapType}
-        queryToFind={queryToFind}
-        changeQueryOneFieldToFind={changeQueryOneFieldToFind}
-        showOptions={showOptions}
-        setShowOptions={setShowOptions}
-        onChange={onChange}
-        showProvMun={showProvMun}
-        stateArrMunProv={stateArrMunProv}
-        loading={loading}
-        getHeatSources={getHeatSources}
-      />
+      <MapBoxModal2 />
       <MapContainer
         center={[middlePosition.latitude, middlePosition.longitude]}
         zoom={7}

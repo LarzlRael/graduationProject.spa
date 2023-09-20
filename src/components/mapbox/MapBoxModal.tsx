@@ -1,8 +1,4 @@
-import {
-  mapsTypeStyle,
-  departametsArray,
-  IMapStyleIntOption,
-} from '../../data/data'
+import { departametsArray, IMapStyleIntOption } from '../../data/data'
 import { CardInfo } from '../CardInfo'
 import { DatePickerRange } from '../DatePickerRange'
 
@@ -17,6 +13,9 @@ import { useContext, useState } from 'react'
 import { Switch } from '../../form/Switch'
 import { QueryToFindInterface } from '../../interfaces/heatResources.interfaces'
 import { ModalComponent } from '../modal/ModalComponent'
+import { useFocosCalor } from '../../hooks/usefocosCalor'
+import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
+import { mapsTypeStyle } from '../../data/data'
 interface Props {
   imageUrl: string
   mapTypeStyle: IMapStyleIntOption[]
@@ -36,26 +35,30 @@ interface Props {
   getHeatSources: () => void
   showProvinvicaMun: (newState: boolean) => void
 }
-export const MapBoxModal = ({
-  imageUrl,
-  mapTypeStyle,
-  mapStyle,
-  setChangeMapType,
-  queryToFind,
-  changeQueryOneFieldToFind,
-  showOptions,
-  setShowOptions,
-  onChange,
-  showProvMun,
-  stateArrMunProv,
-  loading,
-  getHeatSources,
-  showProvinvicaMun,
-}: Props) => {
+export const MapBoxModal = () => {
+  const {
+    /* imageUrl, */
+    setChangeMapType,
+    onChange,
+    stateArrMunProv,
+    loading,
+    getHeatSources,
+  } = useFocosCalor()
+
   const { darkTheme } = useContext(CommonContext)
+  const {
+    mapStyle,
+    showOptions,
+    queryToFind,
+    showProvMun,
+    setShowProvinvicaMun,
+    changeQueryOneFieldToFind,
+    changeQueryToFind,
+    setShowOptions,
+  } = useContext(HeatSourcesContext)
   const [check, setCheck] = useState(false)
   const handleChange = (e: any) => {
-    showProvinvicaMun(e.target.checked)
+    setShowProvinvicaMun(e.target.checked)
 
     changeQueryOneFieldToFind(
       'typeLocation',
@@ -73,91 +76,99 @@ export const MapBoxModal = ({
     )
   }
   return (
-    <ModalComponent>
-      <div className={`modal-content ${darkTheme && 'blackTheme'}`}>
-        <div className="modal-info">
-          <CardInfo imageUrl={imageUrl} />
-          <br />
-
-          <label id="demo-simple-select-label">Seleccionar Tipo de Mapa</label>
-          <Select
-            onChange={(e) => setChangeMapType(e!)}
-            /* value={mapStyle.label} */
-            /* onChange={(e) => setChangeMapType(e.target.value)} */
-            options={mapTypeStyle}
-          />
-        </div>
-
-        <div>
-          <label>Seleccionar departamento</label>
-          <Select onChange={onChange} options={departametsArray} />
-
-          <DatePickerRange />
-
-          <Checkbox
-            label="Provincias/municipios"
-            isChecked={showOptions}
-            onChange={handleChangeFindByProvAndMun}
-          />
-          <Checkbox
-            label="TExt"
-            isChecked={check}
-            onChange={(e) => setCheck((prev)=>(!prev))}
-          />
-
-          {showOptions && (
-            <>
-              <Switch
-                checked={showProvMun}
-                onChange={handleChange}
-                label={`Buscando por ${
-                  showProvMun ? 'Provincia' : 'Municipio'
-                }`}
-              />
-              {showProvMun ? (
-                <>
-                  <label>Seleccionar Provincia</label>
-                  <Select
-                    onChange={(e) => {
-                      changeQueryOneFieldToFind('nameLocation', e!.value)
-                    }}
-                    /* options={stateArrMunProv.sArrayPro} */
-                    options={stateArrMunProv.provincias.map((provincia) => ({
-                      value: provincia,
-                      label: provincia,
-                    }))}
-                  />
-                </>
-              ) : (
-                <>
-                  <label>Seleccionar Municipio</label>
-                  <Select
-                    onChange={(e) =>
-                      changeQueryOneFieldToFind('nameLocation', e!.value)
-                    }
-                    options={stateArrMunProv.municipios.map((municipio) => ({
-                      value: municipio,
-                      label: municipio,
-                    }))}
-                  />
-                </>
-              )}
-            </>
-          )}
-          <br />
-          <br />
-          {!loading ? (
-            <center>
-              <br />
-              <FilledButton onClick={getHeatSources} disabled={loading}>
-                Consultar
-              </FilledButton>
-            </center>
-          ) : (
-            <LoadingElipsis />
-          )}
-        </div>
+    <div className={`modal-content ${darkTheme && 'blackTheme'}`}>
+      <div className="modal-info">
+        <CardInfo imageUrl={queryToFind.image} />
+        <br />
       </div>
+
+      <div>
+        <label>Seleccionar departamento</label>
+        <Select
+          onChange={(e) => {
+            changeQueryToFind({
+              ...queryToFind,
+              departamento: e!.label,
+              image: e!.value,
+              typeLocation: e!.label === 'Bolivia' ? 'pais' : 'departamento',
+            })
+          }}
+          options={departametsArray}
+        />
+
+        <DatePickerRange />
+
+        <Checkbox
+          label="Provincias/municipios"
+          isChecked={showOptions}
+          onChange={handleChangeFindByProvAndMun}
+        />
+        <Checkbox
+          label="TExt"
+          isChecked={check}
+          onChange={(e) => setCheck((prev) => !prev)}
+        />
+
+        {showOptions && (
+          <>
+            <Switch
+              checked={showProvMun}
+              onChange={handleChange}
+              label={`Buscando por ${showProvMun ? 'Provincia' : 'Municipio'}`}
+            />
+            {showProvMun ? (
+              <>
+                <label>Seleccionar Provincia</label>
+                <Select
+                  onChange={(e) => {
+                    changeQueryOneFieldToFind('nameLocation', e!.value)
+                  }}
+                  /* options={stateArrMunProv.sArrayPro} */
+                  options={stateArrMunProv.provincias.map((provincia) => ({
+                    value: provincia,
+                    label: provincia,
+                  }))}
+                />
+              </>
+            ) : (
+              <>
+                <label>Seleccionar Municipio</label>
+                <Select
+                  onChange={(e) =>
+                    changeQueryOneFieldToFind('nameLocation', e!.value)
+                  }
+                  options={stateArrMunProv.municipios.map((municipio) => ({
+                    value: municipio,
+                    label: municipio,
+                  }))}
+                />
+              </>
+            )}
+          </>
+        )}
+        <br />
+        <br />
+        {!loading ? (
+          <center>
+            <br />
+            <FilledButton onClick={getHeatSources} disabled={loading}>
+              Consultar
+            </FilledButton>
+          </center>
+        ) : (
+          <LoadingElipsis />
+        )}
+      </div>
+    </div>
+  )
+}
+
+import React from 'react'
+
+export const MapBoxModal2 = () => {
+  return (
+    <ModalComponent>
+      <MapBoxModal />
     </ModalComponent>
   )
 }
