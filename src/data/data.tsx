@@ -5,7 +5,7 @@ export const initialCoordinates = {
 export const images = [
   { name: 'La Paz', source: 'lapaz.png' },
   { name: 'Oruro', source: 'Oruro.png' },
-  { name: 'Potosi', source: 'potosi.png' },
+  { name: 'Potosí', source: 'potosi.png' },
   { name: 'Tarija', source: 'tarija.png' },
   { name: 'Chuquisaca', source: 'chuquisaca.png' },
   { name: 'Cochabamba', source: 'cochabamba.png' },
@@ -46,7 +46,7 @@ export const departametsArray: OptionAndValueInterface[] = [
       'http://www.chamlaty.com/wp-content/uploads/2019/03/Captura-de-pantalla-2019-03-15-a-las-10.30.43.png',
   },
   {
-    label: 'Potosi',
+    label: 'Potosí',
     value:
       'https://www.elcolombiano.com/binrepository/733x562/0c0/0d0/none/11101/WVSQ/potosiimagen_37443608_20210329100749.jpg',
   },
