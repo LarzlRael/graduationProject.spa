@@ -18,6 +18,13 @@ export const DatePickerRange = () => {
   const { queryToFind, changeQueryToFind } = useFocosCalor()
   const { findMultipleDates: isShowSwith } = queryToFind
   useEffect(() => {
+    if (!isShowSwith) {
+      changeQueryToFind({
+        ...queryToFind,
+        dateEnd: queryToFind.dateStart!,
+      })
+      return
+    }
     changeQueryToFind({
       ...queryToFind,
       dateEnd: moment(queryToFind.dateStart).add(6, 'days').toDate(),

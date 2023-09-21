@@ -42,7 +42,13 @@ export const GraphByMonths = () => {
     changeQueryToFind,
     queryToFind,
   } = useContext(HeatSourcesContext)
+
+  const { response, loading } = useAxiosAuth({
+    url: '/analysis/available-mounth',
+  })
+
   const navigate = useNavigate()
+
   useEffect(() => {
     getHeatSourcesInfoToGragh(
       mounthAndYearSelected.month,
@@ -97,20 +103,17 @@ export const GraphByMonths = () => {
       if (monthName.includes(titleArray[elements[0].index])) {
         return
       }
-
       changeQueryToFind({
         ...queryToFind,
         typeLocation: 'pais',
         dateStart: moment(titleArray[elements[0].index]).toDate(),
         dateEnd: moment(titleArray[elements[0].index]).toDate(),
       })
+      console.log(queryToFind);
       navigate('/mapa')
     },
   }
 
-  const { response, loading } = useAxiosAuth({
-    url: '/analysis/available-mounth',
-  })
   const myRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

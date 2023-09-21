@@ -146,19 +146,17 @@ export const MapBoxModal = () => {
                 </>
               </>
             )}
-
-            <br />
-            {!loading ? (
-              <center>
-                <br />
-                <FilledButton onClick={getHeatSources} disabled={loading}>
-                  Consultar
-                </FilledButton>
-              </center>
-            ) : (
-              <LoadingElipsis />
-            )}
           </>
+        )}
+        {loading ? (
+          <LoadingElipsis />
+        ) : (
+          <center>
+            <br />
+            <FilledButton onClick={getHeatSources} disabled={loading}>
+              Consultar
+            </FilledButton>
+          </center>
         )}
       </div>
     </div>

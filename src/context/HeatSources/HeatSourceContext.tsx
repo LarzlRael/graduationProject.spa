@@ -192,8 +192,11 @@ export const HeatProvider = ({ children }: any) => {
         month: month,
         year: year,
       })
+
       getInformation?.map((resp) =>
-        arrayTitles.push(moment(resp.acq_date).add(8, 'hours').format('L')),
+        arrayTitles.push(
+          moment(resp.acq_date).add(8, 'hours').format('DD/MM/yyyy'),
+        ),
       )
     }
 
