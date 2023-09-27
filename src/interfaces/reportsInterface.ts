@@ -24,3 +24,8 @@ export enum Satellite {
 export enum Version {
   The61Nrt = '6.1NRT',
 }
+
+export interface IGenerateReport {
+  dateStart: Date
+  dateEnd: Date
+}

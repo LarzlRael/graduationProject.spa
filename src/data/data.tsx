@@ -17,7 +17,7 @@ export const namesDepartamentos = [
   'Bolivia',
   'La Paz',
   'Oruro',
-  'Potosi',
+  'Potosí',
   'Tarija',
   'Chuquisaca',
   'Cochabamba',

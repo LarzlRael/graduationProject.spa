@@ -59,8 +59,8 @@ export const useGraficos = ({
       borderColor: getRandomColor(),
     })),
   }
-  console.log('data ok ', data)
-  console.log(':( ', data2)
+/*   console.log('data ok ', data)
+  console.log(':( ', data2) */
 
   const options = {
     scales: {

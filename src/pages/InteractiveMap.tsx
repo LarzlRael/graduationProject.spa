@@ -24,32 +24,13 @@ import PixiOverlay from 'react-leaflet-pixi-overlay'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 
 export const InteractiveMap = () => {
-  const {
-    loading,
-    currentHeatSources,
-    onChange,
-    selecteDepartamentCopy,
-    getHeatSources,
-    stateArrMunProv,
-    setChangeMapType,
-    //query to find
-    queryToFind,
-    loadingNetworl,
-  } = useFocosCalor()
-
+  const { currentHeatSources } = useContext(HeatSourcesContext)
+  const {} = useFocosCalor()
   const {
     heatResources,
-
     middlePoint: { coordinates, poligono },
   } = currentHeatSources
-  const {
-    showOptions,
-    setShowOptions,
-    setShowProvinvicaMun,
-    showProvMun,
-    mapStyle,
-    changeQueryOneFieldToFind,
-  } = useContext(HeatSourcesContext)
+
   const [key, setKey] = useState(generateUniqueKey())
   useEffect(() => {
     setKey(generateUniqueKey())
@@ -107,13 +88,22 @@ export const InteractiveMap = () => {
 
   return (
     <div>
-      <ButtonIcon
+      <div
         style={{
-          marginTop: '1rem',
-        }}
-      />
+          position: 'absolute',
+          top: '10px',
+          width: '100vw',
 
-      <MapBoxModal2 />
+          display: 'flex',
+          justifyContent: 'space-between',
+          zIndex: 2,
+          alignItems: 'center',
+          alignContent: 'center',
+        }}
+      >
+        <ButtonIcon />
+        <MapBoxModal2 />
+      </div>
       <MapContainer
         center={[middlePosition.latitude, middlePosition.longitude]}
         zoom={7}

@@ -9,13 +9,17 @@ import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 
 import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
 import { Switch } from '../form/Switch'
-import { useFocosCalor } from '../hooks/usefocosCalor'
+
 import { QueryToFindInterface } from '../interfaces/heatResources.interfaces'
+import { Label } from './text'
 
-export const DatePickerRange = () => {
+interface DatePickerRangeProps {
+  onChangeDate?: () => void
+}
+export const DatePickerRange = ({ onChangeDate }: DatePickerRangeProps) => {
   const { datesAvailable, loadingState } = useContext(HeatSourcesContext)
+  const { queryToFind, changeQueryToFind } = useContext(HeatSourcesContext)
 
-  const { queryToFind, changeQueryToFind } = useFocosCalor()
   const { findMultipleDates: isShowSwith } = queryToFind
   useEffect(() => {
     if (!isShowSwith) {
@@ -23,13 +27,19 @@ export const DatePickerRange = () => {
         ...queryToFind,
         dateEnd: queryToFind.dateStart!,
       })
-      return
+    } else {
+      changeQueryToFind({
+        ...queryToFind,
+        dateEnd: moment(queryToFind.dateStart).add(6, 'days').toDate(),
+      })
     }
-    changeQueryToFind({
-      ...queryToFind,
-      dateEnd: moment(queryToFind.dateStart).add(6, 'days').toDate(),
-    })
   }, [queryToFind.dateStart])
+
+  useEffect(() => {
+    if (onChangeDate !== undefined) {
+      onChangeDate()
+    }
+  }, [queryToFind.dateEnd, queryToFind.dateStart])
 
   useEffect(() => {
     if (!isShowSwith) {
@@ -56,6 +66,16 @@ export const DatePickerRange = () => {
     <>
       <div>
         <div>
+          <Label
+            display="block"
+            color="var(--color-text)"
+            margin="0 0 0.2rem 0"
+            fontSize="0.9rem"
+            textAlign="start"
+            htmlFor=""
+          >
+            Fecha de inicio
+          </Label>
           <DatePicker
             selected={queryToFind.dateStart}
             maxDate={datesAvailable.max_date}
@@ -64,7 +84,21 @@ export const DatePickerRange = () => {
           />
         </div>
         {isShowSwith && (
-          <div>
+          <div
+            style={{
+              marginTop: '.5rem',
+            }}
+          >
+            <Label
+              display="block"
+              color="var(--color-text)"
+              margin="0 0 0.2rem 0"
+              fontSize="0.9rem"
+              textAlign="start"
+              htmlFor=""
+            >
+              Fecha de fin
+            </Label>
             <DatePicker
               selected={queryToFind.dateEnd}
               dateFormat="dd/MM/yyyy"
@@ -79,7 +113,7 @@ export const DatePickerRange = () => {
       <Switch
         checked={isShowSwith}
         onChange={(e) => onChange('findMultipleDates', e.target.checked)}
-        label={`Buscando por ${isShowSwith ? 'Rango' : 'Un solo dia'}`}
+        label={`Buscando por ${isShowSwith ? 'rango' : 'un solo dia'}`}
       />
     </>
   ) : (

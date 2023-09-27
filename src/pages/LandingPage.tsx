@@ -13,13 +13,12 @@ export const LandingPage = () => {
       <Header />
       <div className="info">
         <div className="title">
-          <h2>See the world</h2>
+          <h2>Controla y Protege Bolivia</h2>
         </div>
         <div className="info-container">
           <span>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Voluptatibus illum labore vitae cumque. Ab ullam officia molestias
-            blanditiis, ex aut quisquam.
+            Mapeo preciso y alertas instantáneas para prevenir incendios
+            forestales y proteger el medio ambiente.
           </span>
           {/* <a
             className="buttonMap"
@@ -30,7 +29,7 @@ export const LandingPage = () => {
             Ir a mapa interactivo
           </a> */}
           <FilledButton
-            margin="20px 0 0 0"
+            $margin="20px 0 0 0"
             /* backGroundColor="var(--primary-color)"
             borderRadius="40px" */
             padding="1rem 2rem"

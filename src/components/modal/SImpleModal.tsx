@@ -66,7 +66,7 @@ const Overlay = styled.div<{
   width: 100vw;
   height: 100vh;
   position: fixed;
-  z-index: 1000;
+  z-index: 3;
   top: 0;
   left: 0;
   background: ${({ $mostrarOverLay }) =>

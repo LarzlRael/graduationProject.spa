@@ -25,8 +25,8 @@ import {
 } from 'chart.js'
 import { LoadingElipsis } from '../../components/widgets/loadings/LoadingElipsis'
 import { Switch } from '../../form/Switch'
-import { useFocosCalor } from '../../hooks/usefocosCalor'
 import { useNavigate } from 'react-router-dom'
+import { Label } from '../../components/text'
 moment.locale('es')
 
 export const GraphByMonths = () => {
@@ -103,15 +103,15 @@ export const GraphByMonths = () => {
       if (monthName.includes(titleArray[elements[0].index])) {
         return
       }
-      console.log(titleArray[elements[0].index]);
+      console.log(titleArray[elements[0].index])
       changeQueryToFind({
         ...queryToFind,
         typeLocation: 'pais',
-        dateStart: moment(titleArray[elements[0].index],'DD-MM-YYYY').toDate(),
-        dateEnd: moment(titleArray[elements[0].index],'DD-MM-YYYY').toDate(),
+        dateStart: moment(titleArray[elements[0].index], 'DD-MM-YYYY').toDate(),
+        dateEnd: moment(titleArray[elements[0].index], 'DD-MM-YYYY').toDate(),
       })
-      
-      console.log(queryToFind);
+
+      console.log(queryToFind)
       navigate('/mapa')
     },
   }
@@ -159,8 +159,16 @@ export const GraphByMonths = () => {
       {loading ? (
         <LoadingElipsis />
       ) : (
-        <>
-          <label>Seleccionar Fecha</label>
+        <div>
+          <Label
+            display="block"
+            color="var(--color-text)"
+            margin="0 0 0.2rem 0"
+            fontSize="1rem"
+            textAlign="start"
+          >
+            Seleccionar Fecha
+          </Label>
           <Select
             value={
               mounthAndYearSelected.onlyYear
@@ -179,7 +187,7 @@ export const GraphByMonths = () => {
             options={generateOption()}
             onChange={(e) => handleChange(e!.value)}
           />
-        </>
+        </div>
       )}
       {loadingState ? (
         <LoadingElipsis />

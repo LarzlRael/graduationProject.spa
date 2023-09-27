@@ -98,11 +98,6 @@ export const useFocosCalor = () => {
     setLoading(true)
   }
 
-  useEffect(() => {
-    getHeatSources()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const showSnakBarError = (isThere: number) => {
     if (isThere === 0) {
       showSnackBar({

@@ -1,8 +1,11 @@
 import { saveAs } from 'file-saver'
-import { setFileName } from '../utils/utils'
-import { baseURL, serverAPI } from './serverConfig'
 
-export const downloadShapeFile = async (dateStart: string, dateEnd: string) => {
+import { baseURL, serverAPI } from './serverConfig'
+import { IGenerateReport } from '../interfaces/reportsInterface'
+import { setFileNameAndExtension } from '../utils/utils'
+
+export const downloadShapeFile = async (generateReport: IGenerateReport) => {
+  const { dateStart, dateEnd } = generateReport
   const url = `${baseURL}/reports/getshapefile/${dateStart}/${dateEnd}`
   const openWindow = window.open(url, '_blank')
   if (openWindow) {
@@ -11,28 +14,41 @@ export const downloadShapeFile = async (dateStart: string, dateEnd: string) => {
 }
 
 export const getReportGeoJsonByDate = async (
-  dateStart: string,
-  dateEnd?: string,
+  generateReport: IGenerateReport,
 ) => {
-  const query = `reports/geojsonreport/${dateStart}/${
-    dateEnd !== null ? dateEnd : dateStart
-  }`
-  const response = await serverAPI.get(query, {
-    responseType: 'blob',
-  })
+  const response = await serverAPI.post(
+    'reports/geojsonreport',
+    generateReport,
+    {
+      responseType: 'blob',
+    },
+  )
 
   let blob = new Blob([response.data])
-  saveAs(blob, `reporte ${setFileName(dateStart, dateEnd)}.geojson`)
+  saveAs(
+    blob,
+    `reporte ${setFileNameAndExtension(
+      generateReport.dateStart,
+      'geojson',
+      generateReport.dateEnd,
+    )}`,
+  )
 }
 
-export const getCVSreport = async (dateStart: string, dateEnd?: string) => {
-  const query = `reports/getreportcvs/${dateStart}/${
-    dateEnd !== null ? dateEnd : dateStart
-  }`
-  const response = await serverAPI.get(query)
+export const getCVSreport = async (generateReport: IGenerateReport) => {
+  console.log(generateReport);
+  const response = await serverAPI.post('reports/getreportcvs', generateReport)
 
-  let blob = new Blob([response.data.csv])
-  saveAs(blob, `reporte ${setFileName(dateStart, dateEnd)}.csv`)
+  console.log(response.data);
+  let blob = new Blob([response.data])
+  saveAs(
+    blob,
+    `reporte ${setFileNameAndExtension(
+      generateReport.dateStart,
+      'csv',
+      generateReport.dateEnd,
+    )}`,
+  )
 }
 interface IUploadFile {
   ok: boolean

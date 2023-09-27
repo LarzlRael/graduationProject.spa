@@ -1,7 +1,19 @@
 .leaflet-container {
-    height: 90vh;
-    width: 90%;
-    border-radius: 2rem;
-    margin: 0 auto;
+    height: 100vh;
+    width: 100%;
+    position: relative;
     /* z-index: 0; */
+}
+
+.leaflet-control {
+    z-index: 0 !important;
+    top: 4rem !important;
+    left: 1rem !important;
+}
+.leaflet-pane {
+    z-index: 0 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+    z-index: 0 !important;
 }

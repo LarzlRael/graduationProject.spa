@@ -15,7 +15,7 @@ import { QueryToFindInterface } from '../../interfaces/heatResources.interfaces'
 import { ModalComponent } from '../modal/ModalComponent'
 import { useFocosCalor } from '../../hooks/usefocosCalor'
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
-import { mapsTypeStyle } from '../../data/data'
+
 interface Props {
   imageUrl: string
   mapTypeStyle: IMapStyleIntOption[]
@@ -90,7 +90,16 @@ export const MapBoxModal = () => {
       </div>
 
       <div>
-        <label>Seleccionar departamento</label>
+        <Label
+          display="block"
+          color="var(--color-text)"
+          margin="0 0 0.2rem 0"
+          fontSize="0.9rem"
+          textAlign="start"
+          htmlFor=""
+        >
+          Seleccionar departamento
+        </Label>
         <Select
           value={departametsArray.filter(
             (option) => option.label === queryToFind.departamento,
@@ -121,11 +130,19 @@ export const MapBoxModal = () => {
                   checked={showProvMun}
                   onChange={handleProvOrMunChange}
                   label={`Buscando por ${
-                    showProvMun ? 'Provincia' : 'Municipio'
+                    showProvMun ? 'provincia' : 'municipio'
                   }`}
                 />
                 <>
-                  <label>Seleccionar Provincia</label>
+                  <Label
+                    display="block"
+                    textAlign="start"
+                    color="var(--color-text)"
+                    margin="0 0 0.2rem 0"
+                    fontSize="0.9rem"
+                  >
+                    Seleccionar {showProvMun ? 'provincia' : 'municipio'}
+                  </Label>
                   <Select
                     onChange={(e) => {
                       changeQueryOneFieldToFind('nameLocation', e!.value)
@@ -164,6 +181,7 @@ export const MapBoxModal = () => {
 }
 
 import React from 'react'
+import { Label } from '../text'
 
 export const MapBoxModal2 = () => {
   return (

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { AdminLogin } from '../admin/LoginAdmin'
 import { AdminDashboard } from '../admin/DashBoard'
 import { LandingPage } from '../pages/LandingPage'
-import { ReportsLists } from '../pages/ReportsLists'
+import { ReportsAndDownloads } from '../pages/ReportsAndDowloads'
 import { Ley1171 } from '../pages/Ley1171'
 import { Departaments } from '../pages/Departaments'
 import { PrivateRoute } from './AdminRoutes'
@@ -42,7 +42,7 @@ export const Navigator = () => {
         <Route path="/inicio" element={<LandingPage />} />
         <Route path="/mapa" element={<InteractiveMap />} />
         <Route path="/login" element={<AdminLogin />} />
-        <Route path="/reportes" element={<ReportsLists />} />
+        <Route path="/reportes" element={<ReportsAndDownloads />} />
         <Route path="/ley1171" element={<Ley1171 />} />
         <Route path="/departamentos" element={<Departaments />} />
         {/* <Route path="/report" component={MyDocument} /> */}

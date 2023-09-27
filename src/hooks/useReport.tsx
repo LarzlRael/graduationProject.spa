@@ -11,38 +11,27 @@ import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 
 export const useReport = () => {
   const { datesAvailable } = useContext(HeatSourcesContext)
-  const [dateFromTo, setDates] = useState<Date[]>()
+
+  const [dateFromTo, setDates] = useState({
+    dateStart: datesAvailable.max_date,
+    dateEnd: datesAvailable.max_date,
+  })
   const [loading, setLoading] = useState<boolean>()
 
-  useEffect(() => {
-    setStatus()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const setStatus = async () => {
-    if (!loading) {
-      setDates([
-        new Date(datesAvailable.min_date),
-        new Date(datesAvailable.max_date),
-      ])
-    }
-  }
-
-  const generateCVSreport = async (dateStart: Date, dateEnd: Date) => {
+  const generateCVSreport = async () => {
+    console.log(dateFromTo)
     setLoading(true)
-    await getCVSreport(
-      dateStart.toISOString().slice(0, 10),
-      dateEnd.toISOString().slice(0, 10),
-    )
+    await getCVSreport({
+      ...dateFromTo,
+    })
     setLoading(false)
   }
 
-  const generateGeoJsonReport = async (dateStart: Date, dateEnd: Date) => {
+  const generateGeoJsonReport = async () => {
     setLoading(true)
-    const getGeoJsonReport = await getReportGeoJsonByDate(
-      dateStart.toISOString().slice(0, 10),
-      dateEnd.toISOString().slice(0, 10),
-    )
+    const getGeoJsonReport = await getReportGeoJsonByDate({
+      ...dateFromTo,
+    })
     setLoading(false)
     return getGeoJsonReport
   }
@@ -55,12 +44,11 @@ export const useReport = () => {
     setLoading(false)
     doc.save(`reporte${newDate}.pdf`)
   }
-  const generateShapeFile = async (dateStart: Date, dateEnd: Date) => {
+  const generateShapeFile = async () => {
     setLoading(true)
-    await downloadShapeFile(
-      dateStart.toISOString().slice(0, 10),
-      dateEnd.toISOString().slice(0, 10),
-    )
+    await downloadShapeFile({
+      ...dateFromTo,
+    })
     setLoading(false)
   }
 
@@ -71,5 +59,6 @@ export const useReport = () => {
     generateShapeFile,
     loading,
     dateFromTo,
+    setDates,
   }
 }

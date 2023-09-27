@@ -120,7 +120,7 @@ export const GraphByDepartaments = () => {
           )}
         </div>
         <div>
-          <DatePickerRange />
+          <DatePickerRange onChangeDate={consultar} />
 
           <FilledButton onClick={consultar}>Consultar</FilledButton>
         </div>

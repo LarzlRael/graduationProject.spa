@@ -70,29 +70,7 @@ body {
       }
     }
 
-    .info {
-      .info-container {
-        span {
-          color: white;
-        }
-      }
-      @include media(sm) {
-        .info-container {
-        }
-      }
-      .buttonMap {
-        &:hover {
-        }
-        @include media(sm) {
-          background: $back-ground-responsive;
-        }
-      }
-      .title {
-        h2 {
-          color: white;
-        }
-      }
-    }
+    
 
     /* .login-div .form .formLogin .button-login,
     .login-div .info-login {

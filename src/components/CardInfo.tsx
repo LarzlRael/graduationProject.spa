@@ -38,13 +38,13 @@ export const CardInfo = ({ imageUrl }: CardInfoInterface) => {
           {!queryToFind.findMultipleDates ? (
             <>
               <b>{moment(queryToFind.dateStart).format('LL')}</b>
-              {/* <b>es de {currentGeoJson.features.length}</b> */}
+              <b>es de {currentHeatSources.heatResources.features.length}</b>
             </>
           ) : (
             <>
               <b>{moment(queryToFind.dateStart).format('LL')}</b> hasta{' '}
               <b>{moment(queryToFind.dateEnd).format('LL')}</b> es de{' '}
-              {/* <b>{currentGeoJson.features.length}</b> */}
+              <b>es de {currentHeatSources.heatResources.features.length}</b>
             </>
           )}
         </span>

@@ -8,17 +8,22 @@ export const convertirFecha = (date: Date) => {
   const datecurrent = `${newDate[2]}-${newDate[1]}-${newDate[0]}`
   return datecurrent
 }
-export const setFileName = (dateStart: string, dateEnd?: string): string => {
-  const spliteDateStart = dateStart.split('-')
-  if (dateStart === dateEnd) {
-    return `${spliteDateStart[2]}-${spliteDateStart[1]}-${spliteDateStart[0]}`
-  }
-  if (dateEnd !== undefined) {
-    const splitDateEnd = dateEnd.split('-')
-    return `${spliteDateStart[2]}${spliteDateStart[1]}${spliteDateStart[0]}-${splitDateEnd[2]}${splitDateEnd[1]}${splitDateEnd[0]}`
-  } else {
-    return `${spliteDateStart[2]}-${spliteDateStart[1]}-${spliteDateStart[0]}`
-  }
+
+export const setFileNameAndExtension = (
+  dateStart: Date,
+  extension: string,
+  dateEnd?: Date,
+): string => {
+  const formattedDateStart = formatDate(dateStart)
+  const formattedDateEnd = dateEnd ? formatDate(dateEnd) : 'now'
+  return `${formattedDateStart}_${formattedDateEnd}.${extension}`
+}
+
+function formatDate(date: Date): string {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${day}${month}${year}`
 }
 
 export const getRankDate = (
@@ -78,7 +83,6 @@ export const isYear = (date: string): boolean => {
 }
 
 export const convertMonths = (date: string): string => {
-
   /* if (date.length !== 4) {
     return `${cultureInfo.month.name[parseInt(date.split('-')[0])]}-${
       date.split('-')[1]
@@ -87,8 +91,7 @@ export const convertMonths = (date: string): string => {
     return date
   } */
   /* console.log(date?.split('-')) */
-    return date
-  
+  return date
 }
 
 export const addHours = (h: number, date: Date) => {
