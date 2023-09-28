@@ -22,6 +22,8 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 
 import PixiOverlay from 'react-leaflet-pixi-overlay'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
+import { Header } from '../components/Header'
+import { Layout } from '../components/Layout'
 
 export const InteractiveMap = () => {
   const { currentHeatSources } = useContext(HeatSourcesContext)
@@ -87,23 +89,7 @@ export const InteractiveMap = () => {
   }
 
   return (
-    <div>
-      <div
-        style={{
-          position: 'absolute',
-          top: '10px',
-          width: '100vw',
-
-          display: 'flex',
-          justifyContent: 'space-between',
-          zIndex: 2,
-          alignItems: 'center',
-          alignContent: 'center',
-        }}
-      >
-        <ButtonIcon />
-        <MapBoxModal2 />
-      </div>
+    <Layout>
       <MapContainer
         center={[middlePosition.latitude, middlePosition.longitude]}
         zoom={7}
@@ -140,7 +126,7 @@ export const InteractiveMap = () => {
         />
         {/* <PixiOverlay markers={setPixiOverlay()} /> */}
       </MapContainer>
-    </div>
+    </Layout>
   )
 }
 const RecenterAutomatically = ({ lat, lng }: { lat: number; lng: number }) => {

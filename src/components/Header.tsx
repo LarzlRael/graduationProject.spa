@@ -3,19 +3,17 @@ import { NavLink } from 'react-router-dom'
 import { IoMenu } from 'react-icons/io5'
 import { useWindowDimensions } from '../hooks/useWindowsDimentions'
 import { IoPersonCircle } from 'react-icons/io5'
-import styled from 'styled-components'
 
 export const Header = () => {
   const { windowDimensions } = useWindowDimensions()
 
+  const [isOpenMenu, setShowMenu] = useState(true)
+
   const closeMenu = () => {
     if (windowDimensions.width <= 768) {
       hideMenu()
-    } else {
-      return
     }
   }
-  const [isOpenMenu, setShowMenu] = useState(true)
 
   const showMenu = () => {
     setShowMenu(true)
@@ -52,6 +50,15 @@ export const Header = () => {
           to="/inicio"
         >
           Inicio
+        </NavLink>
+
+        <NavLink
+          /* activeClassName="active" */
+          onClick={() => closeMenu()}
+          className="link"
+          to="/mapa"
+        >
+          Mapa
         </NavLink>
         <NavLink
           /* activeClassName="active" */

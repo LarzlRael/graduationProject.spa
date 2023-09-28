@@ -79,7 +79,7 @@ export const AdminLogin = () => {
   return (
     <div className="LoginAdmin">
       <ButtonIcon className="LoginAdmin__button-icon" />
-      <div className="login-div animate__animated animate__fadeIn">
+      <div className="LoginAdmin__form--container animate__animated animate__fadeIn">
         <div className="form animate__animated animate__fadeInUp">
           <Formik
             initialValues={initialValues}
@@ -113,7 +113,7 @@ export const AdminLogin = () => {
                   /* background="var(--secondary-color)" */
                   type="submit"
                   className="button-login pointer"
-                  margin="1rem 0"
+                  $margin="1rem 0"
                   borderRadius="20px"
                 >
                   Iniciar Sesion

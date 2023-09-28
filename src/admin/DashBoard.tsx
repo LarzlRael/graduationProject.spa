@@ -54,8 +54,8 @@ export const AdminDashboard = () => {
             <span className="profile-image-name">Nombre de Usuario</span>
           </div>
           <div className="dash-group">
-            {accountsLink.map((item) => (
-              <div key={uuidv4()}>
+            {accountsLink.map((item,i) => (
+              <div key={i}>
                 <span className="title-dash">{item.title_group}</span>
                 {item.items.map((link) => (
                   <NavLink

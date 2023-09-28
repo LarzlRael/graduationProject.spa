@@ -27,11 +27,10 @@ export const useGraficos = ({
   const [tipoGrafico, setTipoGrafico] = useState<string>()
 
   useEffect(() => {
-    const arrayTitles: string[] = []
-
-    info?.map((resp) => arrayTitles.push(resp.nombre))
-
-    setStringTitle(arrayTitles)
+    if (info) {
+      const arrayTitles = info.map((resp) => resp.nombre)
+      setStringTitle(arrayTitles)
+    }
   }, [info])
 
   const data = {
@@ -43,7 +42,7 @@ export const useGraficos = ({
           ? info?.map((ele) => parseInt(ele.focos_calor))!
           : [],
         backgroundColor: stringTitle.map(() => getRandomColor()),
-        borderColor: stringTitle.map(() => getRandomColor()),
+        borderColor: Array(stringTitle.length).fill('rgba(0, 0, 0, 0.9)'),
         borderWidth: 1,
       },
     ],
@@ -59,7 +58,7 @@ export const useGraficos = ({
       borderColor: getRandomColor(),
     })),
   }
-/*   console.log('data ok ', data)
+  /*   console.log('data ok ', data)
   console.log(':( ', data2) */
 
   const options = {

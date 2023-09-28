@@ -9,13 +9,13 @@ export const LandingPage = () => {
   const navigate = useNavigate()
   const { setTheme, darkTheme } = useContext(CommonContext)
   return (
-    <div className="landingContainer">
+    <div className="LandingContainer">
       <Header />
-      <div className="info">
+      <div className="Landing__info">
         <div className="title">
-          <h2>Controla y Protege Bolivia</h2>
+          <h2 className="Landing__title">Controla y Protege Bolivia</h2>
         </div>
-        <div className="info-container">
+        <div className="Landing__info-container">
           <span>
             Mapeo preciso y alertas instantáneas para prevenir incendios
             forestales y proteger el medio ambiente.

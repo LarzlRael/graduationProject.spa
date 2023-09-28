@@ -38,9 +38,9 @@ type HeatSourcesStateProps = {
   mounthAndYearSelected: SelectOptionDateInterface
   titleArray: string[]
   countByDates: DatesHeatSources[]
-
   currentHeatSources: IHeatResourcesAndPoint
   queryToFind: QueryToFindInterface
+
   setShowProvinvicaMun: (newState: boolean) => void
   setShowOptions: (newState: boolean) => void
   setChangeMapType: (mapStyle: IMapStyleIntOption) => void
@@ -124,13 +124,13 @@ export const HeatProvider = ({ children }: any) => {
   const getDatesAvailable = async () => {
     try {
       dispatch({ type: 'loading', payload: true })
-      const dates = await getAvailableDatesServer()
+      const { max_date, min_date } = await getAvailableDatesServer()
 
       dispatch({
         type: 'dates',
         payload: {
-          min_date: addHours(8, new Date(dates.min_date)),
-          max_date: addHours(8, new Date(dates.max_date)),
+          min_date: addHours(8, new Date(min_date)),
+          max_date: addHours(8, new Date(max_date)),
         },
       })
       dispatch({ type: 'loading', payload: false })
@@ -140,30 +140,18 @@ export const HeatProvider = ({ children }: any) => {
   }
 
   const setShowProvinvicaMun = (state: boolean) => {
-    dispatch({
-      type: 'showProvMun',
-      payload: state,
-    })
+    dispatch({ type: 'showProvMun', payload: state })
   }
   const setShowOptions = (state: boolean) => {
-    dispatch({
-      type: 'showOptions',
-      payload: state,
-    })
+    dispatch({ type: 'showOptions', payload: state })
   }
 
   const setChangeMapType = (mapStyle: IMapStyleIntOption) => {
-    dispatch({
-      type: 'changeMapType',
-      payload: mapStyle,
-    })
+    dispatch({ type: 'changeMapType', payload: mapStyle })
   }
 
   const changeTypeGraph = (value: string) => {
-    dispatch({
-      type: 'changeGraphType',
-      payload: value,
-    })
+    dispatch({ type: 'changeGraphType', payload: value })
   }
 
   const setMounthSelected = (
@@ -175,59 +163,32 @@ export const HeatProvider = ({ children }: any) => {
     })
   }
   const getHeatSourcesInfoToGragh = async (month: number, year: number) => {
-    let getInformation: DatesHeatSources[]
-    const arrayTitles: string[] = []
+    dispatch({ type: 'loading', payload: true })
 
-    dispatch({
-      type: 'loading',
-      payload: true,
-    })
-    if (state.mounthAndYearSelected.onlyYear) {
-      getInformation = await getCountHeatSourcesByMonths({
-        year: year,
-      })
-      getInformation?.map((_, i) => arrayTitles.push(meses[i + 1]))
-    } else {
-      getInformation = await getCountHeatSourcesByMonth({
-        month: month,
-        year: year,
-      })
+    const getInformation: DatesHeatSources[] = state.mounthAndYearSelected
+      .onlyYear
+      ? await getCountHeatSourcesByMonths({ year })
+      : await getCountHeatSourcesByMonth({ month, year })
 
-      getInformation?.map((resp) =>
-        arrayTitles.push(
+    const arrayTitles: string[] = state.mounthAndYearSelected.onlyYear
+      ? getInformation?.map((_, i) => meses[i + 1])
+      : getInformation?.map((resp) =>
           moment(resp.acq_date).add(8, 'hours').format('DD/MM/yyyy'),
-        ),
-      )
-    }
+        ) || []
 
-    dispatch({
-      type: 'loading',
-      payload: false,
-    })
+    dispatch({ type: 'loading', payload: false })
 
-    dispatch({
-      type: 'changeCountByDates',
-      payload: getInformation,
-    })
+    dispatch({ type: 'changeCountByDates', payload: getInformation })
 
-    dispatch({
-      type: 'setTitlesArray',
-      payload: arrayTitles,
-    })
+    dispatch({ type: 'setTitlesArray', payload: arrayTitles })
   }
 
   const changeCurrentGeoJson = (currentGeoJson: IHeatResourcesAndPoint) => {
-    dispatch({
-      type: 'setCurrentHeatSources',
-      payload: currentGeoJson,
-    })
+    dispatch({ type: 'setCurrentHeatSources', payload: currentGeoJson })
   }
 
   const changeQueryToFind = (queryToFind: QueryToFindInterface) => {
-    dispatch({
-      type: 'setQueryToFind',
-      payload: queryToFind,
-    })
+    dispatch({ type: 'setQueryToFind', payload: queryToFind })
   }
 
   const changeQueryOneFieldToFind = (

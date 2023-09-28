@@ -17,3 +17,8 @@
 .leaflet-bottom {
     z-index: 0 !important;
 }
+
+/* .header {
+    position: absolute;
+    top: 2rem;
+} */

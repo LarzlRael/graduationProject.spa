@@ -5,7 +5,7 @@ import { Line, Bar } from 'react-chartjs-2'
 import moment from 'moment'
 import Select from 'react-select'
 
-import { meses, monthName } from '../../data/data'
+import { OptionAndValueInterface, meses, monthName } from '../../data/data'
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
 import {
   getOnlyYear,
@@ -54,7 +54,6 @@ export const GraphByMonths = () => {
       mounthAndYearSelected.month,
       mounthAndYearSelected.year,
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounthAndYearSelected])
 
   const [lineGraph, setLineGraph] = useState(false)
@@ -64,12 +63,10 @@ export const GraphByMonths = () => {
     datasets: [
       {
         label: `Focos de calor`,
-        data: countByDates?.map((ele) => parseInt(ele.focos_calor))
-          ? countByDates?.map((ele) => parseInt(ele.focos_calor))
-          : [],
+        data: countByDates?.map((ele) => parseInt(ele.focos_calor)) || [],
         backgroundColor: titleArray.map(() => getRandomColor()),
-        borderColor: titleArray.map(() => getRandomColor()),
-        borderWidth: 2,
+        borderColor: Array(titleArray.length).fill('rgba(0, 0, 0, 0.9)'),
+        borderWidth: 1,
       },
     ],
   }
@@ -103,7 +100,7 @@ export const GraphByMonths = () => {
       if (monthName.includes(titleArray[elements[0].index])) {
         return
       }
-      console.log(titleArray[elements[0].index])
+
       changeQueryToFind({
         ...queryToFind,
         typeLocation: 'pais',
@@ -111,7 +108,6 @@ export const GraphByMonths = () => {
         dateEnd: moment(titleArray[elements[0].index], 'DD-MM-YYYY').toDate(),
       })
 
-      console.log(queryToFind)
       navigate('/mapa')
     },
   }
@@ -137,18 +133,16 @@ export const GraphByMonths = () => {
       })
     }
   }
-  // list of mouths with year field
-  function generateOption() {
-    let options: { value: string; label: string }[] = []
-    response?.map(({ month, year }: any) =>
-      options.push({
-        value: month ? month + '-' + year : year,
-        label: month ? monthName[month] + '-' + year : year,
-      }),
-    )
 
-    return options
+  function generateOption(): OptionAndValueInterface[] {
+    return (
+      response?.map(({ month, year }: { month?: number; year: number }) => ({
+        value: month ? `${month}-${year}` : `${year}`,
+        label: month ? `${monthName[month]}-${year}` : `${year}`,
+      })) || []
+    )
   }
+
   return (
     <>
       <Switch

@@ -7,7 +7,7 @@ interface Props {
   content: string
   interactive?: boolean
   /* trigger */
-  placement?:'top'|'bottom'|'left'|'right'
+  placement?: 'top' | 'bottom' | 'left' | 'right'
 }
 const ToolTip = ({
   children,
@@ -22,14 +22,12 @@ const ToolTip = ({
       /* trigger={trigger ? trigger : 'mouseenter focus'} */
       placement={placement ? placement : 'top'}
       interactive={interactive ? true : false}
-      
       content={
         <span
           style={{
             fontSize: '1.2rem',
             /* fontWeight: '500', */
             color: 'var(--primary-color)',
-            
           }}
         >
           {content}

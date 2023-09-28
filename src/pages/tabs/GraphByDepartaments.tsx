@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef } from 'react'
 
-import { departametsArray, namesDepartamentos } from '../../data/data'
+import { namesDepartamentos } from '../../data/data'
 import {
   getCountByDepPro,
   getCountByDepartamaments,
