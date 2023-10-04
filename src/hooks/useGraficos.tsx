@@ -10,7 +10,7 @@ import {
   registerables,
 } from 'chart.js'
 import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2'
-import { GraphProps } from '../components/Graficos'
+import { GraphProps } from '../components/graphs/Graficos'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
 import { graphTypeArray } from '../data/data'
 

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { IoMenu } from 'react-icons/io5'
-import { useWindowDimensions } from '../hooks/useWindowsDimentions'
+
 import { IoPersonCircle } from 'react-icons/io5'
+import { useWindowDimensions } from '../../hooks/useWindowsDimentions'
 
 export const Header = () => {
   const { windowDimensions } = useWindowDimensions()
@@ -56,14 +57,6 @@ export const Header = () => {
           /* activeClassName="active" */
           onClick={() => closeMenu()}
           className="link"
-          to="/mapa"
-        >
-          Mapa
-        </NavLink>
-        <NavLink
-          /* activeClassName="active" */
-          onClick={() => closeMenu()}
-          className="link"
           to="/reportes"
         >
           Reportes y descargas
@@ -91,7 +84,7 @@ export const Header = () => {
           className="link"
           to="/login"
         >
-          <IoPersonCircle fontSize={30} />
+          <IoPersonCircle fontSize="25" color="var(--primary-color)" />
         </NavLink>
       </div>
     </header>

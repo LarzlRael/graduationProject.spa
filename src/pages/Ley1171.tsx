@@ -1,4 +1,4 @@
-import { Layout } from '../components/Layout'
+import { Layout } from '../components/public/Layout'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 export const Ley1171 = () => {

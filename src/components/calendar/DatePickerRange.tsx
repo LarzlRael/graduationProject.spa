@@ -5,13 +5,12 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 import moment from 'moment'
-import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
+import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
+import { QueryToFindInterface } from '../../interfaces/heatResources.interfaces'
 
-import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
-import { Switch } from '../form/Switch'
-
-import { QueryToFindInterface } from '../interfaces/heatResources.interfaces'
-import { Label } from './text'
+import { Label } from '../text'
+import { LoadingElipsis } from '../widgets/loadings/LoadingElipsis'
+import { Switch } from '../../form/Switch'
 
 interface DatePickerRangeProps {
   onChangeDate?: () => void

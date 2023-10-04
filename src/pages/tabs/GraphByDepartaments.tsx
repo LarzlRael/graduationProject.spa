@@ -6,16 +6,17 @@ import {
   getCountByDepartamaments,
   getCountByDeMun,
 } from '../../provider/analysisServices'
-import { Graficos } from '../../components/Graficos'
+import { Graficos } from '../../components/graphs/Graficos'
 import { RespFoco } from '../../interfaces/countProvinceDepartamento.interface'
 
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
-import { DatePickerRange } from '../../components/DatePickerRange'
+
 import { FilledButton } from '../../components/widgets/buttons/FilledButton'
 import Select from 'react-select'
 import { Switch } from '../../form/Switch'
 import { useNavigate } from 'react-router-dom'
 import { useFocosCalor } from '../../hooks/usefocosCalor'
+import { DatePickerRange } from '../../components/calendar/DatePickerRange'
 
 export const GraphByDepartaments = () => {
   const {
@@ -87,10 +88,39 @@ export const GraphByDepartaments = () => {
     }
     setShowSwitch(true)
   }, [queryToFind.departamento])
+
   const optionsGenerated = namesDepartamentos.map((departament) => ({
     value: departament,
     label: departament,
   }))
+
+  function changeQueryToFindAndConsult(e: any) {
+    changeQueryToFind({
+      ...queryToFind,
+      departamento: e!.value,
+      isAllDepartamentos: e!.value === 'Bolivia',
+      typeLocation: e!.value === 'Bolivia' ? 'pais' : 'departamento',
+    })
+    consultar()
+  }
+
+  function selectedInfoGraph(value: any) {
+    changeQueryToFind({
+      ...queryToFind,
+      departamento: queryToFind.isAllDepartamentos
+        ? value.nameLocation
+        : queryToFind.departamento,
+
+      nameLocation: value.nameLocation,
+      typeLocation: queryToFind.isAllDepartamentos
+        ? 'departamento'
+        : showProvMun
+        ? 'provincia'
+        : 'municipio',
+    })
+    getHeatSources()
+    navigate('/mapa')
+  }
   return (
     <div className="graphDepartaments">
       <div className="combo">
@@ -100,15 +130,7 @@ export const GraphByDepartaments = () => {
             value={optionsGenerated.filter(
               (option) => option.value === queryToFind.departamento,
             )}
-            onChange={(e) => {
-              changeQueryToFind({
-                ...queryToFind,
-                departamento: e!.value,
-                isAllDepartamentos: e!.value === 'Bolivia',
-                typeLocation: e!.value === 'Bolivia' ? 'pais' : 'departamento',
-              })
-              consultar()
-            }}
+            onChange={changeQueryToFindAndConsult}
           />
 
           {showSwitch && (
@@ -131,23 +153,7 @@ export const GraphByDepartaments = () => {
         info={countDepProvState}
         loading={loading}
         nombreDepartamento={queryToFind.departamento}
-        selected={(value) => {
-          changeQueryToFind({
-            ...queryToFind,
-            departamento: queryToFind.isAllDepartamentos
-              ? value.nameLocation
-              : queryToFind.departamento,
-
-            nameLocation: value.nameLocation,
-            typeLocation: queryToFind.isAllDepartamentos
-              ? 'departamento'
-              : showProvMun
-              ? 'provincia'
-              : 'municipio',
-          })
-          getHeatSources()
-          navigate('/mapa')
-        }}
+        selected={selectedInfoGraph}
       />
     </div>
   )

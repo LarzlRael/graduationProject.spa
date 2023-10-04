@@ -114,6 +114,7 @@ export const useFocosCalor = () => {
       ...queryToFind,
     })
     setLoadingNetwork(false)
+
     changeCurrentGeoJson(queryResult)
 
     setViewport({
@@ -143,8 +144,6 @@ export const useFocosCalor = () => {
       departamentSelected: queryToFind.departamento,
       image: queryToFind.image,
     })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])
 
   useEffect(() => {

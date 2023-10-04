@@ -21,3 +21,8 @@
     --green: #458e7f;
     --white: #ffffff;
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

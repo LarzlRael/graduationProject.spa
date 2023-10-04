@@ -3,7 +3,7 @@ import moment from 'moment'
 import 'moment/locale/es' // without this line it didn't work
 
 import { useContext, useEffect } from 'react'
-import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
+import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
 moment.locale('es')
 
 interface CardInfoInterface {

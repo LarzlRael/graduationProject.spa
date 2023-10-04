@@ -29,7 +29,8 @@
 }
 
 .layout_page {
-  width: 1200px;
+  width: 80%;
+
   margin: 1rem auto;
 
   @include media(sm) {

@@ -1,9 +1,10 @@
 import { useRef, useEffect } from 'react'
-import { RespFoco } from '../interfaces/countProvinceDepartamento.interface'
-import { useGraficos } from '../hooks/useGraficos'
-import { LoadingElipsis } from './widgets/loadings/LoadingElipsis'
+import { RespFoco } from '../../interfaces/countProvinceDepartamento.interface'
+import { useGraficos } from '../../hooks/useGraficos'
+import { LoadingElipsis } from '../widgets/loadings/LoadingElipsis'
 import Select from 'react-select'
-import { LoadingExpanded, LoadingSpin } from './widgets/loadings/Loading'
+
+import NotFound from '../widgets/error/NotFound'
 export interface GraphProps {
   info?: RespFoco[]
   nombreDepartamento: string
@@ -28,6 +29,7 @@ export const Graficos = (graphProps: GraphProps) => {
   useEffect(() => {
     window.scrollTo(0, myRef.current?.offsetTop ? myRef.current?.offsetTop : 0)
   }, [loading])
+
   const graphTypeArrayGenerated = graphTypeArray.map((graph) => ({
     value: graph,
     label: graph,
@@ -38,11 +40,9 @@ export const Graficos = (graphProps: GraphProps) => {
       <Select
         /* renderValue={(value) => `${graphType}`} */
         options={graphTypeArrayGenerated}
-        value={
-          graphTypeArrayGenerated.filter(
-            (option) => option.value === graphType,
-          )
-        }
+        value={graphTypeArrayGenerated.filter(
+          (option) => option.value === graphType,
+        )}
         onChange={(e) => {
           changeTypeGraph(e!.value)
         }}
@@ -51,7 +51,11 @@ export const Graficos = (graphProps: GraphProps) => {
       {loading ? (
         <LoadingElipsis />
       ) : info?.length === 0 ? (
-        <div>No se encontraron datos</div>
+        <NotFound
+          ref={myRef}
+          subtitle="No se encontraron datos para el departamento seleccionado"
+          title="No se encontraron datos"
+        />
       ) : (
         <div
           ref={myRef}

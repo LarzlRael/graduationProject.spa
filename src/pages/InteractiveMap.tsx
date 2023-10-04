@@ -22,8 +22,6 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 
 import PixiOverlay from 'react-leaflet-pixi-overlay'
 import { HeatSourcesContext } from '../context/HeatSources/HeatSourceContext'
-import { Header } from '../components/Header'
-import { Layout } from '../components/Layout'
 
 export const InteractiveMap = () => {
   const { currentHeatSources } = useContext(HeatSourcesContext)
@@ -44,6 +42,7 @@ export const InteractiveMap = () => {
   })
 
   useEffect(() => {
+    console.log(coordinates)
     if (
       coordinates.latitude !== undefined ||
       coordinates.longitude !== undefined
@@ -89,7 +88,24 @@ export const InteractiveMap = () => {
   }
 
   return (
-    <Layout>
+    <div>
+      <div
+        style={{
+          position: 'absolute',
+          top: '10px',
+          width: '100vw',
+
+          display: 'flex',
+          justifyContent: 'space-between',
+          zIndex: 2,
+          alignItems: 'center',
+          alignContent: 'center',
+        }}
+      >
+        <ButtonIcon />
+        <MapBoxModal2 />
+      </div>
+
       <MapContainer
         center={[middlePosition.latitude, middlePosition.longitude]}
         zoom={7}
@@ -120,13 +136,13 @@ export const InteractiveMap = () => {
         )}
 
         <GeoJSON data={polyToGeoJson()} />
-        <RecenterAutomatically
+         <RecenterAutomatically
           lat={middlePosition.latitude}
           lng={middlePosition.longitude}
         />
         {/* <PixiOverlay markers={setPixiOverlay()} /> */}
       </MapContainer>
-    </Layout>
+    </div>
   )
 }
 const RecenterAutomatically = ({ lat, lng }: { lat: number; lng: number }) => {

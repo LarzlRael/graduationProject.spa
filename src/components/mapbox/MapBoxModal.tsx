@@ -1,6 +1,5 @@
 import { departametsArray, IMapStyleIntOption } from '../../data/data'
-import { CardInfo } from '../CardInfo'
-import { DatePickerRange } from '../DatePickerRange'
+import { CardInfo } from '../cards/CardInfo'
 
 import { LoadingElipsis } from '../widgets/loadings/LoadingElipsis'
 
@@ -16,25 +15,6 @@ import { ModalComponent } from '../modal/ModalComponent'
 import { useFocosCalor } from '../../hooks/usefocosCalor'
 import { HeatSourcesContext } from '../../context/HeatSources/HeatSourceContext'
 
-interface Props {
-  imageUrl: string
-  mapTypeStyle: IMapStyleIntOption[]
-  mapStyle: IMapStyleIntOption
-  setChangeMapType: (mapStyle: IMapStyleIntOption) => void
-  queryToFind: QueryToFindInterface
-  changeQueryOneFieldToFind: (
-    field: keyof QueryToFindInterface,
-    value: string,
-  ) => void
-  showOptions: boolean
-  showProvMun: boolean
-  setShowOptions: (newState: boolean) => void
-  onChange: (e: any) => void
-  stateArrMunProv: IProvinciasAndMunicipios
-  loading: boolean
-  getHeatSources: () => void
-  showProvinvicaMun: (newState: boolean) => void
-}
 export const MapBoxModal = () => {
   const {
     /* imageUrl, */
@@ -182,6 +162,7 @@ export const MapBoxModal = () => {
 
 import React from 'react'
 import { Label } from '../text'
+import { DatePickerRange } from '../calendar/DatePickerRange'
 
 export const MapBoxModal2 = () => {
   return (

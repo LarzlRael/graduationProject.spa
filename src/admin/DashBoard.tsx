@@ -1,44 +1,46 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-import { accountsLink } from './dataMenu';
-import { UpdateInformation } from './dashboard/UpdateInformation';
-import { CVSTutorial } from './dashboard/CVSTutorial';
-import { AuthAdminContext } from '../context/LoginContext/AuthAdminContext';
-import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import { useWindowDimensions } from '../hooks/useWindowsDimentions';
+import React, { useContext, useState, useEffect } from 'react'
+import { Routes, Route, NavLink, Navigate } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
+import { accountsLink } from './dataMenu'
+import { UpdateInformation } from './dashboard/UpdateInformation'
+import { CVSTutorial } from './dashboard/CVSTutorial'
+import { AuthAdminContext } from '../context/LoginContext/AuthAdminContext'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { useWindowDimensions } from '../hooks/useWindowsDimentions'
 
 export const AdminDashboard = () => {
-  const [openMenu, setOpenMenu] = useState(false);
-  const { logOut } = useContext(AuthAdminContext);
-  const { windowDimensions } = useWindowDimensions();
+  const [openMenu, setOpenMenu] = useState(false)
+  const { logOut } = useContext(AuthAdminContext)
+  const { windowDimensions } = useWindowDimensions()
 
   const handleToogleMenu = () => {
-    setOpenMenu(!openMenu);
-  };
+    setOpenMenu(!openMenu)
+  }
 
   useEffect(() => {
     if (windowDimensions.width < 768) {
-      setOpenMenu(true);
+      setOpenMenu(true)
     } else {
-      setOpenMenu(false);
+      setOpenMenu(false)
     }
-  }, [windowDimensions.width]);
+  }, [windowDimensions.width])
 
-  useDocumentTitle('dashboard');
+  useDocumentTitle('dashboard')
 
   const goToLink = () => {
     if (windowDimensions.width < 768) {
-      handleToogleMenu();
+      handleToogleMenu()
     }
-  };
+  }
 
   return (
     <div>
       <div className="toolbar">
         <i
           onClick={handleToogleMenu}
-          className={`${openMenu ? 'fa fa-bars' : 'fas fa-arrow-left'} menu-bar`}
+          className={`${
+            openMenu ? 'fa fa-bars' : 'fas fa-arrow-left'
+          } menu-bar`}
           aria-hidden="true"
         ></i>
         <h4>Panel de administracion</h4>
@@ -54,7 +56,7 @@ export const AdminDashboard = () => {
             <span className="profile-image-name">Nombre de Usuario</span>
           </div>
           <div className="dash-group">
-            {accountsLink.map((item,i) => (
+            {accountsLink.map((item, i) => (
               <div key={i}>
                 <span className="title-dash">{item.title_group}</span>
                 {item.items.map((link) => (
@@ -83,6 +85,7 @@ export const AdminDashboard = () => {
         <div className="dash-content">
           <div className="dashContentContainer">
             <Routes>
+              <Route path="/" element={<Navigate to="/dashboard/actualizar" />} />
               <Route path="/actualizar" element={<UpdateInformation />} />
               <Route path="/tutorial" element={<CVSTutorial />} />
             </Routes>
@@ -90,5 +93,5 @@ export const AdminDashboard = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

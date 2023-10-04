@@ -1,9 +1,10 @@
-import { Header } from '../components/Header'
+
 import { FilledButton } from '../components/widgets/buttons/FilledButton'
 import { useNavigate } from 'react-router'
 import { Switch } from '../form/Switch'
 import { CommonContext } from '../context/commonContext/CommonContext'
 import { useContext } from 'react'
+import { Header } from '../components/public/Header'
 
 export const LandingPage = () => {
   const navigate = useNavigate()

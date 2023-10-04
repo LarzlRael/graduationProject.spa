@@ -8,7 +8,7 @@ import { uploadFileCVS } from '../../provider/reportsServices'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useDocumentTitle } from '../../hooks/useDocumentTitle'
-import ToolTip from '../../components/ToolTip'
+
 import { FilledButton } from '../../components/widgets/buttons/FilledButton'
 import { CommonContext } from '../../context/commonContext/CommonContext'
 import {
@@ -17,16 +17,20 @@ import {
 } from '../../components/widgets/loadings/Loading'
 import { LoadingElipsis } from '../../components/widgets/loadings/LoadingElipsis'
 import { postAction } from '../../provider/services/action/ActionAuthorization'
-import { validateStatus } from '../../utils/validation'
+import { validateArray, validateStatus } from '../../utils/validation'
+import ToolTip from '../../components/boxex/ToolTip'
+import BoxFlex from '../../components/boxex/BoxFlex'
+import { H2 } from '../../components/text'
 
 export const UpdateInformation = () => {
-  const [selectedFile, setSelectedFile] = useState<File>()
+  const [selectedFile, setSelectedFile] = useState<File[]>([])
   const [loading, setLoading] = useState(false)
   const [isSelected, setIsSelected] = useState(false)
-  const { changeSimpleModal } = useContext(CommonContext)
+  const { changeSimpleModal, clearSimpleaModal } = useContext(CommonContext)
+
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return
-    setSelectedFile(e.target.files[0])
+    setSelectedFile(Array.from(e.target.files))
     setIsSelected(true)
     e.currentTarget.value = ''
   }
@@ -35,57 +39,48 @@ export const UpdateInformation = () => {
     if (!selectedFile) return
 
     let formData = new FormData()
-    formData.append('csv', selectedFile)
+    /* formData.append('csv', selectedFile) */
+    selectedFile.forEach((file, index) => {
+      formData.append('csv', file)
+    })
 
     changeSimpleModal({
       isOpen: true,
       title: 'ACTUALIZANDO BASE DE DATOS',
-
       contentModal: (
         <div>
-          <h5>Se esta subiendo los datos, no cierre este ventana</h5>
+          <H2>Se esta subiendo los datos, no cierre este ventana</H2>
           <LoadingElipsis />
         </div>
       ),
-      isButtonClose: true,
+      isButtonClose: false,
       width: '350px',
     })
 
     setLoading(true)
     postAction('maps/uploadcsvupdate', formData)
       .then((res: any) => {
-        /* console.log(res.status)
+        console.log(res.status)
         if (validateStatus(res.status)) {
-          toast.success(res.data.msg)
-
-          changeSimpleModal({
-            isOpen: false,
-            title: '',
-            contentModal: null,
-          })
+          console.log(res.data)
+          toast.success(res.data.message)
+          clearSimpleaModal()
+          clearFile()
         } else {
           toast.error('Error al subir el archivo')
-          changeSimpleModal({
-            isOpen: false,
-            title: '',
-            contentModal: null,
-          })
-        } */
+          clearSimpleaModal()
+        }
       })
       .catch((err: any) => {
         toast.error(err)
-        changeSimpleModal({
-          isOpen: false,
-          title: '',
-          contentModal: null,
-        })
+        clearSimpleaModal()
       })
 
     setLoading(false)
   }
 
   const clearFile = () => {
-    setSelectedFile(undefined)
+    setSelectedFile([])
     setIsSelected(false)
   }
 
@@ -111,6 +106,7 @@ export const UpdateInformation = () => {
         style={{ display: 'none' }}
         ref={inputRef}
         type="file"
+        multiple={false}
         onChange={changeHandler}
         id="raised-button-file"
       />
@@ -124,18 +120,41 @@ export const UpdateInformation = () => {
                     <span>{file?.name && file?.name}</span>
                 ))
             } */}
-      <span>{selectedFile?.name && selectedFile?.name}</span>
+      <span>
+        {validateArray(selectedFile) &&
+          selectedFile.map((file, index) => (
+            <span key={index}>
+              {file?.name && file?.name}
+              <br />
+            </span>
+          ))}
+      </span>
       <br />
       {isSelected && (
-        <>
+        <BoxFlex>
           <FilledButton
             onClick={uploadFile}
             icon={<MdFileUpload size="1.5rem" onClick={clearFile} />}
           >
             Actualizar Base de datos
           </FilledButton>
-          <IoCloseCircleSharp size="1.5rem" onClick={clearFile} />
-        </>
+          <ToolTip
+            content="Cancelar"
+            children={
+              <button
+                style={{
+                  border: 'none',
+                  background: 'none',
+                  cursor: 'pointer',
+                  outline: 'none',
+                }}
+                onClick={clearFile}
+              >
+                <IoCloseCircleSharp size="25" color="var(--primary-color)" />
+              </button>
+            }
+          ></ToolTip>
+        </BoxFlex>
       )}
     </div>
   )

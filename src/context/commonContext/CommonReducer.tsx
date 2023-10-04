@@ -32,6 +32,7 @@ type CommonAction =
   | { type: 'changeTab'; payload: number }
   | { type: 'changeModal'; payload: IModal }
   | { type: 'changeSimpleModal'; payload: ISimpleModal }
+  | { type: 'clearSimpleModal' }
 /* | { type: 'removeError' }
   | { type: 'noAuthenticated' } 
   | { type: 'logout' }
@@ -71,6 +72,16 @@ export const commonReducer = (
       return {
         ...state,
         simpleModal: action.payload,
+      }
+    case 'clearSimpleModal':
+      return {
+        ...state,
+        simpleModal: {
+          isOpen: false,
+          title: '',
+          contentModal: null,
+          isButtonClose: true,
+        },
       }
 
     default:

@@ -1,19 +1,16 @@
-import { Layout } from '../components/Layout';
-import { TabNavigator } from './tabs/TabNavigator';
-
-
+import { Layout } from '../components/public/Layout'
+import { TabNavigator } from './tabs/TabNavigator'
 
 export const Departaments = () => {
-
-    /* const [selectedImage, setselectedImage] = useState(images[0].source);
+  /* const [selectedImage, setselectedImage] = useState(images[0].source);
     const onChange = (e: any) => {
         setselectedImage(e.target.value);
         console.log(e.target.value);
     }
     } */
-    return (
-        <Layout>
-            {/* <select name="" id="" onChange={onChange}>
+  return (
+    <Layout>
+      {/* <select name="" id="" onChange={onChange}>
                 {images.map(image => (
                     <option value={image.source}>{image.name}</option>
                 ))}
@@ -29,7 +26,7 @@ export const Departaments = () => {
                 <br />
             </> */}
 
-            <TabNavigator />
-        </Layout>
-    )
+      <TabNavigator />
+    </Layout>
+  )
 }

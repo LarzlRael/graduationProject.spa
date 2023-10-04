@@ -18,6 +18,7 @@ type CommonContextProps = {
   setTabPosition: (tabPosition: number) => void
   changeModal: (parameters: IModal) => void
   changeSimpleModal: (parameters: ISimpleModal) => void
+  clearSimpleaModal: () => void
 }
 
 const CommonInitialState: CommonState = {
@@ -88,6 +89,11 @@ export const CommonProvider = ({ children }: any) => {
       payload: parameters,
     })
   }
+  const clearSimpleaModal = () => {
+    dispatch({
+      type: 'clearSimpleModal',
+    })
+  }
 
   return (
     <CommonContext.Provider
@@ -97,6 +103,7 @@ export const CommonProvider = ({ children }: any) => {
         showSnackBar,
         setTabPosition,
         changeModal,
+        clearSimpleaModal,
         changeSimpleModal,
       }}
     >
