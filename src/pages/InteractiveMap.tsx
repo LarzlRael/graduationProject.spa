@@ -102,7 +102,7 @@ export const InteractiveMap = () => {
           alignContent: 'center',
         }}
       >
-        <ButtonIcon />
+        <ButtonIcon $color="yellow" />
         <MapBoxModal2 />
       </div>
 
@@ -136,7 +136,7 @@ export const InteractiveMap = () => {
         )}
 
         <GeoJSON data={polyToGeoJson()} />
-         <RecenterAutomatically
+        <RecenterAutomatically
           lat={middlePosition.latitude}
           lng={middlePosition.longitude}
         />

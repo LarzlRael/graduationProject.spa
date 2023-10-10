@@ -12,6 +12,7 @@ import {
   getRandomColor,
   getOnlyMonth,
   isYear,
+  findIndexMonth,
 } from '../../utils/utils'
 
 import useAxiosAuth from '../../hooks/useAxios'
@@ -98,6 +99,11 @@ export const GraphByMonths = () => {
       }
 
       if (monthName.includes(titleArray[elements[0].index])) {
+        setMounthSelected({
+          month: findIndexMonth(titleArray[elements[0].index]),
+          year: mounthAndYearSelected.year,
+          onlyYear: false,
+        })
         return
       }
 

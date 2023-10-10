@@ -81,6 +81,30 @@ export const getOnlyYear = (date: string): number => {
 export const isYear = (date: string): boolean => {
   return date.length === 4
 }
+export function findIndexMonth(monthName: string) {
+  const months = [
+    'enero',
+    'febrero',
+    'marzo',
+    'abril',
+    'mayo',
+    'junio',
+    'julio',
+    'agosto',
+    'septiembre',
+    'octubre',
+    'noviembre',
+    'diciembre',
+  ]
+
+  // Convertir el mes a minúsculas para hacer la comparación insensible a mayúsculas
+  const normalizedMonth = monthName.toLowerCase()
+
+  // Buscar el índice del mes en el array
+  const index = months.findIndex((month) => month === normalizedMonth)
+
+  return index + 1
+}
 
 export const convertMonths = (date: string): string => {
   /* if (date.length !== 4) {

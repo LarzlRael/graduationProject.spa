@@ -26,3 +26,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.button__without__styles {
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+}

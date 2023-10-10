@@ -16,31 +16,32 @@ import {
   LoadingSpin,
 } from '../../components/widgets/loadings/Loading'
 import { LoadingElipsis } from '../../components/widgets/loadings/LoadingElipsis'
-import { postAction } from '../../provider/services/action/ActionAuthorization'
+import {
+  getAction,
+  postAction,
+} from '../../provider/services/action/ActionAuthorization'
 import { validateArray, validateStatus } from '../../utils/validation'
 import ToolTip from '../../components/boxex/ToolTip'
 import BoxFlex from '../../components/boxex/BoxFlex'
 import { H2 } from '../../components/text'
 
 export const UpdateInformation = () => {
-  const [selectedFile, setSelectedFile] = useState<File[]>([])
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [loading, setLoading] = useState(false)
-  const [isSelected, setIsSelected] = useState(false)
   const { changeSimpleModal, clearSimpleaModal } = useContext(CommonContext)
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return
-    setSelectedFile(Array.from(e.target.files))
-    setIsSelected(true)
-    e.currentTarget.value = ''
+    setSelectedFiles(Array.from(e.target.files))
+    e.target.value = ''
   }
 
   const uploadFile = async () => {
-    if (!selectedFile) return
+    if (!selectedFiles) return
 
     let formData = new FormData()
     /* formData.append('csv', selectedFile) */
-    selectedFile.forEach((file, index) => {
+    selectedFiles.forEach((file, index) => {
       formData.append('csv', file)
     })
 
@@ -60,41 +61,69 @@ export const UpdateInformation = () => {
     setLoading(true)
     postAction('maps/uploadcsvupdate', formData)
       .then((res: any) => {
-        console.log(res.status)
+        clearSimpleaModal()
         if (validateStatus(res.status)) {
-          console.log(res.data)
           toast.success(res.data.message)
-          clearSimpleaModal()
-          clearFile()
+          clearAllFiles()
         } else {
-          toast.error('Error al subir el archivo')
-          clearSimpleaModal()
+          toast.error(res.data.message)
         }
       })
       .catch((err: any) => {
         toast.error(err)
-        clearSimpleaModal()
       })
 
     setLoading(false)
   }
 
-  const clearFile = () => {
-    setSelectedFile([])
-    setIsSelected(false)
+  const clearFile = (index: number) => {
+    setSelectedFiles(selectedFiles.filter((file, i) => i !== index))
+  }
+  const clearAllFiles = () => {
+    setSelectedFiles([])
   }
 
   useDocumentTitle('Actualizar Focos de calor')
   const inputRef = useRef<any>(null)
 
-  const handleClick = () => {
-    // 👇️ open file input box on click of another element
-    inputRef.current.click()
+  const handleOpen = () => inputRef.current.click()
+
+  const updateFromServer = async () => {
+    changeSimpleModal({
+      isOpen: true,
+      title: 'ACTUALIZANDO BASE DE DATOS',
+      contentModal: (
+        <div>
+          <H2 textAlign="center">
+            Se esta actualizando la base de datos desde el servidor, no cierre
+            este ventana
+          </H2>
+          <LoadingElipsis />
+        </div>
+      ),
+      isButtonClose: false,
+      width: '350px',
+    })
+    getAction('history/updateFromAPI')
+      .then((res: any) => {
+        clearSimpleaModal()
+        if (validateStatus(res.status)) {
+          toast.success('Base de datos actualizada correctamente')
+        } else {
+          toast.error('Hubo un error al actualizar la base de datos')
+        }
+      })
+      .catch((err: any) => {
+        toast.error('Error al actualizar la base de datos')
+      })
   }
+
   return (
     <div>
-      <h2>Actualizar focos de calor</h2>
-      <span>¿De donde consigo el archivo ?</span>
+      <H2 color="var(--primary-color)">Actualizar focos de calor</H2>
+      <span>
+        ¿De donde consigo los archivo para actualizar los focos de calor?
+      </span>
       <br />
       <span>
         Subir achivo de formato <b>.CVS</b>
@@ -106,56 +135,44 @@ export const UpdateInformation = () => {
         style={{ display: 'none' }}
         ref={inputRef}
         type="file"
-        multiple={false}
+        multiple={true}
         onChange={changeHandler}
-        id="raised-button-file"
       />
-      <label htmlFor="raised-button-file">
-        <FilledButton onClick={handleClick}>
-          Seleccionar archivo CVS
-        </FilledButton>
-      </label>
-      {/*  {
-                selectedFiles!.map(file => (
-                    <span>{file?.name && file?.name}</span>
-                ))
-            } */}
-      <span>
-        {validateArray(selectedFile) &&
-          selectedFile.map((file, index) => (
+
+      <FilledButton onClick={handleOpen}>Seleccionar archivo CVS</FilledButton>
+
+      {validateArray(selectedFiles) &&
+        selectedFiles.map((file, index) => (
+          <BoxFlex>
             <span key={index}>
               {file?.name && file?.name}
-              <br />
+              {'  '}
+              {file && Math.floor(file.size / 1000)} KB
             </span>
-          ))}
-      </span>
-      <br />
-      {isSelected && (
-        <BoxFlex>
-          <FilledButton
-            onClick={uploadFile}
-            icon={<MdFileUpload size="1.5rem" onClick={clearFile} />}
-          >
-            Actualizar Base de datos
-          </FilledButton>
-          <ToolTip
-            content="Cancelar"
-            children={
-              <button
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer',
-                  outline: 'none',
-                }}
-                onClick={clearFile}
-              >
-                <IoCloseCircleSharp size="25" color="var(--primary-color)" />
-              </button>
-            }
-          ></ToolTip>
-        </BoxFlex>
+            <ToolTip
+              content="Eliminar este archivo"
+              children={
+                <button
+                  className="button__without__styles"
+                  onClick={() => clearFile(index)}
+                >
+                  <IoCloseCircleSharp size="25" color="var(--primary-color)" />
+                </button>
+              }
+            />
+          </BoxFlex>
+        ))}
+
+      {validateArray(selectedFiles) && (
+        <FilledButton onClick={uploadFile}>
+          Actualizar Base de datos
+        </FilledButton>
       )}
+      <br />
+      <br />
+      <FilledButton onClick={updateFromServer}>
+        Actualizar automaticamente
+      </FilledButton>
     </div>
   )
 }

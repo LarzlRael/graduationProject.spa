@@ -14,7 +14,7 @@ export const H2Styled = styled.h2<{
   color: ${({ color }) => (color ? color : '#292828')};
   font-size: ${({ fontSize }) => fontSize};
   display: block;
-  text-align: ${({ textAlign }) => (textAlign ? textAlign : 'center')};
+  text-align: ${({ textAlign }) => (textAlign ? textAlign : 'start')};
   margin: ${({ margin }) => margin};
   font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 'normal')};
 

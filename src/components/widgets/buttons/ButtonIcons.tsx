@@ -5,12 +5,14 @@ interface Props {
   icon?: string
   style?: React.CSSProperties
   className?: string
+  $color?: string
 }
 export const ButtonIcon = ({
   to,
   icon = 'chevron-left',
   style,
   className,
+  $color = 'var(--primary-color)',
 }: Props) => {
   const navigator = useNavigate()
   return (
@@ -19,7 +21,7 @@ export const ButtonIcon = ({
         onClick={() => (to ? navigator('/') : navigator(-1))}
         className="ButtonIcon"
       >
-        <i className={`fas fa-${icon}`}></i>
+        <i className={`fas fa-${icon}`} style={{ color: $color }}></i>
       </button>
     </div>
   )
